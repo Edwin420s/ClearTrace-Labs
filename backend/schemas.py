@@ -27,6 +27,7 @@ class CreateCaseRequest(BaseModel):
 
 
 class ExtractedClaimRecord(BaseModel):
+    """Represents a factual claim extracted independently from a single source."""
     claim_id: str
     case_id: Optional[str] = None
     source_id: str
