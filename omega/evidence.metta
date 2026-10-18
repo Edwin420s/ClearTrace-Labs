@@ -1,4 +1,3 @@
-;; Omega Cognitive Architecture Layer
 ;; ============================================================================
 ;; ClearTrace Labs — Omega Cognitive Architecture: evidence.metta
 ;; Source Credibility, Provenance, and Corroboration Scoring
