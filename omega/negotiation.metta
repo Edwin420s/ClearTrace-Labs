@@ -1,3 +1,4 @@
+;; Omega Cognitive Architecture Layer
 ;; ============================================================================
 ;; ClearTrace Labs — Omega Cognitive Architecture: negotiation.metta
 ;; 5-Stage Multi-Round Negotiation Protocol State Machine
