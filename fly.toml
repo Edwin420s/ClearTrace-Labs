@@ -1,3 +1,4 @@
+# ClearTrace Labs
 # ClearTrace Labs — Fly.io Deployment Configuration
 app = "cleartrace-labs"
 primary_region = "nbo" # Nairobi region or closest available
