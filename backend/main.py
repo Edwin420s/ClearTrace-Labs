@@ -69,7 +69,8 @@ agent_a = RecordVerifierAgentA()
 agent_b = ContextChallengerAgentB()
 
 
-@app.get("/health")
+@app.get("/health", tags=["System"])
+# Health check endpoint
 def health_check() -> Dict[str, Any]:
     init_db()
     return {
