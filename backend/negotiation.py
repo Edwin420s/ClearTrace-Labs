@@ -18,6 +18,7 @@ from backend.schemas import (
 
 
 class MultiAgentReconciliationEngine:
+    """Orchestrates 5-stage negotiation between Agent A and Agent B."""
     def __init__(self, reasoner: SymbolicReasoner) -> None:
         self.reasoner = reasoner
 
