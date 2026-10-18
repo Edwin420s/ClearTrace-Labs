@@ -70,9 +70,7 @@ class Expression(Atom):
         return isinstance(other, Expression) and self.children == other.children
 
 
-def tokenize(
-    # Tokenizes MeTTa S-expression string into lexical tokens
-text: str) -> List[str]:
+def tokenize(text: str) -> List[str]:
     cleaned_lines = []
     for line in text.splitlines():
         line = re.sub(r";.*$", "", line)
@@ -333,7 +331,6 @@ class MettaInterpreter:
 # ==============================================================================
 
 class SymbolicReasoner:
-    """Dual-runtime MeTTa engine supporting Hyperon and pure symbolic S-expressions."""
     """Executes symbolic truth classification with MeTTa rules and trace generation."""
 
     def __init__(self) -> None:
