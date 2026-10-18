@@ -93,3 +93,4 @@ $$\text{Shortfall} = \text{EligibleGross} \times \frac{\Delta_{pct}}{100}$$
 ```
 
 <!-- Note: S-expression rewrite engine adheres to SingularityNET Hyperon semantics. -->
+<!-- Dynamic rules compile directly into the shared space. -->
