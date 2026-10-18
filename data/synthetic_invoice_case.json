@@ -1,0 +1,123 @@
+{
+  "preset_id": "invoice",
+  "domain": "invoice",
+  "badge": "Registered Problem Case \u2014 Purchase Order vs. Supplier Invoice",
+  "title": "[SYNTHETIC DEMO] Purchase Order (90 Units) vs. Supplier Invoice (100 Units)",
+  "description": "Your original registered ClearTrace scenario: Purchase Order PO-2026-089 authorizes 90 units at KSh 500/unit (KSh 45,000), while Supplier Invoice INV-8847 bills 100 units at KSh 500/unit (KSh 50,000) \u2014 a 10-unit / KSh 5,000 disputed variance.",
+  "sources": [
+    {
+      "label": "Authorized Purchase Order PO-2026-089 (Source A)",
+      "source_role": "source_a",
+      "raw_text": "[SYNTHETIC PO] Purchase Order: PO-2026-089 | Supplier: Savannah Craft Supplies Ltd. Item SKU: CANVAS-ROLL-XL. Authorized Quantity: 90 units. Agreed Unit Price: KSh 500. Authorized Total: KSh 45,000.",
+      "structured_claims": [
+        {
+          "entity": "PO-2026-089",
+          "property_name": "po_reference",
+          "value": "PO-2026-089",
+          "evidence_ref": "PO Header Block",
+          "original_text": "Purchase Order: PO-2026-089"
+        },
+        {
+          "entity": "PO-2026-089",
+          "property_name": "supplier_name",
+          "value": "Savannah Craft Supplies Ltd",
+          "evidence_ref": "PO Vendor Field",
+          "original_text": "Supplier: Savannah Craft Supplies Ltd."
+        },
+        {
+          "entity": "PO-2026-089",
+          "property_name": "authorized_quantity",
+          "value": 90,
+          "evidence_ref": "PO Line Item 1 (Quantity)",
+          "original_text": "Authorized Quantity: 90 units."
+        },
+        {
+          "entity": "PO-2026-089",
+          "property_name": "unit_price_ksh",
+          "value": 500,
+          "evidence_ref": "PO Line Item 1 (Unit Price)",
+          "original_text": "Agreed Unit Price: KSh 500."
+        },
+        {
+          "entity": "PO-2026-089",
+          "property_name": "total_amount_ksh",
+          "value": 45000,
+          "evidence_ref": "PO Footer Total",
+          "original_text": "Authorized Total: KSh 45,000."
+        }
+      ],
+      "metadata": {
+        "synthetic_demo": true
+      }
+    },
+    {
+      "label": "Supplier Invoice INV-8847 (Source B)",
+      "source_role": "source_b",
+      "raw_text": "[SYNTHETIC INVOICE] Invoice: INV-8847 referencing PO-2026-089 | Supplier: Savannah Craft Supplies Ltd. Billed Quantity: 100 units. Unit Price: KSh 500. Billed Total: KSh 50,000.",
+      "structured_claims": [
+        {
+          "entity": "PO-2026-089",
+          "property_name": "po_reference",
+          "value": "PO-2026-089",
+          "evidence_ref": "Invoice Ref Field",
+          "original_text": "referencing PO-2026-089"
+        },
+        {
+          "entity": "PO-2026-089",
+          "property_name": "supplier_name",
+          "value": "Savannah Craft Supplies Ltd",
+          "evidence_ref": "Invoice Header",
+          "original_text": "Supplier: Savannah Craft Supplies Ltd."
+        },
+        {
+          "entity": "PO-2026-089",
+          "property_name": "authorized_quantity",
+          "value": 100,
+          "evidence_ref": "Invoice Line 1 (Billed Qty)",
+          "original_text": "Billed Quantity: 100 units."
+        },
+        {
+          "entity": "PO-2026-089",
+          "property_name": "unit_price_ksh",
+          "value": 500,
+          "evidence_ref": "Invoice Line 1 (Price)",
+          "original_text": "Unit Price: KSh 500."
+        },
+        {
+          "entity": "PO-2026-089",
+          "property_name": "total_amount_ksh",
+          "value": 50000,
+          "evidence_ref": "Invoice Total Due",
+          "original_text": "Billed Total: KSh 50,000."
+        }
+      ],
+      "metadata": {
+        "synthetic_demo": true
+      }
+    },
+    {
+      "label": "Signed PO Amendment #PO-2026-089-AMD1 (Optional 3rd Evidence)",
+      "source_role": "corroboration",
+      "raw_text": "[SYNTHETIC AMENDMENT] Approved Order Amendment #PO-2026-089-AMD1: Increases authorized_quantity to 100 units and total_amount_ksh to KSh 50,000.",
+      "structured_claims": [
+        {
+          "entity": "PO-2026-089",
+          "property_name": "authorized_quantity",
+          "value": 100,
+          "evidence_ref": "Amendment Clause 1",
+          "original_text": "Increases authorized_quantity to 100 units"
+        },
+        {
+          "entity": "PO-2026-089",
+          "property_name": "total_amount_ksh",
+          "value": 50000,
+          "evidence_ref": "Amendment Clause 2",
+          "original_text": "and total_amount_ksh to KSh 50,000."
+        }
+      ],
+      "metadata": {
+        "synthetic_demo": true
+      }
+    }
+  ]
+}
