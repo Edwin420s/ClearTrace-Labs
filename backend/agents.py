@@ -121,6 +121,7 @@ class RecordVerifierAgentA:
 
 
 class ContextChallengerAgentB:
+    """Agent B: Focuses on context verification, addenda, and counterparty claims."""
     """
     Agent B — Independent Counter-Analyst & Context Challenger.
     Operates strictly in isolation on Source B during Phase 1 extraction,
