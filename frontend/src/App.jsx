@@ -116,6 +116,7 @@ export default function App() {
   };
 
   const handleVerifyReplayProof = async () => {
+    // Submits verification request to backend to recompute Merkle root
     if (!caseDetails) return;
     setVerifyingProof(true);
     try {
