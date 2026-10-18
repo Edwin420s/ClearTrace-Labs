@@ -1,3 +1,4 @@
-from typing import Any, List
-class Atom:
-    pass
+class Symbol:
+    def __init__(self, name): self.name = name
+class Variable:
+    def __init__(self, name): self.name = name
