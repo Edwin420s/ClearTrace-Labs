@@ -3,3 +3,5 @@
 (: Property Type)
 (: Value Type)
 (: Status Type)
+(: Agent Type)
+(: Stage Type)
