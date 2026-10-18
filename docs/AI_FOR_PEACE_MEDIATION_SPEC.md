@@ -85,3 +85,5 @@ In the ClearTrace Labs user interface, reviewers can click on any property findi
 - The exact quote and archival citation from Agent B
 - The step-by-step MeTTa rewrite trace showing how the rule arrived at `CONTRADICTION` or `EVIDENCE_SUPPORTED`
 - The SHA-256 Merkle leaf hash for independent cryptographic verification.
+
+<!-- Preserves authentic historical divergence between Harlem and Nairobi archives. -->
