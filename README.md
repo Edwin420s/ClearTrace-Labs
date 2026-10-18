@@ -1,4 +1,3 @@
-# ClearTrace Labs
 # ClearTrace Labs — Multi-Agent Truth & Reconciliation Engine
 
 > **BASIX & Artificial Superintelligence Alliance: State of the Art Hackathon (October 2026)**  
