@@ -51,3 +51,5 @@
 3. Verify `/health` reports `status: online` and active MeTTa rules.
 4. Pre-seed the cases: `python3 scripts/seed_presets.py`
 5. Ensure recording resolution is 1080p, audio is clear, and keep strictly within 180 seconds.
+
+<!-- Presentation calibrated for exact 3:00 minute runtime per Hackathon Rule 09. -->
