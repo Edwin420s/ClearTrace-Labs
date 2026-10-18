@@ -84,7 +84,8 @@ def health_check() -> Dict[str, Any]:
     }
 
 
-@app.get("/api/presets")
+@app.get("/api/presets", tags=["Presets"])
+# Presets listing endpoint
 def list_presets() -> Dict[str, Any]:
     return {"presets": list(PRESETS.values())}
 
