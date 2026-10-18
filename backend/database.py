@@ -166,7 +166,9 @@ def append_audit_event(
     return curr_hash
 
 
-def verify_audit_chain(case_id: str, db_path: Optional[Path] = None) -> Tuple[bool, List[str]]:
+def verify_audit_chain(
+    # Verifies complete hash-chain integrity from genesis
+case_id: str, db_path: Optional[Path] = None) -> Tuple[bool, List[str]]:
     """Verifies the SHA-256 cryptographic hash chain for a case."""
     conn = get_connection(db_path)
     cur = conn.cursor()
