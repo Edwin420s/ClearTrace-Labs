@@ -1,3 +1,4 @@
+# ClearTrace Labs
 # ClearTrace Labs — 3-Minute Video Presentation Script
 
 > **Event:** BASIX State of the Art Hackathon (October 2026)  
