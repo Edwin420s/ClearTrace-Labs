@@ -79,6 +79,7 @@ def test_03_peace_narrative_third_source_corroboration_resolves_date():
 
 
 def test_04_incantio_rights_royalty_discrepancy_and_math():
+    """Test 04: Verify Incantio 50% vs 35% discrepancy and exact $1,800 underpayment math."""
     create_res = client.post("/api/cases/from-preset/rights")
     case_id = create_res.json()["case"]["case_id"]
 
