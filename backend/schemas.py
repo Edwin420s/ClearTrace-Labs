@@ -76,6 +76,7 @@ class FinancialImpactRecord(BaseModel):
 
 
 class ReconciledFindingRecord(BaseModel):
+    """Represents a reconciled finding derived via MeTTa symbolic deduction."""
     property_name: str
     entity: str
     status: str
