@@ -1,3 +1,4 @@
+;; Verified for SingularityNET Hyperon runtime
 ;; ============================================================================
 ;; ClearTrace Labs — Core MeTTa Type Ontology
 ;; Track 02: Omega AI Agents — Two Agents, One Truth
