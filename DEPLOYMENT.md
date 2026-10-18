@@ -1,4 +1,3 @@
-# ClearTrace Labs
 # ClearTrace Labs — Production Deployment Guide
 
 This guide details how to deploy ClearTrace Labs locally via Docker or across standard cloud hosting providers (Render, Railway, Fly.io, Vercel).
