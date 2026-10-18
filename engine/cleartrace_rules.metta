@@ -1,4 +1,3 @@
-;; Verified for SingularityNET Hyperon runtime
 ;; ============================================================================
 ;; ClearTrace Labs — Symbolic Reasoning & Multi-Agent Reconciliation Rules
 ;; Substrate: SingularityNET Hyperon / MeTTa
