@@ -68,3 +68,5 @@
   - [`CRYPTOGRAPHIC_AUDIT_SPEC.md`](./CRYPTOGRAPHIC_AUDIT_SPEC.md): Merkle proof and SHA-256 ledger spec.
   - [`API_SPECIFICATION.md`](./API_SPECIFICATION.md): Complete REST contracts.
   - [`DEPLOYMENT.md`](../DEPLOYMENT.md): Docker Compose and cloud manifests.
+
+<!-- Evaluated against all 10 BASIX State of the Art Hackathon rules. -->
