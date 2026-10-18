@@ -1,4 +1,3 @@
-# ClearTrace Labs
 # Contributing to ClearTrace Labs
 
 Thank you for your interest in contributing to **ClearTrace Labs**! We welcome contributions that advance symbolic multi-agent reasoning, SingularityNET Hyperon / MeTTa integration, and verifiable decision workflows.
