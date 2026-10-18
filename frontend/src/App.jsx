@@ -133,6 +133,7 @@ export default function App() {
   };
 
   const handleAddCustomRule = async (e) => {
+    // Injects new MeTTa rule dynamically into the live Atomspace
     e.preventDefault();
     if (!report || !customRuleText.trim()) return;
     setLoading(true);
