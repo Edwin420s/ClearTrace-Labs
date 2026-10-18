@@ -1,3 +1,4 @@
+# ClearTrace Labs Production Module
 """
 ClearTrace Labs — Dual-Runtime MeTTa Symbolic Reasoning Engine.
 Supports native SingularityNET Hyperon (if installed) alongside an embedded
