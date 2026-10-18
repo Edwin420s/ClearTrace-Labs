@@ -1,3 +1,4 @@
+<!-- ClearTrace Labs Documentation -->
 # ClearTrace Labs — REST API Reference & Data Contracts
 
 ## Base URL
