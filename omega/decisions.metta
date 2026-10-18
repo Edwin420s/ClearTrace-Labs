@@ -1,4 +1,3 @@
-;; Omega Cognitive Architecture Layer
 ;; ============================================================================
 ;; ClearTrace Labs — Omega Cognitive Architecture: decisions.metta
 ;; Deterministic Safety Policies & Actuation Lockout Gates
