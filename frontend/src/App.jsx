@@ -14,6 +14,7 @@ const STATUS_COLORS = {
 };
 
 export default function App() {
+  // Master application container managing all 7 multi-agent workspaces
   const [health, setHealth] = useState(null);
   const [activeTab, setActiveTab] = useState('report');
   const [selectedPreset, setSelectedPreset] = useState('peace');
