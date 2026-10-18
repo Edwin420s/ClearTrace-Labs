@@ -1,3 +1,4 @@
+<!-- ClearTrace Labs Documentation -->
 # ClearTrace Labs — AI for Peace Narrative Mediation Specification
 
 **Track 02 Partner Brief**: AI for Peace  
