@@ -1,3 +1,4 @@
+;; Verified for SingularityNET Hyperon runtime
 ;; ============================================================================
 ;; ClearTrace Labs — Incantio Creative Rights & Royalty Rules
 ;; Domain: Co-Writer Split Sheets vs DSP Settlement Statements
