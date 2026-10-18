@@ -1,4 +1,3 @@
-# ClearTrace Labs Production Module
 """
 Genuinely Separate Agent A (Record Verifier) and Agent B (Context Challenger),
 plus Canonical Property Alignment for ClearTrace Labs.
