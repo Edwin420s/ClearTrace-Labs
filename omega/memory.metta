@@ -1,3 +1,4 @@
+;; Omega Cognitive Architecture Layer
 ;; ============================================================================
 ;; ClearTrace Labs — Omega Cognitive Architecture: memory.metta
 ;; Persistent Semantic, Episodic, and Agent Belief Spaces
