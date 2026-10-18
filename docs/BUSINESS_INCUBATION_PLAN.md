@@ -1,3 +1,4 @@
+<!-- ClearTrace Labs Documentation -->
 # ClearTrace Labs — Commercial Incubation Plan & Roadmap
 
 **Hackathon Context**: BASIX State of the Art Hackathon 2026 (Track 02: Omega AI Agents)  
