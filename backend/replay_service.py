@@ -23,7 +23,9 @@ def compute_sha256(data: Any) -> str:
     return hashlib.sha256(str(data).encode("utf-8")).hexdigest()
 
 
-def compute_merkle_root(leaf_hashes: List[str]) -> str:
+def compute_merkle_root(
+    # Computes SHA-256 Merkle root from leaf hashes
+leaf_hashes: List[str]) -> str:
     """Computes Merkle root from an ordered list of leaf SHA-256 hashes."""
     if not leaf_hashes:
         return hashlib.sha256(b"EMPTY_MERKLE_TREE").hexdigest()
