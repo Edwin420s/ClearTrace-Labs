@@ -1,3 +1,4 @@
+# ClearTrace Labs Production Module
 """
 ClearTrace Labs — SQLite Persistence & SHA-256 Tamper-Evident Audit Chain.
 Implements complete case tracking, isolated agent runs, multi-round negotiation logs,
