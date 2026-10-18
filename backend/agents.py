@@ -70,6 +70,7 @@ def normalize_claim_value(val: Any) -> str:
 
 
 class RecordVerifierAgentA:
+    """Agent A: Focuses on strict documentary compliance and primary records."""
     """
     Agent A — Primary Record & Contractual Verifier.
     Operates strictly in isolation on Source A without access to Source B.
