@@ -14,7 +14,6 @@ const STATUS_COLORS = {
 };
 
 export default function App() {
-  // Master application container managing all 7 multi-agent workspaces
   const [health, setHealth] = useState(null);
   const [activeTab, setActiveTab] = useState('report');
   const [selectedPreset, setSelectedPreset] = useState('peace');
@@ -116,7 +115,6 @@ export default function App() {
   };
 
   const handleVerifyReplayProof = async () => {
-    // Submits verification request to backend to recompute Merkle root
     if (!caseDetails) return;
     setVerifyingProof(true);
     try {
@@ -133,7 +131,6 @@ export default function App() {
   };
 
   const handleAddCustomRule = async (e) => {
-    // Injects new MeTTa rule dynamically into the live Atomspace
     e.preventDefault();
     if (!report || !customRuleText.trim()) return;
     setLoading(true);
