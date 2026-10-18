@@ -40,5 +40,3 @@ stateDiagram-v2
 ### Stage 5: Resolution or Escalation
 * If the dispute cannot be settled with verifiable evidence, the engine halts negotiation, logs a `HALT_PRESERVE_DISPUTE` step, and transitions the case to `NEEDS_HUMAN_REVIEW`.
 * Zero ungrounded or synthetic compromise is permitted.
-
-<!-- Protocol enforces 5 distinct negotiation states without loop deadlocks. -->
