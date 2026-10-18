@@ -1,0 +1,99 @@
+{
+  "preset_id": "rights",
+  "domain": "rights",
+  "badge": "Partner Brief \u2014 Incantio Music Split & Royalty Audit",
+  "title": "[SYNTHETIC DEMO] Incantio Co-Write Split Sheet vs. DSP Royalty Statement",
+  "description": "Compares a signed studio session split sheet (50% co-writer share) against a quarterly distributor royalty statement (35% allocated share) on $12,000 eligible distributable revenue.",
+  "sources": [
+    {
+      "label": "Incantio Signed Studio Split Sheet (Synthetic Agreement v1)",
+      "source_role": "source_a",
+      "raw_text": "[SYNTHETIC SPLIT SHEET] Work ID: TRK-PEACE-ANTHEM-01 | ISRC: US-INC-26-00412. Co-Writer A (Nairobi Producer) agreed share: 50.0% of net distributable revenue. Territory: Worldwide. Sync licensing: Pre-cleared via Incantio. Eligible distributable revenue reported for Q3 2026: $12,000.00.",
+      "structured_claims": [
+        {
+          "entity": "TRK-PEACE-ANTHEM-01",
+          "property_name": "work_id",
+          "value": "TRK-PEACE-ANTHEM-01",
+          "evidence_ref": "Split Sheet Clause 1.1",
+          "original_text": "Work ID: TRK-PEACE-ANTHEM-01"
+        },
+        {
+          "entity": "TRK-PEACE-ANTHEM-01",
+          "property_name": "isrc_code",
+          "value": "US-INC-26-00412",
+          "evidence_ref": "Split Sheet Clause 1.2",
+          "original_text": "ISRC: US-INC-26-00412"
+        },
+        {
+          "entity": "TRK-PEACE-ANTHEM-01",
+          "property_name": "split_percentage",
+          "value": 50.0,
+          "evidence_ref": "Split Sheet Clause 2.1 (Signed in Session)",
+          "original_text": "Co-Writer A agreed share: 50.0% of net distributable revenue."
+        },
+        {
+          "entity": "TRK-PEACE-ANTHEM-01",
+          "property_name": "territory",
+          "value": "Worldwide",
+          "evidence_ref": "Split Sheet Clause 3.1",
+          "original_text": "Territory: Worldwide."
+        },
+        {
+          "entity": "TRK-PEACE-ANTHEM-01",
+          "property_name": "eligible_revenue_usd",
+          "value": 12000.0,
+          "evidence_ref": "Split Sheet Schedule A (Q3 2026)",
+          "original_text": "Eligible distributable revenue reported for Q3 2026: $12,000.00."
+        }
+      ],
+      "metadata": {
+        "synthetic_demo": true
+      }
+    },
+    {
+      "label": "DSP Settlement Statement Q3 2026 (Synthetic Statement B)",
+      "source_role": "source_b",
+      "raw_text": "[SYNTHETIC DSP STATEMENT] Work ID: TRK-PEACE-ANTHEM-01 | ISRC: US-INC-26-00412. Eligible distributable revenue for Q3 2026: $12,000.00. Co-Writer A allocated royalty share: 35.0% ($4,200.00 paid). Territory applied: North America Only.",
+      "structured_claims": [
+        {
+          "entity": "TRK-PEACE-ANTHEM-01",
+          "property_name": "work_id",
+          "value": "TRK-PEACE-ANTHEM-01",
+          "evidence_ref": "Statement Line 10",
+          "original_text": "Work ID: TRK-PEACE-ANTHEM-01"
+        },
+        {
+          "entity": "TRK-PEACE-ANTHEM-01",
+          "property_name": "isrc_code",
+          "value": "US-INC-26-00412",
+          "evidence_ref": "Statement Line 11",
+          "original_text": "ISRC: US-INC-26-00412"
+        },
+        {
+          "entity": "TRK-PEACE-ANTHEM-01",
+          "property_name": "split_percentage",
+          "value": 35.0,
+          "evidence_ref": "Statement Line 14 (Royalty Allocation)",
+          "original_text": "Co-Writer A allocated royalty share: 35.0% ($4,200.00 paid)."
+        },
+        {
+          "entity": "TRK-PEACE-ANTHEM-01",
+          "property_name": "territory",
+          "value": "North America Only",
+          "evidence_ref": "Statement Line 18 (Territory Filter)",
+          "original_text": "Territory applied: North America Only."
+        },
+        {
+          "entity": "TRK-PEACE-ANTHEM-01",
+          "property_name": "eligible_revenue_usd",
+          "value": 12000.0,
+          "evidence_ref": "Statement Line 12",
+          "original_text": "Eligible distributable revenue for Q3 2026: $12,000.00."
+        }
+      ],
+      "metadata": {
+        "synthetic_demo": true
+      }
+    }
+  ]
+}
