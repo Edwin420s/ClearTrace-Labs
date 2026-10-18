@@ -84,5 +84,3 @@ Default local development port: `http://localhost:8000`
   }
   ```
 * **`GET /api/rules/custom`**: Lists all active custom rules.
-
-<!-- Endpoints adhere to REST standards with OpenAPI 3.1 documentation. -->
