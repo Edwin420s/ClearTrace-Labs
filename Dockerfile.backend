@@ -1,0 +1,40 @@
+# ==============================================================================
+# ClearTrace Labs — Production Backend Dockerfile
+# SingularityNET Hyperon / MeTTa + FastAPI Runtime
+# ==============================================================================
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies (build-essential, git, curl)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy codebase
+COPY backend/ ./backend/
+COPY engine/ ./engine/
+COPY metta/ ./metta/
+COPY omega/ ./omega/
+COPY scripts/ ./scripts/
+COPY tests/ ./tests/
+COPY pytest.ini .
+COPY cleartrace.db* ./
+
+# Set environment
+ENV PYTHONPATH=/app
+ENV PORT=8000
+
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8000/health || exit 1
+
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
