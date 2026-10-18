@@ -1,4 +1,3 @@
-# ClearTrace Labs
 services:
   - type: web
     name: cleartrace-backend
