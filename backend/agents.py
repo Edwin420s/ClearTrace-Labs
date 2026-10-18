@@ -70,7 +70,6 @@ def normalize_claim_value(val: Any) -> str:
 
 
 class RecordVerifierAgentA:
-    """Agent A: Focuses on strict documentary compliance and primary records."""
     """
     Agent A — Primary Record & Contractual Verifier.
     Operates strictly in isolation on Source A without access to Source B.
@@ -121,7 +120,6 @@ class RecordVerifierAgentA:
 
 
 class ContextChallengerAgentB:
-    """Agent B: Focuses on context verification, addenda, and counterparty claims."""
     """
     Agent B — Independent Counter-Analyst & Context Challenger.
     Operates strictly in isolation on Source B during Phase 1 extraction,
