@@ -39,5 +39,3 @@ Judges and external auditors can verify any certificate offline in 1 line:
 ```bash
 python3 scripts/verify_replay_cert.py [path_to_bundle.json]
 ```
-
-<!-- SHA-256 hash chaining formula: curr_hash = SHA256(prev_hash + index + payload) -->
