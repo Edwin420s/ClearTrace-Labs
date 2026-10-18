@@ -90,7 +90,8 @@ def list_presets() -> Dict[str, Any]:
     return {"presets": list(PRESETS.values())}
 
 
-@app.get("/api/cases")
+@app.get("/api/cases", tags=["Cases"])
+# Cases listing endpoint
 def list_cases() -> Dict[str, Any]:
     init_db()
     conn = get_connection()
