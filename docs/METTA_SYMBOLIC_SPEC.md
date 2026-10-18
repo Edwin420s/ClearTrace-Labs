@@ -1,3 +1,4 @@
+<!-- ClearTrace Labs Documentation -->
 # ClearTrace Labs — MeTTa Symbolic Formal Specification
 
 ## Abstract
