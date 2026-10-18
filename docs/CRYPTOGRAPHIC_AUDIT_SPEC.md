@@ -1,4 +1,3 @@
-<!-- ClearTrace Labs Documentation -->
 # ClearTrace Labs — Cryptographic Audit & Replay Specification
 
 ## Abstract
