@@ -70,7 +70,9 @@ class Expression(Atom):
         return isinstance(other, Expression) and self.children == other.children
 
 
-def tokenize(text: str) -> List[str]:
+def tokenize(
+    # Tokenizes MeTTa S-expression string into lexical tokens
+text: str) -> List[str]:
     cleaned_lines = []
     for line in text.splitlines():
         line = re.sub(r";.*$", "", line)
