@@ -1,3 +1,4 @@
+# ClearTrace Labs
 # ==============================================================================
 # ClearTrace Labs — Production Frontend Dockerfile
 # Multi-stage: Node.js 20 build -> Nginx Alpine runtime
