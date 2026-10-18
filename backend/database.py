@@ -119,6 +119,8 @@ def init_db(db_path: Optional[Path] = None) -> None:
 
 
 def append_audit_event(
+    # Appends tamper-evident SHA-256 event to ledger
+
     case_id: str,
     event_type: str,
     actor: str,
