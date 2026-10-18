@@ -65,5 +65,3 @@ flowchart LR
 ## 5. Team & Governance
 - **Edwin Mwiti**: System Architecture, MeTTa Symbolic Logic, Full-Stack Engineering.
 - **Ecosystem Collaborators**: SingularityNET Mentors, XR Agency, BGI Comms, Incantio.com.
-
-<!-- Targets commercial deployment on BASIX.MARKET incubator rails. -->
