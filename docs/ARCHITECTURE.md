@@ -1,4 +1,3 @@
-<!-- ClearTrace Labs Documentation -->
 # ClearTrace Labs — Production Architecture & Cognitive Blueprint
 
 ## Executive Abstract
