@@ -91,6 +91,3 @@ $$\text{Shortfall} = \text{EligibleGross} \times \frac{\Delta_{pct}}{100}$$
            (EVIDENCE_SUPPORTED authorized_quantity $invQty "Approved_Amendment_Verified")
            (CONTRADICTION authorized_quantity $poQty $invQty))))
 ```
-
-<!-- Note: S-expression rewrite engine adheres to SingularityNET Hyperon semantics. -->
-<!-- Dynamic rules compile directly into the shared space. -->
