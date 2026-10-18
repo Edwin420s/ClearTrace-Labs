@@ -1,3 +1,4 @@
+<!-- ClearTrace Labs Documentation -->
 # ClearTrace Labs — Hackathon Compliance & Rubric Audit
 
 **Project**: ClearTrace Labs  
