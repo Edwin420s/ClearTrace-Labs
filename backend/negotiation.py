@@ -1,4 +1,3 @@
-# ClearTrace Labs Production Module
 """
 5-Stage Multi-Round Negotiation Protocol & Deterministic Domain Verifier.
 Implements:
