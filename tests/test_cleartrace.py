@@ -41,6 +41,7 @@ def test_01_health_endpoint():
 
 
 def test_02_peace_narrative_preserves_contradiction_and_exclusives():
+    """Test 02: Verify AI for Peace preserves contradiction and unilateral claims."""
     create_res = client.post("/api/cases/from-preset/peace")
     assert create_res.status_code == 200
     case_id = create_res.json()["case"]["case_id"]
