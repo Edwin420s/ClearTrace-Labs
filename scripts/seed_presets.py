@@ -44,3 +44,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Seeds synthetic demonstration cases for peace, rights, and invoice domains.
