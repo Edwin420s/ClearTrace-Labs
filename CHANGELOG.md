@@ -1,3 +1,4 @@
+# ClearTrace Labs
 # Changelog
 
 All notable changes to the **ClearTrace Labs** project will be documented in this file.
