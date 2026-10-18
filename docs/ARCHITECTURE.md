@@ -69,3 +69,4 @@ The backend integrates SingularityNET Hyperon via `backend/metta_runner.py`:
 
 <!-- Note: Component boundaries enforce air-gapped Phase 1 execution. -->
 <!-- Protocol ensures deterministic state transitions. -->
+<!-- Merkle tree roots provide tamper-evident cryptographic proofs. -->
