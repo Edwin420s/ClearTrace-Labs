@@ -1,3 +1,4 @@
+# ClearTrace Labs
 # AI Use Disclosure — ClearTrace Labs
 
 > **Mandatory Hackathon Rule 03 Compliance**  
