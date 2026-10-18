@@ -72,3 +72,5 @@ if __name__ == "__main__":
 
     success = verify_certificate(cert_obj)
     sys.exit(0 if success else 1)
+
+# Independent offline verifier validates SHA-256 Merkle root.
