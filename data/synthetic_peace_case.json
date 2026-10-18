@@ -1,0 +1,132 @@
+{
+  "preset_id": "peace",
+  "domain": "peace",
+  "badge": "Primary Brief \u2014 AI for Peace (Harlem \u2194 Nairobi)",
+  "title": "[SYNTHETIC DEMO] 1969 Harlem\u2013Nairobi Cultural Peace Exchange",
+  "description": "Two community archives describe the same cross-cultural peace gathering. They agree on the event title, venue, and keynote speaker, but disagree on the start date and attendee numbers, while each records a unique source-exclusive detail.",
+  "sources": [
+    {
+      "label": "Harlem Living Archive (Synthetic Record A)",
+      "source_role": "source_a",
+      "raw_text": "[SYNTHETIC ARCHIVE A] The Transatlantic Cultural Peace Exchange convened at the Harlem Community Arts Hall on 1969-08-12. Keynote speaker Dr. Marcus Kwame addressed 450 registered delegates. The delegates signed the Harlem-Nairobi Cultural Solidarity Accord.",
+      "structured_claims": [
+        {
+          "entity": "exchange_1969",
+          "property_name": "event_title",
+          "value": "Transatlantic Cultural Peace Exchange",
+          "evidence_ref": "Harlem Box 4, Fol. 2, Para 1",
+          "original_text": "The Transatlantic Cultural Peace Exchange convened..."
+        },
+        {
+          "entity": "exchange_1969",
+          "property_name": "venue",
+          "value": "Harlem Community Arts Hall",
+          "evidence_ref": "Harlem Box 4, Fol. 2, Para 1",
+          "original_text": "...at the Harlem Community Arts Hall..."
+        },
+        {
+          "entity": "exchange_1969",
+          "property_name": "start_date",
+          "value": "1969-08-12",
+          "evidence_ref": "Harlem Box 4, Fol. 2, Para 1",
+          "original_text": "...convened on 1969-08-12."
+        },
+        {
+          "entity": "exchange_1969",
+          "property_name": "keynote_speaker",
+          "value": "Dr. Marcus Kwame",
+          "evidence_ref": "Harlem Box 4, Fol. 2, Para 2",
+          "original_text": "Keynote speaker Dr. Marcus Kwame addressed..."
+        },
+        {
+          "entity": "exchange_1969",
+          "property_name": "attendee_estimate",
+          "value": "450 registered delegates",
+          "evidence_ref": "Harlem Box 4, Fol. 2, Para 2",
+          "original_text": "...addressed 450 registered delegates."
+        },
+        {
+          "entity": "exchange_1969",
+          "property_name": "accord_signed",
+          "value": "Harlem-Nairobi Cultural Solidarity Accord",
+          "evidence_ref": "Harlem Box 4, Fol. 2, Para 3",
+          "original_text": "The delegates signed the Harlem-Nairobi Cultural Solidarity Accord."
+        }
+      ],
+      "metadata": {
+        "synthetic_demo": true,
+        "origin_city": "New York"
+      }
+    },
+    {
+      "label": "Nairobi Oral History Chronicle (Synthetic Record B)",
+      "source_role": "source_b",
+      "raw_text": "[SYNTHETIC ARCHIVE B] Oral history tape #14 recalls the Transatlantic Cultural Peace Exchange at the Harlem Community Arts Hall beginning on 1969-08-19. Dr. Marcus Kwame delivered the keynote speech before an estimated crowd of 600 attendees. The session was preserved on East African Magnetic Reel #14.",
+      "structured_claims": [
+        {
+          "entity": "exchange_1969",
+          "property_name": "event_title",
+          "value": "Transatlantic Cultural Peace Exchange",
+          "evidence_ref": "Nairobi Tape #14, 02:15",
+          "original_text": "...recalls the Transatlantic Cultural Peace Exchange..."
+        },
+        {
+          "entity": "exchange_1969",
+          "property_name": "venue",
+          "value": "Harlem Community Arts Hall",
+          "evidence_ref": "Nairobi Tape #14, 02:40",
+          "original_text": "...at the Harlem Community Arts Hall..."
+        },
+        {
+          "entity": "exchange_1969",
+          "property_name": "start_date",
+          "value": "1969-08-19",
+          "evidence_ref": "Nairobi Tape #14, 03:10",
+          "original_text": "...beginning on 1969-08-19."
+        },
+        {
+          "entity": "exchange_1969",
+          "property_name": "keynote_speaker",
+          "value": "Dr. Marcus Kwame",
+          "evidence_ref": "Nairobi Tape #14, 04:05",
+          "original_text": "Dr. Marcus Kwame delivered the keynote speech..."
+        },
+        {
+          "entity": "exchange_1969",
+          "property_name": "attendee_estimate",
+          "value": "600 attendees (estimate)",
+          "evidence_ref": "Nairobi Tape #14, 05:12",
+          "original_text": "...before an estimated crowd of 600 attendees."
+        },
+        {
+          "entity": "exchange_1969",
+          "property_name": "recording_medium",
+          "value": "East African Magnetic Reel #14",
+          "evidence_ref": "Nairobi Tape #14, 06:00",
+          "original_text": "The session was preserved on East African Magnetic Reel #14."
+        }
+      ],
+      "metadata": {
+        "synthetic_demo": true,
+        "origin_city": "Nairobi"
+      }
+    },
+    {
+      "label": "Contemporaneous Printed Event Programme (Optional 3rd Evidence)",
+      "source_role": "corroboration",
+      "raw_text": "[SYNTHETIC ARCHIVE C] Official Printed Programme: Transatlantic Cultural Peace Exchange, Opening Ceremony dated 1969-08-12 at Harlem Community Arts Hall.",
+      "structured_claims": [
+        {
+          "entity": "exchange_1969",
+          "property_name": "start_date",
+          "value": "1969-08-12",
+          "evidence_ref": "Printed Programme Cover, Line 3",
+          "original_text": "Opening Ceremony dated 1969-08-12"
+        }
+      ],
+      "metadata": {
+        "synthetic_demo": true
+      }
+    }
+  ]
+}
