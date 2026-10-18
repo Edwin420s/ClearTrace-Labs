@@ -331,6 +331,7 @@ class MettaInterpreter:
 # ==============================================================================
 
 class SymbolicReasoner:
+    """Dual-runtime MeTTa engine supporting Hyperon and pure symbolic S-expressions."""
     """Executes symbolic truth classification with MeTTa rules and trace generation."""
 
     def __init__(self) -> None:
