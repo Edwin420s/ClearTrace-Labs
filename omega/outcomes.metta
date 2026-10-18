@@ -1,3 +1,4 @@
+;; Omega Cognitive Architecture Layer
 ;; ============================================================================
 ;; ClearTrace Labs — Omega Cognitive Architecture: outcomes.metta
 ;; Closed-Loop Learning & Human Adjudication Feedback
