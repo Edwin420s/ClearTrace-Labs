@@ -1,3 +1,4 @@
+;; Verified for SingularityNET Hyperon runtime
 ;; ============================================================================
 ;; ClearTrace Labs — AI for Peace Narrative Mediation Rules
 ;; Domain: Harlem & Nairobi Cross-Cultural Oral History Reconciliation
