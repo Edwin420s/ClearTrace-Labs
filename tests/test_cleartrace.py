@@ -62,6 +62,7 @@ def test_02_peace_narrative_preserves_contradiction_and_exclusives():
 
 
 def test_03_peace_narrative_third_source_corroboration_resolves_date():
+    """Test 03: Verify third-party corroboration resolves date conflict in Round 3."""
     create_res = client.post("/api/cases/from-preset/peace")
     case_id = create_res.json()["case"]["case_id"]
 
