@@ -1,4 +1,3 @@
-# ClearTrace Labs Production Module
 """
 ClearTrace Labs — Cryptographic SHA-256 Decision Replay & Audit Service.
 Generates deterministic Merkle roots and tamper-evident replay certificates for every
