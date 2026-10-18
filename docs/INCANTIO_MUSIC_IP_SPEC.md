@@ -1,3 +1,4 @@
+<!-- ClearTrace Labs Documentation -->
 # ClearTrace Labs — Incantio Creative Rights & Royalty Reconciliation Specification
 
 **Track 02 Partner Brief**: Incantio.com Music Business & Rights as Rules  
