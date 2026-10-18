@@ -32,7 +32,6 @@ def clean_test_db():
 
 
 def test_01_health_endpoint():
-    """Test 01: Verify health endpoint and rule loading."""
     res = client.get("/health")
     assert res.status_code == 200
     data = res.json()
@@ -41,7 +40,6 @@ def test_01_health_endpoint():
 
 
 def test_02_peace_narrative_preserves_contradiction_and_exclusives():
-    """Test 02: Verify AI for Peace preserves contradiction and unilateral claims."""
     create_res = client.post("/api/cases/from-preset/peace")
     assert create_res.status_code == 200
     case_id = create_res.json()["case"]["case_id"]
@@ -62,7 +60,6 @@ def test_02_peace_narrative_preserves_contradiction_and_exclusives():
 
 
 def test_03_peace_narrative_third_source_corroboration_resolves_date():
-    """Test 03: Verify third-party corroboration resolves date conflict in Round 3."""
     create_res = client.post("/api/cases/from-preset/peace")
     case_id = create_res.json()["case"]["case_id"]
 
@@ -79,7 +76,6 @@ def test_03_peace_narrative_third_source_corroboration_resolves_date():
 
 
 def test_04_incantio_rights_royalty_discrepancy_and_math():
-    """Test 04: Verify Incantio 50% vs 35% discrepancy and exact $1,800 underpayment math."""
     create_res = client.post("/api/cases/from-preset/rights")
     case_id = create_res.json()["case"]["case_id"]
 
@@ -101,7 +97,6 @@ def test_04_incantio_rights_royalty_discrepancy_and_math():
 
 
 def test_05_invoice_po_quantity_dispute_and_amendment():
-    """Test 05: Verify PO 90 vs Invoice 100 variance and signed amendment resolution."""
     create_res = client.post("/api/cases/from-preset/invoice")
     case_id = create_res.json()["case"]["case_id"]
 
