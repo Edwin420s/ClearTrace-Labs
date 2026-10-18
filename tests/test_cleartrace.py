@@ -101,6 +101,7 @@ def test_04_incantio_rights_royalty_discrepancy_and_math():
 
 
 def test_05_invoice_po_quantity_dispute_and_amendment():
+    """Test 05: Verify PO 90 vs Invoice 100 variance and signed amendment resolution."""
     create_res = client.post("/api/cases/from-preset/invoice")
     case_id = create_res.json()["case"]["case_id"]
 
