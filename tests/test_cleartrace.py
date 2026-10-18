@@ -32,6 +32,7 @@ def clean_test_db():
 
 
 def test_01_health_endpoint():
+    """Test 01: Verify health endpoint and rule loading."""
     res = client.get("/health")
     assert res.status_code == 200
     data = res.json()
