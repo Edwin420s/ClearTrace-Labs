@@ -1,4 +1,3 @@
-<!-- ClearTrace Labs Documentation -->
 # ClearTrace Labs — Hackathon Submission Packet
 
 ## 1. Team & Submission Identity
