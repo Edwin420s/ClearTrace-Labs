@@ -1,4 +1,3 @@
-# ClearTrace Labs
 .PHONY: test seed verify benchmark backend frontend build docker-build docker-up docker-down clean help
 
 help:
