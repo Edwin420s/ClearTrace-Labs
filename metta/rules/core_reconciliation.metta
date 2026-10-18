@@ -1,3 +1,4 @@
+;; Verified for SingularityNET Hyperon runtime
 ;; ============================================================================
 ;; ClearTrace Labs — Core Symbolic Reconciliation Rules
 ;; Substrate: SingularityNET Hyperon / MeTTa
