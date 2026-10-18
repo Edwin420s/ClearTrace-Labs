@@ -63,5 +63,3 @@ $$\text{Disputed Amount (USD)} = \text{Expected Payout} - \text{Reported Payout}
 1. **Pre-Listing Verification**: Before a track is listed on [Incantio.com](https://incantio.com) for sync licensing, ClearTrace Labs audits the split sheet against the registration metadata.
 2. **Deterministic Settlement Lockout**: If an unresolved `CONTRADICTION` is flagged on `split_percentage`, the system locks automated payout disbursement until an authorized reviewer adjudicates the case.
 3. **Audit Trail**: Every DSP discrepancy flag produces a tamper-evident SHA-256 event, providing proof for legal publisher claims.
-
-<!-- Clarifies mathematical distinction between percentage points and calculated USD. -->
