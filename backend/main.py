@@ -69,8 +69,7 @@ agent_a = RecordVerifierAgentA()
 agent_b = ContextChallengerAgentB()
 
 
-@app.get("/health", tags=["System"])
-# Health check endpoint
+@app.get("/health")
 def health_check() -> Dict[str, Any]:
     init_db()
     return {
@@ -84,14 +83,12 @@ def health_check() -> Dict[str, Any]:
     }
 
 
-@app.get("/api/presets", tags=["Presets"])
-# Presets listing endpoint
+@app.get("/api/presets")
 def list_presets() -> Dict[str, Any]:
     return {"presets": list(PRESETS.values())}
 
 
-@app.get("/api/cases", tags=["Cases"])
-# Cases listing endpoint
+@app.get("/api/cases")
 def list_cases() -> Dict[str, Any]:
     init_db()
     conn = get_connection()
