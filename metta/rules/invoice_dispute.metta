@@ -1,3 +1,4 @@
+;; Verified for SingularityNET Hyperon runtime
 ;; ============================================================================
 ;; ClearTrace Labs — Operational Record Dispute Rules
 ;; Domain: Purchase Order vs Supplier Invoice Reconciliation
