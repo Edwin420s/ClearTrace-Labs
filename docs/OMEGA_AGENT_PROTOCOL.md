@@ -1,4 +1,3 @@
-<!-- ClearTrace Labs Documentation -->
 # ClearTrace Labs — Omega 5-Stage Multi-Round Negotiation Protocol
 
 ## Overview
