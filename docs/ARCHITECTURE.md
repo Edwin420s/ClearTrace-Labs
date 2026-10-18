@@ -66,7 +66,3 @@ The backend integrates SingularityNET Hyperon via `backend/metta_runner.py`:
 1. **SHA-256 Replay Certificates**: Computes an ordered Merkle root across all sources, negotiation steps, and rule findings, generating an unalterable proof string.
 2. **Blockchain-Style Audit Chain**: Every case creation, extraction, rule reduction, and reviewer decision is linked via `curr_hash = SHA256(prev_hash + index + event_type + actor + details)`. Any database alteration is instantly detected.
 3. **The Agent That Grows Up**: Auditors can register custom MeTTa rewrite rules dynamically (`POST /api/rules/custom`), which compile directly into the active Atomspace to govern future disputes.
-
-<!-- Note: Component boundaries enforce air-gapped Phase 1 execution. -->
-<!-- Protocol ensures deterministic state transitions. -->
-<!-- Merkle tree roots provide tamper-evident cryptographic proofs. -->
