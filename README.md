@@ -210,5 +210,3 @@ In accordance with Hackathon Rule 03:
 
 ## 8. License & IP Rights
 Licensed under the [Apache 2.0 License](LICENSE). Developed by Edwin Mwiti for the BASIX State of the Art Hackathon 2026.
-
-<!-- Built for BASIX State of the Art Hackathon 2026 by Edwin Mwiti -->
