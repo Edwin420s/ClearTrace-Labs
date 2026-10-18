@@ -27,7 +27,6 @@ class CreateCaseRequest(BaseModel):
 
 
 class ExtractedClaimRecord(BaseModel):
-    """Represents a factual claim extracted independently from a single source."""
     claim_id: str
     case_id: Optional[str] = None
     source_id: str
@@ -76,7 +75,6 @@ class FinancialImpactRecord(BaseModel):
 
 
 class ReconciledFindingRecord(BaseModel):
-    """Represents a reconciled finding derived via MeTTa symbolic deduction."""
     property_name: str
     entity: str
     status: str
