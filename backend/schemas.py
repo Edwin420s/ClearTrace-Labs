@@ -1,3 +1,4 @@
+# ClearTrace Labs Production Module
 """
 ClearTrace Labs — Pydantic Data Contracts & Schemas (Pydantic v2).
 Defines typed models for cases, sources, extracted claims, negotiation rounds,
