@@ -1,42 +1,10 @@
-"""
-Automated Acceptance Test Suite for ClearTrace Labs.
-Verifies all requirements from the specification:
-  1. Health & MeTTa rule loading
-  2. AI for Peace: Corroborated agreements, preserved date contradictions, and source-exclusive claims
-  3. AI for Peace: 3rd-party corroboration resolving a date conflict in Round 3
-  4. Incantio Rights: 50% vs 35% split percentage-point discrepancy & $1,800 disputed payout math
-  5. Registered Invoice/PO Case: 90 units vs 100 units (KSh 5,000 variance) & PO amendment resolution
-  6. Both-agents-wrong edge case: Deterministic source verification rejecting false agent consensus
-  7. Human review decisions & status transitions
-  8. Tamper-evident SHA-256 hash-chain verification
-  9. Export bundle integrity
-"""
-
-import os
-from pathlib import Path
-import pytest
-from fastapi.testclient import TestClient
-
-from backend.database import DB_PATH, init_db
-from backend.main import app
-
-client = TestClient(app)
-
-
-@pytest.fixture(autouse=True)
-def clean_test_db():
-    if DB_PATH.exists():
-        os.remove(DB_PATH)
-    init_db()
-    yield
-
-
 def test_01_health_endpoint():
     res = client.get("/health")
     assert res.status_code == 200
     data = res.json()
     assert data["status"] == "online"
     assert data["rules_file_loaded"] is True
+
 
 
 def test_02_peace_narrative_preserves_contradiction_and_exclusives():
@@ -59,6 +27,7 @@ def test_02_peace_narrative_preserves_contradiction_and_exclusives():
     assert findings["archival_medium"]["status"] == "SOURCE_EXCLUSIVE"
 
 
+
 def test_03_peace_narrative_third_source_corroboration_resolves_date():
     create_res = client.post("/api/cases/from-preset/peace")
     case_id = create_res.json()["case"]["case_id"]
@@ -73,6 +42,7 @@ def test_03_peace_narrative_third_source_corroboration_resolves_date():
 
     assert findings["event_date"]["status"] == "EVIDENCE_SUPPORTED"
     assert findings["event_date"]["resolved_value"] == "1969-08-12"
+
 
 
 def test_04_incantio_rights_royalty_discrepancy_and_math():
@@ -94,6 +64,7 @@ def test_04_incantio_rights_royalty_discrepancy_and_math():
     assert impact["expected_payout_usd"] == 6000.0
     assert impact["reported_payout_usd"] == 4200.0
     assert impact["disputed_amount_usd"] == 1800.0
+
 
 
 def test_05_invoice_po_quantity_dispute_and_amendment():
@@ -120,6 +91,7 @@ def test_05_invoice_po_quantity_dispute_and_amendment():
     findings_amd = {f["property_name"]: f for f in rep_amd["findings"]}
     assert findings_amd["authorized_quantity"]["status"] == "EVIDENCE_SUPPORTED"
     assert findings_amd["authorized_quantity"]["resolved_value"] == 100
+
 
 
 def test_06_both_agents_wrong_caught_by_source_verification():
@@ -168,6 +140,7 @@ def test_06_both_agents_wrong_caught_by_source_verification():
     assert finding["status"] == "CONTRADICTION"
 
 
+
 def test_07_human_review_and_sha256_audit_chain():
     case_id = client.post("/api/cases/from-preset/peace").json()["case"]["case_id"]
     client.post(f"/api/cases/{case_id}/reconcile")
@@ -190,6 +163,7 @@ def test_07_human_review_and_sha256_audit_chain():
     assert exp_res.json()["case"]["case_id"] == case_id
 
 
+
 def test_08_decision_replay_certificate_verification():
     case_id = client.post("/api/cases/from-preset/rights").json()["case"]["case_id"]
     client.post(f"/api/cases/{case_id}/reconcile")
@@ -207,6 +181,7 @@ def test_08_decision_replay_certificate_verification():
     assert verify_data["message"] == "Certificate verified successfully."
 
 
+
 def test_09_dynamic_metta_rule_learning_agent_that_grows_up():
     rule_payload = {
         "rule_name": "lenient_attendee_margin",
@@ -221,6 +196,7 @@ def test_09_dynamic_metta_rule_learning_agent_that_grows_up():
     list_res = client.get("/api/rules/custom?domain=peace")
     assert list_res.status_code == 200
     assert len(list_res.json()["custom_rules"]) >= 1
+
 
 
 def test_10_audit_chain_tamper_detection():
@@ -240,3 +216,15 @@ def test_10_audit_chain_tamper_detection():
     data = audit_res.json()
     assert data["chain_integrity_verified"] is False
     assert len(data["chain_errors"]) > 0
+
+
+
+def test_11_metta_atomspace_inspection():
+    res = client.get("/api/metta/space")
+    assert res.status_code == 200
+    data = res.json()
+    assert data["total_rules"] >= 10
+    assert "Entity" in data["known_types"]
+    assert "AGREEMENT" in data["status_symbols"]
+
+
