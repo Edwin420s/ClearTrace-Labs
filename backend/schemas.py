@@ -171,3 +171,12 @@ class CaseExportBundle(BaseModel):
     audit_chain: List[Dict[str, Any]]
     replay_certificate: Optional[Dict[str, Any]]
     custom_rules: List[Dict[str, Any]]
+
+
+class QuickReconcileRequest(BaseModel):
+    title: str = Field(default="Quick Case Reconciliation", description="Title of the dispute case")
+    domain: str = Field(default="peace", description="'peace', 'rights', or 'invoice'")
+    source_a_label: str = Field(default="Primary Source A")
+    source_a_text: str = Field(..., description="Raw text of Document A")
+    source_b_label: str = Field(default="Primary Source B")
+    source_b_text: str = Field(..., description="Raw text of Document B")
