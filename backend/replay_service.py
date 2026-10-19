@@ -23,11 +23,13 @@ def compute_sha256(data: Any) -> str:
     return hashlib.sha256(str(data).encode("utf-8")).hexdigest()
 
 
-def compute_merkle_root(leaf_hashes: List[str]) -> str:
-    """Computes Merkle root from an ordered list of leaf SHA-256 hashes."""
+def compute_merkle_tree_layers(leaf_hashes: List[str]) -> List[List[str]]:
+    """Computes all levels of the Merkle tree from leaves up to the root."""
     if not leaf_hashes:
-        return hashlib.sha256(b"EMPTY_MERKLE_TREE").hexdigest()
+        empty = hashlib.sha256(b"EMPTY_MERKLE_TREE").hexdigest()
+        return [[empty]]
 
+    layers: List[List[str]] = [list(leaf_hashes)]
     current_level = list(leaf_hashes)
     while len(current_level) > 1:
         next_level: List[str] = []
@@ -36,9 +38,16 @@ def compute_merkle_root(leaf_hashes: List[str]) -> str:
             right = current_level[i + 1] if i + 1 < len(current_level) else left
             combined = hashlib.sha256(f"{left}:{right}".encode("utf-8")).hexdigest()
             next_level.append(combined)
+        layers.append(next_level)
         current_level = next_level
 
-    return current_level[0]
+    return layers
+
+
+def compute_merkle_root(leaf_hashes: List[str]) -> str:
+    """Computes Merkle root from an ordered list of leaf SHA-256 hashes."""
+    layers = compute_merkle_tree_layers(leaf_hashes)
+    return layers[-1][0] if layers and layers[-1] else hashlib.sha256(b"EMPTY_MERKLE_TREE").hexdigest()
 
 
 class DecisionReplayService:
