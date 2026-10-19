@@ -344,3 +344,14 @@ def test_16_false_consensus_guard_verification():
     assert rep["case"]["case_id"] == case_id
 
 
+
+def test_17_merkle_root_determinism_and_idempotency():
+    case_res = client.post("/api/cases/from-preset/peace")
+    case_id = case_res.json()["case"]["case_id"]
+    client.post(f"/api/cases/{case_id}/reconcile")
+    tree1 = client.get(f"/api/cases/{case_id}/merkle-tree").json()
+    tree2 = client.get(f"/api/cases/{case_id}/merkle-tree").json()
+    assert tree1["merkle_root"] == tree2["merkle_root"]
+    assert tree1["layers"] == tree2["layers"]
+
+
