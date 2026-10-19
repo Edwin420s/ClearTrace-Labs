@@ -21,7 +21,7 @@ class SourceDocumentInput(BaseModel):
 
 class CreateCaseRequest(BaseModel):
     title: str
-    domain: str = Field(..., description="'peace', 'rights', or 'invoice'")
+    domain: str = Field(default="peace", description="Domain e.g. 'peace', 'rights', 'invoice', or custom domain")
     description: Optional[str] = None
     sources: List[SourceDocumentInput]
 
