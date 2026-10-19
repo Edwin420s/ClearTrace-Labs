@@ -435,6 +435,12 @@ class SymbolicReasoner:
     def get_atomspace_inspection(self) -> Dict[str, Any]:
         """Returns detailed inspection of currently loaded MeTTa rules and Atomspace types."""
         rules_summary = []
+        for r in self.space.rules:
+            head, body = r
+            rules_summary.append({
+                "pattern": repr(head),
+                "reduction": repr(body),
+            })
         return {
             "hyperon_active": self.hyperon_active,
             "total_rules": len(self.space.rules),
