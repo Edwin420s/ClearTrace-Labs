@@ -618,6 +618,12 @@ def _ensure_case_exists(case_id: str) -> Dict[str, Any]:
     return dict(row)
 
 
+@app.get("/api/metta/space", tags=["Symbolic Engine"])
+def get_metta_atomspace() -> Dict[str, Any]:
+    """Returns inspection of active MeTTa rules and Atomspace types."""
+    return reasoner.get_atomspace_inspection()
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
