@@ -374,3 +374,17 @@ def test_19_atomspace_rule_count_consistency():
     assert len(space["status_symbols"]) >= 5
 
 
+
+def test_20_cli_proof_validator_subprocess_execution():
+    import subprocess
+    result = subprocess.run(
+        ["python3", "scripts/validate_proof.py"],
+        capture_output=True,
+        text=True,
+        cwd=str(Path(__file__).resolve().parent.parent),
+    )
+    assert result.returncode == 0
+    assert "SUCCESS" in result.stdout
+
+
+
