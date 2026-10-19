@@ -242,3 +242,25 @@ def test_12_hierarchical_merkle_tree_layers():
     assert tree_data["layers"][-1][0] == tree_data["merkle_root"]
 
 
+
+def test_13_quick_reconcile_arbitrary_unstructured_text():
+    payload = {
+        "title": "Ad-Hoc Unstructured Peace Dispute",
+        "domain": "peace",
+        "source_a_label": "Harlem Archive Tape",
+        "source_a_text": "Cultural Peace Exchange was held at Studio Museum Harlem on 1969-08-12 with 300 delegates.",
+        "source_b_label": "Nairobi Archive Tape",
+        "source_b_text": "Cultural Peace Exchange was held at Studio Museum Harlem on 1969-08-14 with 80 delegates.",
+        "include_corroboration": False,
+        "negotiation_round_limit": 3,
+    }
+    rec_res = client.post("/api/cases/quick-reconcile", json=payload)
+    assert rec_res.status_code == 200
+    rep = rec_res.json()
+    findings = {f["property_name"]: f for f in rep["findings"]}
+    assert "venue" in findings
+    assert findings["venue"]["status"] == "AGREEMENT"
+    assert "event_date" in findings
+    assert findings["event_date"]["status"] == "CONTRADICTION"
+
+
