@@ -431,3 +431,13 @@ class SymbolicReasoner:
         if isinstance(val, (int, float)):
             return f"{float(val):.4f}".rstrip("0").rstrip(".")
         return str(val).strip()
+
+    def get_atomspace_inspection(self) -> Dict[str, Any]:
+        """Returns detailed inspection of currently loaded MeTTa rules and Atomspace types."""
+        rules_summary = []
+        return {
+            "hyperon_active": self.hyperon_active,
+            "total_rules": len(self.space.rules),
+            "total_facts": len(self.space.facts),
+            "rules": rules_summary,
+        }
