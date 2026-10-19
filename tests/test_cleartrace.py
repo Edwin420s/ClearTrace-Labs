@@ -264,3 +264,24 @@ def test_13_quick_reconcile_arbitrary_unstructured_text():
     assert findings["event_date"]["status"] == "CONTRADICTION"
 
 
+
+def test_14_markdown_report_and_certificate_download():
+    case_id = client.post("/api/cases/from-preset/invoice").json()["case"]["case_id"]
+    client.post(f"/api/cases/{case_id}/reconcile")
+
+    md_res = client.get(f"/api/cases/{case_id}/report.md")
+    assert md_res.status_code == 200
+    md_text = md_res.text
+    assert "ClearTrace Labs" in md_text
+    assert "Executive Summary" in md_text
+    assert "Reconciled Findings" in md_text
+    assert "Cryptographic Replay Proof" in md_text
+
+    cert_res = client.get(f"/api/cases/{case_id}/certificate")
+    assert cert_res.status_code == 200
+    cert = cert_res.json()
+    assert cert["case_id"] == case_id
+    assert len(cert["merkle_root"]) == 64
+    assert len(cert["verification_hash"]) == 64
+
+
