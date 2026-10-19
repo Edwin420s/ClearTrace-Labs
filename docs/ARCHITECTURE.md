@@ -66,3 +66,14 @@ The backend integrates SingularityNET Hyperon via `backend/metta_runner.py`:
 1. **SHA-256 Replay Certificates**: Computes an ordered Merkle root across all sources, negotiation steps, and rule findings, generating an unalterable proof string.
 2. **Blockchain-Style Audit Chain**: Every case creation, extraction, rule reduction, and reviewer decision is linked via `curr_hash = SHA256(prev_hash + index + event_type + actor + details)`. Any database alteration is instantly detected.
 3. **The Agent That Grows Up**: Auditors can register custom MeTTa rewrite rules dynamically (`POST /api/rules/custom`), which compile directly into the active Atomspace to govern future disputes.
+
+### E. Phase 5: Hierarchical Merkle Tree Layer Engine
+The `DecisionReplayService` builds an authenticated multi-level Merkle tree:
+* **Level 0 (Leaf Hashes)**: Hashed atomic objects partitioned into sources, negotiation steps, and symbolic findings.
+* **Level 1 to Level N-1**: Pairwise associative SHA-256 reductions.
+* **Level N (Merkle Root)**: Top-level cryptographic root sealing the entire decision history.
+Exposed via `GET /api/cases/{case_id}/merkle-tree` and visualized interactively in the web dashboard.
+
+### F. Phase 6: Automated Unstructured Text Extraction
+`RecordVerifierAgentA` and `ContextChallengerAgentB` feature heuristic fallback parsers (`extract_claims_from_raw_text`) that automatically detect and tokenize dates, percentages, monetary amounts, and participant estimates from raw, unformatted documents, supporting ad-hoc reconciliation across custom domains (ESG carbon disclosures, clinical trials, legal contract amendments).
+
