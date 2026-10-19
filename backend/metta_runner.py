@@ -433,7 +433,7 @@ class SymbolicReasoner:
         return str(val).strip()
 
     def get_atomspace_inspection(self) -> Dict[str, Any]:
-        """Returns detailed inspection of currently loaded MeTTa rules and Atomspace types."""
+        """Returns comprehensive runtime inspection of loaded MeTTa rules, Atomspace types, and status atoms."""
         rules_summary = []
         for r in self.space.rules:
             head, body = r
