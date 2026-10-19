@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-10-19 — Advanced Features & Enhanced Verification Release
+
+### Added
+- **Ad-Hoc Custom Case Reconciliation**: `POST /api/cases/quick-reconcile` and Tab 6 Custom Case Studio allowing users and judges to paste arbitrary unformatted documents and reconcile live with MeTTa.
+- **Automated Text Extraction Fallbacks**: Regex and heuristic extractors in `RecordVerifierAgentA` and `ContextChallengerAgentB` to extract dates, percentages, amounts, and entities from raw text.
+- **Hierarchical Merkle Tree Layer Engine**: Multi-level tree calculation (`compute_merkle_tree_layers`) and `GET /api/cases/{case_id}/merkle-tree` endpoint for visual inspection of cryptographic proofs.
+- **Live Atomspace Inspector**: `GET /api/metta/space` and live dashboard card in Tab 5 inspecting loaded rewrite rules and types.
+- **Executive Markdown Reports**: `GET /api/cases/{case_id}/report.md` generating formatted audit documents.
+- **Standalone Certificate Export**: `GET /api/cases/{case_id}/certificate` and UI download button.
+- **Offline CLI Proof Validator**: `scripts/validate_proof.py` tool.
+- **Status Filter Pills**: Quick finding filters (`ALL`, `CONTRADICTION`, `AGREEMENT`, `EVIDENCE_SUPPORTED`, `SOURCE_EXCLUSIVE`) in Tab 1.
+- **Extended Test Suite**: 20 comprehensive automated pytest test suites (100% passing).
+
+---
+
 ## [1.0.0] - 2026-10-19 — BASIX State of the Art Hackathon Release
 
 ### Added
