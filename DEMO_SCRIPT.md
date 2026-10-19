@@ -8,40 +8,40 @@
 ---
 
 ## Act 1: The Problem & The Solution (0:00 – 0:40)
-* **Visual:** Browser showing ClearTrace Labs UI header and Track 02 badge.
+* **Visual:** Browser showing ClearTrace Labs UI header at `http://localhost:5173` with clean typography and `Evidence-First` badge.
 * **Spoken Script:**
-  > *"Hello, judges and organizers. I am Edwin Mwiti, presenting ClearTrace Labs. Traditional generative LLMs operate on probabilities: when faced with contradictory accounts, they guess or smooth over differences by inventing plausible compromises. In cultural history and creative royalties, guessing causes severe harm.*
+  > *"Hello, judges and organizers. I am Edwin Mwiti, presenting ClearTrace Labs. Traditional generative LLMs operate on probabilities: when faced with contradictory accounts, they guess or smooth over differences by inventing plausible compromises. In cultural history, procurement, and creative royalties, guessing causes severe harm.*
   >
   > *Under Track 02: Two Agents, One Truth, ClearTrace replaces hallucination with deterministic symbolic deduction. Built on SingularityNET MeTTa and Omega stateful memory, ClearTrace lets two independent agents investigate evidence, challenge unsupported claims, and reason to verifiable truth."*
 
 ---
 
-## Act 2: Live Demo — AI for Peace Narrative Mediation (0:40 – 1:35)
-* **Visual:** Select Preset 1 (`peace`). Click **Load & Reconcile Case**. Show the findings table and negotiation timeline.
+## Act 2: Live Demo — Simple Mode & Procurement Overcharge (0:40 – 1:30)
+* **Visual:** Select Preset: **Procurement (90 vs 100 Units · KSh 5,000 Overcharge)**. Show Document A (PO) and Document B (Invoice) textareas. Click **Compare My Documents**.
 * **Spoken Script:**
-  > *"Here is ClearTrace in action on our primary partner brief: AI for Peace. Two community archives describe the 1969 Cultural Peace Exchange. Agent A examines the Harlem Living Archive; Agent B examines the Nairobi Oral History Chronicle in complete isolation.*
+  > *"ClearTrace was designed for everyday users through three simple actions: Add documents, Compare, and Understand the results.*
   >
-  > *During negotiation, they agree on the venue and keynote speaker. But on the event date, Harlem records August 12 while Nairobi records August 19. Notice what ClearTrace does: it refuses to invent a middle date; it preserves the contradiction in red with full attribution.*
+  > *Here, a buyer authorized 90 units on Purchase Order 089, but the supplier billed for 100 units on Invoice 104. In seconds, ClearTrace isolates the discrepancy, explains the root cause in plain English, and quantifies the exact financial exposure: a KSh 5,000 potential overcharge.*
   >
-  > *Now watch this: we toggle on the third independent archive—a contemporaneous printed programme. We re-run reconciliation. In Round 3, Agent B discovers the corroborating programme, revises its position, and MeTTa deductively resolves the start date to August 12 with a complete audit trail."*
+  > *Now, what if we have third-party proof? We enable 'Have a third document to help verify the result?' and inject the Signed PO Amendment. Clicking Compare resolves the authorized quantity with verifiable proof, without synthetic guessing."*
 
 ---
 
-## Act 3: Live Demo — Incantio Creative Rights & B2B Invoices (1:35 – 2:20)
-* **Visual:** Switch to Preset 2 (`rights`), then demonstrate Preset 3 (`invoice`).
+## Act 3: Live Demo — Incantio Creative Rights & AI for Peace (1:30 – 2:15)
+* **Visual:** Switch to **Music Royalties** preset, click Compare, then switch to **Oral History** preset.
 * **Spoken Script:**
-  > *"Next, our second partner brief: Incantio. A co-writer split sheet claims 50% ownership, while the DSP streaming statement reports only 35%. ClearTrace separates the 15 percentage-point allocation gap from verified financial loss, calculating the exact $1,800 monetary underpayment on $12,000 eligible revenue.*
+  > *"Next, our partner briefs. In creative music rights with Incantio, a producer split sheet claims 50% while the DSP remitted 35%. ClearTrace highlights the 15 percentage-point gap and calculates the exact $1,800 missing payout on $12,000 revenue.*
   >
-  > *In our registered B2B invoice case, an unapproved 10-unit excess billing triggers an automatic payment lockout until an authorized PO amendment confirms delivery of 100 units."*
+  > *In our AI for Peace case, Harlem and Nairobi oral chronicles disagree on the 1969 festival start date—August 12 versus August 19. Notice what ClearTrace does: it refuses to invent a middle date; it preserves the contradiction with full attribution until independent evidence resolves it."*
 
 ---
 
-## Act 4: Architecture, Replay Proofs & What's Next (2:20 – 3:00)
-* **Visual:** Click **Replay Proof** tab, click **Verify Cryptographic Proof Now**, then show the **Rule Studio ("Agent That Grows Up")**.
+## Act 4: Advanced Audit Mode, Cryptographic Seals & Roadmap (2:15 – 3:00)
+* **Visual:** Toggle to **Advanced Audit Mode**. Show the Multi-Agent Negotiation Timeline, record a quick Human Review decision, and click **Verify Decision Replay**.
 * **Spoken Script:**
-  > *"Under the hood, ClearTrace runs MeTTa S-expression rewrite rules in a typed Atomspace. Every case decision is sealed into a cryptographic SHA-256 Merkle Replay Certificate that any auditor can verify offline with our CLI.*
+  > *"For judges and compliance officers, switching to Advanced Audit Mode reveals the technical engine: traceable multi-agent negotiation rounds, human review adjudication that commits sign-offs to a tamper-evident audit ledger, and cryptographic SHA-256 Merkle Decision Replay.*
   >
-  > *We also satisfy 'The Agent That Grows Up': auditors can teach the engine new MeTTa rules live in our Rule Studio. Next, we are integrating on-chain settlement rails via ASI Chain to automatically release escrowed royalties upon MeTTa verification. Thank you!"*
+  > *Every finding is mathematically sealed and reproducible offline via our CLI. Next, we are integrating on-chain settlement rails via ASI Chain to automatically release escrowed royalties upon MeTTa verification. Thank you!"*
 
 ---
 
