@@ -174,6 +174,7 @@ class CaseExportBundle(BaseModel):
 
 
 class QuickReconcileRequest(BaseModel):
+    """Schema for ad-hoc reconciliation from unstructured text."""
     title: str = Field(default="Quick Case Reconciliation", description="Title of the dispute case")
     domain: str = Field(default="peace", description="'peace', 'rights', or 'invoice'")
     source_a_label: str = Field(default="Primary Source A")
