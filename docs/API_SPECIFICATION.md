@@ -84,3 +84,13 @@ Default local development port: `http://localhost:8000`
   }
   ```
 * **`GET /api/rules/custom`**: Lists all active custom rules.
+
+---
+
+### 7. Ad-Hoc Reconciliation & Merkle Layer Inspection
+* **`POST /api/cases/quick-reconcile`**: Single-call endpoint to ingest arbitrary raw text for Document A, Document B, and optional Document C, running automated claim extraction and 5-stage MeTTa reconciliation.
+* **`GET /api/cases/{case_id}/merkle-tree`**: Returns hierarchical Merkle tree layers, tree depth, and breakdown of leaves (sources, negotiation steps, findings).
+* **`GET /api/cases/{case_id}/report.md`**: Returns executive-ready Markdown audit report.
+* **`GET /api/cases/{case_id}/certificate`**: Returns standalone `.cert.json` replay certificate for offline verification.
+* **`GET /api/metta/space`**: Returns real-time Atomspace inspection including loaded rules, facts count, atom types, and status symbols.
+
