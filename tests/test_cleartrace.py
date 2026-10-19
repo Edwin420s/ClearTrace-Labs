@@ -366,3 +366,11 @@ def test_18_quick_reconcile_missing_fields_validation():
     assert res.status_code == 422
 
 
+
+def test_19_atomspace_rule_count_consistency():
+    space = client.get("/api/metta/space").json()
+    assert space["total_rules"] >= 10
+    assert "known_types" in space
+    assert len(space["status_symbols"]) >= 5
+
+
