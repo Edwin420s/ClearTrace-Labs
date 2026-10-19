@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] - 2026-10-19 — Dual-Mode Architecture & Responsible Trust Release
+
+### Added
+- **Dual-Mode User Experience**:
+  - **Simple Mode (Default)**: Streamlined 3-action workflow (Add Documents, Understand Results, Next Steps) designed for business users and non-technical auditors.
+  - **Advanced Audit Mode**: Dedicated interface for hackathon judges and compliance engineers featuring multi-agent negotiation timelines, human review adjudication forms, and cryptographic decision replay verification.
+- **Responsible Trust Categorization**:
+  - `Agreement Between Sources` explicitly distinguished from external verification.
+  - `Supported by Independent Evidence` reserved strictly for corroborating 3rd documents.
+  - Transparent `Conflict Detected` and `Document-Exclusive Note` classifications.
+- **Financial Exposure Quantification**: Real-time dollar and shilling exposure metrics on discrepancy cards (e.g., $1,800 royalty underpayment, KSh 5,000 procurement overcharge).
+- **Frontend Modularization**: Split monolith into `components/` (`DocumentInputs`, `FindingsSummary`, `NextSteps`, `AdvancedAudit`, `TrustBadge`, `Icons`) and `data/` (`scenarios.js`).
+- **Comprehensive Master Verification**: Integrated frontend production build checks into `scripts/run_all_verifications.sh`.
+
+---
+
 ## [1.1.0] - 2026-10-19 — Advanced Features & Enhanced Verification Release
 
 ### Added

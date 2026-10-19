@@ -165,14 +165,23 @@ cleartrace-labs/
 │   ├── presets.py                     # Synthetic demonstration datasets
 │   └── main.py                        # REST API routing, lifespan, and export handlers
 │
-├── frontend/                          # High-Performance React + Vite UI
+├── frontend/                          # High-Performance React + Vite UI (Dual-Mode UX)
 │   ├── package.json
 │   ├── vite.config.js
 │   ├── index.html
 │   └── src/
 │       ├── main.jsx
 │       ├── styles.css                 # Responsive, modern styling
-│       └── App.jsx                    # Multi-view interactive dashboard (8 tabs)
+│       ├── App.jsx                    # Root coordinator for Simple & Advanced modes
+│       ├── data/
+│       │   └── scenarios.js           # Preset cases and domain dictionary
+│       └── components/
+│           ├── DocumentInputs.jsx     # Action 1: Multi-document intake & 3rd-source toggle
+│           ├── FindingsSummary.jsx    # Action 2: Plain-language discrepancy cards & exposures
+│           ├── NextSteps.jsx          # Action 3: Guidance for proof, review, and exports
+│           ├── AdvancedAudit.jsx      # Auditor timeline, sign-off form & replay check
+│           ├── TrustBadge.jsx         # Responsible outcome classifications
+│           └── Icons.jsx              # Clean SVG icons (zero emojis)
 │
 ├── tests/                             # Automated Acceptance Suite
 │   └── test_cleartrace.py             # 20-point comprehensive pytest matrix (100% passing)
