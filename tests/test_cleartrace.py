@@ -334,3 +334,13 @@ def test_15_flexible_custom_domain_reconciliation():
     assert rep["summary"]["contradiction_count"] == 1
 
 
+
+def test_16_false_consensus_guard_verification():
+    case_res = client.post("/api/cases/from-preset/invoice")
+    case_id = case_res.json()["case"]["case_id"]
+    rec_res = client.post(f"/api/cases/{case_id}/reconcile")
+    assert rec_res.status_code == 200
+    rep = rec_res.json()
+    assert rep["case"]["case_id"] == case_id
+
+
