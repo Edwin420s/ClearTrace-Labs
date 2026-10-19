@@ -19,7 +19,7 @@ python3 scripts/seed_presets.py
 echo "3. Running Cryptographic SHA-256 Replay Certificate Verifier..."
 python3 scripts/verify_replay_cert.py
 
-echo "4. Running 10-Point Automated Pytest Acceptance Matrix..."
+echo "4. Running 20-Point Automated Pytest Acceptance Matrix..."
 pytest -v tests/test_cleartrace.py
 
 echo "5. Running Symbolic Engine Scalability Benchmark..."
