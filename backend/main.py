@@ -624,6 +624,29 @@ def get_metta_atomspace() -> Dict[str, Any]:
     return reasoner.get_atomspace_inspection()
 
 
+@app.get("/api/cases/{case_id}/merkle-tree", tags=["Verification"])
+def get_case_merkle_tree(case_id: str) -> Dict[str, Any]:
+    """Returns full hierarchical Merkle tree layers for visualization."""
+    init_db()
+    case_row = _ensure_case_exists(case_id)
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM sources WHERE case_id = ?", (case_id,))
+    sources = [dict(r) for r in cur.fetchall()]
+    cur.execute("SELECT * FROM negotiation_rounds WHERE case_id = ? ORDER BY id ASC", (case_id,))
+    steps = [dict(r) for r in cur.fetchall()]
+    cur.execute("SELECT findings_json FROM reconciliation_reports WHERE case_id = ?", (case_id,))
+    rep = cur.fetchone()
+    conn.close()
+    findings = json.loads(rep["findings_json"]) if rep and rep["findings_json"] else []
+    tree = DecisionReplayService.get_merkle_tree_details(findings, steps, sources)
+    return {
+        "case_id": case_id,
+        "domain": case_row["domain"],
+        **tree,
+    }
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
