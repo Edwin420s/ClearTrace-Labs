@@ -37,6 +37,7 @@ from backend.replay_service import DecisionReplayService
 from backend.schemas import (
     CreateCaseRequest,
     CustomRuleInput,
+    QuickReconcileRequest,
     ReconcileRequest,
     ReviewDecisionRequest,
     SourceDocumentInput,
@@ -438,7 +439,7 @@ def get_case_details(case_id: str) -> Dict[str, Any]:
     }
 
 
-@app.get("/api/cases/{case_id}/report")
+@app.get("/api/cases/{case_id}/report", tags=["Cases"])
 def get_case_report(case_id: str, status: Optional[str] = None) -> Dict[str, Any]:
     init_db()
     case_row = _ensure_case_exists(case_id)
@@ -473,7 +474,6 @@ def get_case_report(case_id: str, status: Optional[str] = None) -> Dict[str, Any
             pass
 
     valid, errors = verify_audit_chain(case_id)
-
     all_findings = json.loads(rep_row["findings_json"])
     if status:
         filtered_findings = [f for f in all_findings if f.get("status", "").upper() == status.upper()]
@@ -482,6 +482,7 @@ def get_case_report(case_id: str, status: Optional[str] = None) -> Dict[str, Any
 
     return {
         "case": case_row,
+        "domain": case_row["domain"],
         "metta_runtime_active": bool(rep_row["metta_runtime_active"]),
         "summary": json.loads(rep_row["summary_json"]),
         "findings": filtered_findings,
@@ -607,15 +608,90 @@ def export_case_bundle(case_id: str) -> Dict[str, Any]:
     }
 
 
-def _ensure_case_exists(case_id: str) -> Dict[str, Any]:
-    conn = get_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM cases WHERE case_id = ?", (case_id,))
-    row = cur.fetchone()
-    conn.close()
-    if not row:
-        raise HTTPException(status_code=404, detail=f"Case '{case_id}' not found.")
-    return dict(row)
+@app.get("/api/cases/{case_id}/report.md", response_class=PlainTextResponse, tags=["Cases"])
+def get_case_markdown_report(case_id: str) -> str:
+    """Generates an executive-ready Markdown audit report of the reconciliation."""
+    init_db()
+    rep = get_case_report(case_id)
+    details = get_case_details(case_id)
+    c = details["case"]
+    s = rep["summary"]
+    cert = rep.get("replay_certificate") or {}
+
+    lines = [
+        "# ClearTrace Labs — Truth & Reconciliation Audit Report",
+        f"**Case ID:** `{c['case_id']}` | **Domain:** `{c['domain'].upper()}` | **Status:** `{s.get('overall_status', 'UNKNOWN')}`",
+        f"**Title:** {c['title']}",
+        f"**Generated:** {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}",
+        "",
+        "## Executive Summary",
+        f"- **Verified Agreements:** {s.get('agreement_count', 0)} / {s.get('total_properties', 0)}",
+        f"- **Preserved Contradictions:** {s.get('contradiction_count', 0)}",
+        f"- **Corroborated by 3rd Archive:** {s.get('evidence_supported_count', 0)}",
+        f"- **Source-Exclusive Attributes:** {s.get('source_exclusive_count', 0)}",
+        f"- **Cryptographic Chain Integrity:** {'VALID' if rep.get('audit_chain_valid') else 'BROKEN'}",
+        "",
+        "## Ingested Independent Sources (Isolated Intake)",
+    ]
+    for src in details["sources"]:
+        lines.append(f"- **[{src['source_role'].upper()}] {src['label']}** (SHA-256: `{src['source_hash'][:16]}...`)")
+
+    lines.extend([
+        "",
+        "## Reconciled Findings",
+        "| Property | Agent A Claim | Agent B Claim | Status | Resolved / Corroborated | MeTTa Expression |",
+        "|---|---|---|---|---|---|",
+    ])
+    for f in rep.get("findings", []):
+        val_a = f.get("value_a") if f.get("value_a") is not None else f.get("agent_a_value", "—")
+        val_b = f.get("value_b") if f.get("value_b") is not None else f.get("agent_b_value", "—")
+        resolved = f.get("resolved_value") if f.get("resolved_value") is not None else "UNRESOLVED"
+        status = f.get("status", "UNKNOWN")
+        expr = f.get("metta_expression", "")
+        lines.append(f"| **{f.get('property_name')}** | {val_a} | {val_b} | `{status}` | **{resolved}** | `{expr}` |")
+
+    financial_findings = [f for f in rep.get("findings", []) if f.get("financial_impact")]
+    if financial_findings:
+        lines.extend([
+            "",
+            "## Deterministic Financial Discrepancies",
+        ])
+        for f in financial_findings:
+            fi = f["financial_impact"]
+            lines.append(f"### Property: `{f.get('property_name')}`")
+            if "percentage_point_discrepancy" in fi:
+                lines.append(f"- **Percentage Point Gap:** {fi['percentage_point_discrepancy']} points")
+            if "disputed_amount_usd" in fi:
+                lines.append(f"- **Disputed Payout (USD):** ${fi['disputed_amount_usd']:,.2f}")
+            if "excess_units_billed" in fi:
+                lines.append(f"- **Excess Units Billed:** {fi['excess_units_billed']}")
+            if "disputed_amount_ksh" in fi:
+                lines.append(f"- **Disputed Variance (KSh):** KSh {fi['disputed_amount_ksh']:,.2f}")
+
+    lines.extend([
+        "",
+        "## Cryptographic Replay Proof (SHA-256)",
+        f"- **Merkle Root:** `{cert.get('merkle_root', 'N/A')}`",
+        f"- **Decision Digest:** `{cert.get('decision_digest', 'N/A')}`",
+        f"- **Ruleset Signature:** `{cert.get('ruleset_signature', 'N/A')}`",
+        f"- **Verification Hash:** `{cert.get('verification_hash', 'N/A')}`",
+        f"- **Timestamp:** `{cert.get('timestamp', 'N/A')}`",
+        "",
+        "---",
+        "_Report cryptographically sealed by ClearTrace Labs MeTTa Symbolic Engine (Track 02: Omega AI Agents)._",
+    ])
+    return "\n".join(lines)
+
+
+@app.get("/api/cases/{case_id}/certificate", tags=["Verification"])
+def get_case_certificate(case_id: str) -> Dict[str, Any]:
+    """Returns standalone cryptographic replay certificate for verification."""
+    init_db()
+    rep = get_case_report(case_id)
+    cert = rep.get("replay_certificate")
+    if not cert:
+        raise HTTPException(status_code=404, detail="Replay certificate not generated for this case.")
+    return cert
 
 
 @app.get("/api/metta/space", tags=["Symbolic Engine"])
@@ -690,6 +766,17 @@ def quick_reconcile_case(req: QuickReconcileRequest) -> Dict[str, Any]:
         include_corroboration=req.include_corroboration,
     )
     return reconcile_case(case_id, reconcile_req)
+
+
+def _ensure_case_exists(case_id: str) -> Dict[str, Any]:
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM cases WHERE case_id = ?", (case_id,))
+    row = cur.fetchone()
+    conn.close()
+    if not row:
+        raise HTTPException(status_code=404, detail=f"Case '{case_id}' not found.")
+    return dict(row)
 
 
 if __name__ == "__main__":
