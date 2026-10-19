@@ -103,8 +103,9 @@ def list_cases() -> Dict[str, Any]:
 @app.post("/api/cases")
 def create_case(req: CreateCaseRequest) -> Dict[str, Any]:
     init_db()
-    if req.domain not in ("peace", "rights", "invoice"):
-        raise HTTPException(status_code=400, detail="Invalid domain. Choose 'peace', 'rights', or 'invoice'.")
+    domain_clean = (req.domain or "generic").strip().lower()
+    if not domain_clean:
+        raise HTTPException(status_code=400, detail="Domain cannot be empty.")
 
     case_id = f"CT-{uuid.uuid4().hex[:8].upper()}"
     now_iso = datetime.now(timezone.utc).isoformat()
@@ -113,7 +114,7 @@ def create_case(req: CreateCaseRequest) -> Dict[str, Any]:
     cur = conn.cursor()
     cur.execute(
         "INSERT INTO cases (case_id, title, domain, description, status, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        (case_id, req.title, req.domain, req.description, "CREATED", now_iso),
+        (case_id, req.title, domain_clean, req.description, "CREATED", now_iso),
     )
     conn.commit()
     conn.close()
@@ -122,7 +123,7 @@ def create_case(req: CreateCaseRequest) -> Dict[str, Any]:
         case_id=case_id,
         event_type="CASE_CREATED",
         actor="System_Intake",
-        details={"title": req.title, "domain": req.domain, "description": req.description},
+        details={"title": req.title, "domain": domain_clean, "description": req.description},
     )
 
     for src in req.sources:
