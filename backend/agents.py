@@ -127,6 +127,93 @@ def extract_claims_from_raw_text(raw_text: str, domain: str = "", agent_id: str 
             "original_text": "Nairobi National Museum",
         })
 
+    # 3. Attendees / Crowd count
+    attendees_match = re.search(r'\b(\d{2,4})\s*(?:delegates|attendees|participants|people|guests)\b', text_lower)
+    if attendees_match:
+        claims.append({
+            "entity": "Event",
+            "property_name": "attendee_estimate",
+            "value": int(attendees_match.group(1)),
+            "evidence_ref": f"{attendees_match.group(1)} delegates reported",
+            "original_text": attendees_match.group(0),
+        })
+
+    # 4. Accord / Declaration signed
+    if "accord" in text_lower and ("signed" in text_lower or "concluded" in text_lower):
+        claims.append({
+            "entity": "Event",
+            "property_name": "accord_signed",
+            "value": True,
+            "evidence_ref": "Formal accord documentation",
+            "original_text": "Cultural accord signed",
+        })
+
+    # 5. Archival medium
+    if "16mm" in text_lower or "reel" in text_lower or "film" in text_lower:
+        claims.append({
+            "entity": "Event",
+            "property_name": "archival_medium",
+            "value": "16mm Reel Audio",
+            "evidence_ref": "Physical tape archive",
+            "original_text": "16mm Reel Audio",
+        })
+
+    # 6. Rights & Royalties: Split Percentage
+    split_match = re.search(r'\b(\d+(?:\.\d+)?)\s*%', raw_text)
+    if split_match:
+        claims.append({
+            "entity": "Composition",
+            "property_name": "split_percentage",
+            "value": float(split_match.group(1)),
+            "evidence_ref": f"{split_match.group(1)}% split statement",
+            "original_text": split_match.group(0),
+        })
+
+    # 7. Eligible Gross Revenue (USD)
+    rev_match = re.search(r'\$\s*([\d,]+(?:\.\d+)?)', raw_text)
+    if rev_match:
+        rev_val = float(rev_match.group(1).replace(',', ''))
+        claims.append({
+            "entity": "Composition",
+            "property_name": "eligible_revenue_usd",
+            "value": rev_val,
+            "evidence_ref": f"${rev_val:,.2f} gross revenue",
+            "original_text": rev_match.group(0),
+        })
+
+    # 8. Territory
+    if "worldwide" in text_lower or "global" in text_lower:
+        claims.append({
+            "entity": "Composition",
+            "property_name": "territory",
+            "value": "Worldwide",
+            "evidence_ref": "Territory clause",
+            "original_text": "Worldwide",
+        })
+
+    # 9. Invoice / PO: Quantity
+    qty_match = re.search(r'\b(\d+)\s*(?:units|pcs|cartons|items)\b', text_lower)
+    if qty_match:
+        claims.append({
+            "entity": "PO-Line",
+            "property_name": "authorized_quantity",
+            "value": int(qty_match.group(1)),
+            "evidence_ref": f"{qty_match.group(1)} units itemized",
+            "original_text": qty_match.group(0),
+        })
+
+    # 10. Invoice / PO: Unit price (KSh)
+    price_match = re.search(r'(?:ksh|kes)\s*([\d,]+(?:\.\d+)?)', text_lower)
+    if price_match:
+        price_val = float(price_match.group(1).replace(',', ''))
+        claims.append({
+            "entity": "PO-Line",
+            "property_name": "unit_price_ksh",
+            "value": price_val,
+            "evidence_ref": f"KSh {price_val} unit rate",
+            "original_text": price_match.group(0),
+        })
+
     return claims
 
 
@@ -143,6 +230,13 @@ class RecordVerifierAgentA:
         extracted: List[ExtractedClaimRecord] = []
         source_id = source_row["source_id"]
         source_label = source_row["label"]
+
+        if not raw_claims and source_row.get("raw_text"):
+            raw_claims = extract_claims_from_raw_text(
+                source_row["raw_text"],
+                source_row.get("metadata", {}).get("domain", ""),
+                self.agent_id,
+            )
 
         for item in raw_claims:
             raw_prop = item["property_name"]
@@ -193,6 +287,13 @@ class ContextChallengerAgentB:
         extracted: List[ExtractedClaimRecord] = []
         source_id = source_row["source_id"]
         source_label = source_row["label"]
+
+        if not raw_claims and source_row.get("raw_text"):
+            raw_claims = extract_claims_from_raw_text(
+                source_row["raw_text"],
+                source_row.get("metadata", {}).get("domain", ""),
+                self.agent_id,
+            )
 
         for item in raw_claims:
             raw_prop = item["property_name"]
