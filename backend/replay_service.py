@@ -56,6 +56,32 @@ class DecisionReplayService:
     RULES_SIGNATURE = "MeTTa-Hyperon-S-Expression-V1.0-SHA256"
 
     @classmethod
+    def get_merkle_tree_details(
+        cls,
+        findings: List[Dict[str, Any]],
+        negotiation_history: List[Dict[str, Any]],
+        sources: List[Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        """Returns the full Merkle tree structure including all layers for visualization."""
+        leaf_hashes = [
+            compute_sha256({"type": "source", "idx": i, "data": s})
+            for i, s in enumerate(sources)
+        ] + [
+            compute_sha256({"type": "step", "idx": i, "data": step})
+            for i, step in enumerate(negotiation_history)
+        ] + [
+            compute_sha256({"type": "finding", "idx": i, "data": f})
+            for i, f in enumerate(findings)
+        ]
+        layers = compute_merkle_tree_layers(leaf_hashes)
+        return {
+            "leaves_count": len(leaf_hashes),
+            "tree_depth": len(layers),
+            "merkle_root": layers[-1][0] if layers and layers[-1] else "",
+            "layers": layers,
+        }
+
+    @classmethod
     def generate_certificate(
         cls,
         case_id: str,
