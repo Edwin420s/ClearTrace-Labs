@@ -647,6 +647,51 @@ def get_case_merkle_tree(case_id: str) -> Dict[str, Any]:
     }
 
 
+@app.post("/api/cases/quick-reconcile", tags=["Reconciliation"])
+def quick_reconcile_case(req: QuickReconcileRequest) -> Dict[str, Any]:
+    """Single-call endpoint to create, extract, negotiate, and reconcile ad-hoc documents."""
+    init_db()
+    sources = [
+        SourceDocumentInput(
+            label=req.source_a_label,
+            source_role="source_a",
+            raw_text=req.source_a_text,
+            structured_claims=[],
+            metadata={"domain": req.domain},
+        ),
+        SourceDocumentInput(
+            label=req.source_b_label,
+            source_role="source_b",
+            raw_text=req.source_b_text,
+            structured_claims=[],
+            metadata={"domain": req.domain},
+        ),
+    ]
+    if req.include_corroboration and req.corroboration_text:
+        sources.append(
+            SourceDocumentInput(
+                label=req.corroboration_label or "3rd-Party Corroborator",
+                source_role="corroborator",
+                raw_text=req.corroboration_text,
+                structured_claims=[],
+                metadata={"domain": req.domain},
+            )
+        )
+    case_req = CreateCaseRequest(
+        title=req.title,
+        domain=req.domain,
+        description="Ad-hoc reconciliation executed via automated intake",
+        sources=sources,
+    )
+    created = create_case(case_req)
+    case_id = created["case"]["case_id"]
+    reconcile_req = ReconcileRequest(
+        negotiation_round_limit=req.negotiation_round_limit,
+        include_corroboration=req.include_corroboration,
+    )
+    return reconcile_case(case_id, reconcile_req)
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
