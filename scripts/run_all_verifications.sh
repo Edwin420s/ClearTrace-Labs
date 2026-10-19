@@ -25,7 +25,11 @@ pytest -v tests/test_cleartrace.py
 echo "5. Running Symbolic Engine Scalability Benchmark..."
 python3 scripts/benchmark_engine.py
 
+echo "6. Running Frontend Production Build Verification..."
+(cd "$DIR/frontend" && npm run build)
+
 echo ""
 echo "================================================================="
 echo " [ALL CHECKS PASSED] ClearTrace Labs is 100% Verified!"
 echo "================================================================="
+
