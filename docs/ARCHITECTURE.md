@@ -77,3 +77,17 @@ Exposed via `GET /api/cases/{case_id}/merkle-tree` and visualized interactively 
 ### F. Phase 6: Automated Unstructured Text Extraction
 `RecordVerifierAgentA` and `ContextChallengerAgentB` feature heuristic fallback parsers (`extract_claims_from_raw_text`) that automatically detect and tokenize dates, percentages, monetary amounts, and participant estimates from raw, unformatted documents, supporting ad-hoc reconciliation across custom domains (ESG carbon disclosures, clinical trials, legal contract amendments).
 
+### G. Phase 7: Dual-Mode User Experience & Responsible Trust Taxonomy
+The frontend separates operational consumption from forensic compliance:
+* **Simple Mode (Default)**: Designed around the core user objective—*"I have two documents; show me what differs, why it matters, and what to do next."* Implemented across three numbered actions:
+  1. *Action 1 (Add Your Documents)*: Two primary textareas, presets, clear confirmation, and an expandable 3rd-party independent evidence panel.
+  2. *Action 2 (Understand the Results)*: Plain-language summary banner, prioritized discrepancy cards, side-by-side claim values with exact citations, and financial impact exposure estimates.
+  3. *Action 3 (Next Steps for Your Audit)*: Concrete operational options to add independent proof, record human approval, or export reports.
+* **Advanced Audit Mode**: Tailored for hackathon judges, auditors, and systems engineers. Exposes the multi-agent negotiation timeline, human reviewer adjudication ledger, and offline mathematical SHA-256 Decision Replay validation.
+* **Responsible Trust Categorization**:
+  * `Agreement Between Sources`: Both records state the same value. Distinct from independent verification—shared claims do not constitute external truth.
+  * `Conflict Detected`: Records state conflicting values. Preserved transparently without hallucinating averages.
+  * `Supported by Independent Evidence`: Reserved exclusively for claims corroborated by an independent third document.
+  * `Document-Exclusive Note`: Asymmetric claims documented in one source only.
+
+
