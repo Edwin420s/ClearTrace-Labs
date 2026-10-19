@@ -439,7 +439,7 @@ def get_case_details(case_id: str) -> Dict[str, Any]:
 
 
 @app.get("/api/cases/{case_id}/report")
-def get_case_report(case_id: str) -> Dict[str, Any]:
+def get_case_report(case_id: str, status: Optional[str] = None) -> Dict[str, Any]:
     init_db()
     case_row = _ensure_case_exists(case_id)
     conn = get_connection()
@@ -474,11 +474,17 @@ def get_case_report(case_id: str) -> Dict[str, Any]:
 
     valid, errors = verify_audit_chain(case_id)
 
+    all_findings = json.loads(rep_row["findings_json"])
+    if status:
+        filtered_findings = [f for f in all_findings if f.get("status", "").upper() == status.upper()]
+    else:
+        filtered_findings = all_findings
+
     return {
         "case": case_row,
         "metta_runtime_active": bool(rep_row["metta_runtime_active"]),
         "summary": json.loads(rep_row["summary_json"]),
-        "findings": json.loads(rep_row["findings_json"]),
+        "findings": filtered_findings,
         "synthesized_output": json.loads(rep_row["timeline_or_ledger_json"]),
         "agent_runs": agent_runs,
         "negotiation_rounds": negotiation_rounds,
