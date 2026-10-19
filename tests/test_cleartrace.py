@@ -285,3 +285,52 @@ def test_14_markdown_report_and_certificate_download():
     assert len(cert["verification_hash"]) == 64
 
 
+
+def test_15_flexible_custom_domain_reconciliation():
+    custom_case = {
+        "title": "ESG Carbon Offsets Audit",
+        "domain": "esg_audit",
+        "sources": [
+            {
+                "label": "Supplier ESG Disclosures",
+                "source_role": "source_a",
+                "raw_text": "Scope 1 emissions verified at 4200 metric tons CO2e.",
+                "structured_claims": [
+                    {
+                        "entity": "Scope 1 Emissions",
+                        "property_name": "metric_tons_co2e",
+                        "value": 4200,
+                        "evidence_ref": "ESG-Doc-A#p12",
+                        "original_text": "Scope 1 emissions verified at 4200 metric tons CO2e.",
+                    }
+                ],
+                "metadata": {"certifier": "Supplier Self-Report"},
+            },
+            {
+                "label": "Third-Party Carbon Auditor",
+                "source_role": "source_b",
+                "raw_text": "Audit measured Scope 1 emissions at 5100 metric tons CO2e.",
+                "structured_claims": [
+                    {
+                        "entity": "Scope 1 Emissions",
+                        "property_name": "metric_tons_co2e",
+                        "value": 5100,
+                        "evidence_ref": "Auditor-Report#p3",
+                        "original_text": "Audit measured Scope 1 emissions at 5100 metric tons CO2e.",
+                    }
+                ],
+                "metadata": {"certifier": "EcoVerify Global"},
+            },
+        ],
+    }
+    create_res = client.post("/api/cases", json=custom_case)
+    assert create_res.status_code == 200
+    case_id = create_res.json()["case"]["case_id"]
+
+    rec_res = client.post(f"/api/cases/{case_id}/reconcile")
+    assert rec_res.status_code == 200
+    rep = rec_res.json()
+    assert rep["domain"] == "esg_audit"
+    assert rep["summary"]["contradiction_count"] == 1
+
+
