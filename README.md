@@ -9,7 +9,7 @@
 [![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
 [![FastAPI: Production](https://img.shields.io/badge/FastAPI-v0.115-emerald)](https://fastapi.tiangolo.com)
 [![MeTTa: Hyperon](https://img.shields.io/badge/MeTTa-Hyperon%20Symbolic%20Engine-purple)](https://singularitynet.io)
-[![Tests: 100% Passing](https://img.shields.io/badge/Tests-10%2F10%20Passing-brightgreen)](tests/test_cleartrace.py)
+[![Tests: 100% Passing](https://img.shields.io/badge/Tests-20%2F20%20Passing-brightgreen)](tests/test_cleartrace.py)
 [![Replay: Cryptographic SHA--256](https://img.shields.io/badge/Proofs-SHA--256%20Merkle%20Replay-blueviolet)](scripts/verify_replay_cert.py)
 
 ---
@@ -89,7 +89,7 @@ flowchart TD
 ```bash
 ./scripts/run_all_verifications.sh
 ```
-*Executes database seeding, replay proof verification, and all 10 automated pytest suites.*
+*Executes database seeding, replay proof verification, and all 20 automated pytest suites.*
 
 ### 2. Launch FastAPI Backend
 ```bash
@@ -172,14 +172,15 @@ cleartrace-labs/
 │   └── src/
 │       ├── main.jsx
 │       ├── styles.css                 # Responsive, modern styling
-│       └── App.jsx                    # Multi-view interactive dashboard (7 tabs)
+│       └── App.jsx                    # Multi-view interactive dashboard (8 tabs)
 │
 ├── tests/                             # Automated Acceptance Suite
-│   └── test_cleartrace.py             # 10-point comprehensive pytest matrix (100% passing)
+│   └── test_cleartrace.py             # 20-point comprehensive pytest matrix (100% passing)
 │
 ├── scripts/                           # Tooling & Verification CLIs
 │   ├── run_all_verifications.sh       # One-command automated master runner
 │   ├── verify_replay_cert.py          # Standalone cryptographic proof verifier
+│   ├── validate_proof.py              # Proof verification CLI wrapper
 │   ├── seed_presets.py                # Database seeder
 │   ├── export_audit_bundle.py         # Judge audit bundle exporter
 │   └── benchmark_engine.py            # Latency and throughput benchmark
