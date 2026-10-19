@@ -228,3 +228,17 @@ def test_11_metta_atomspace_inspection():
     assert "AGREEMENT" in data["status_symbols"]
 
 
+
+def test_12_hierarchical_merkle_tree_layers():
+    case_id = client.post("/api/cases/from-preset/rights").json()["case"]["case_id"]
+    client.post(f"/api/cases/{case_id}/reconcile")
+
+    tree_res = client.get(f"/api/cases/{case_id}/merkle-tree")
+    assert tree_res.status_code == 200
+    tree_data = tree_res.json()
+    assert tree_data["leaves_count"] > 0
+    assert tree_data["tree_depth"] >= 1
+    assert len(tree_data["merkle_root"]) == 64
+    assert tree_data["layers"][-1][0] == tree_data["merkle_root"]
+
+
