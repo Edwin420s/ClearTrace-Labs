@@ -180,3 +180,8 @@ class QuickReconcileRequest(BaseModel):
     source_a_text: str = Field(..., description="Raw text of Document A")
     source_b_label: str = Field(default="Primary Source B")
     source_b_text: str = Field(..., description="Raw text of Document B")
+    corroboration_label: Optional[str] = Field(default="3rd-Party Corroborator", description="Optional 3rd party record")
+    corroboration_text: Optional[str] = Field(default=None, description="Optional corroborating text")
+    negotiation_round_limit: int = Field(default=3, ge=1, le=5)
+    include_corroboration: bool = Field(default=False)
+
