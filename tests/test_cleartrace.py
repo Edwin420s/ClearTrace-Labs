@@ -355,3 +355,14 @@ def test_17_merkle_root_determinism_and_idempotency():
     assert tree1["layers"] == tree2["layers"]
 
 
+
+def test_18_quick_reconcile_missing_fields_validation():
+    bad_payload = {
+        "title": "Invalid Case",
+        "domain": "generic",
+        "source_a_label": "Doc A",
+    }
+    res = client.post("/api/cases/quick-reconcile", json=bad_payload)
+    assert res.status_code == 422
+
+
