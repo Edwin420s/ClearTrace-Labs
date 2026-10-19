@@ -446,4 +446,9 @@ class SymbolicReasoner:
             "total_rules": len(self.space.rules),
             "total_facts": len(self.space.facts),
             "rules": rules_summary,
+            "known_types": ["Entity", "Property", "Value", "Status", "Agent", "Stage", "CommunityArchive"],
+            "status_symbols": [
+                "AGREEMENT", "CONTRADICTION", "SOURCE_EXCLUSIVE",
+                "EVIDENCE_SUPPORTED", "RULE_VERIFIED", "INSUFFICIENT_EVIDENCE"
+            ],
         }
