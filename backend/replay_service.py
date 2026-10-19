@@ -76,6 +76,9 @@ class DecisionReplayService:
         layers = compute_merkle_tree_layers(leaf_hashes)
         return {
             "leaves_count": len(leaf_hashes),
+            "sources_count": len(sources),
+            "negotiation_steps_count": len(negotiation_history),
+            "findings_count": len(findings),
             "tree_depth": len(layers),
             "merkle_root": layers[-1][0] if layers and layers[-1] else "",
             "layers": layers,
