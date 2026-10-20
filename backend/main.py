@@ -134,12 +134,12 @@ def get_current_user(
 ) -> Optional[Dict[str, Any]]:
     """Resolves authenticated user from Bearer token or X-User-Id header."""
     init_db()
-    if authorization and authorization.lower().startswith("bearer "):
+    if isinstance(authorization, str) and authorization.lower().startswith("bearer "):
         token = authorization[7:].strip()
         user = get_user_by_token(token)
         if user:
             return user
-    if x_user_id:
+    if isinstance(x_user_id, str) and x_user_id.strip():
         user = get_user_by_id(x_user_id.strip())
         if user:
             return user
