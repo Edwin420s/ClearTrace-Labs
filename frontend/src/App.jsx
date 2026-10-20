@@ -643,7 +643,7 @@ export default function App() {
       <main
         className={`${
           activeTab === 'history' || activeTab === 'landing' ? 'max-w-7xl' : 'max-w-5xl'
-        } mx-auto px-4 sm:px-6 py-8 flex flex-col gap-6 transition-all duration-200`}
+        } mx-auto px-3 sm:px-6 py-4 sm:py-8 flex flex-col gap-5 sm:gap-6 transition-all duration-200 w-full`}
       >
         {!user || activeTab === 'landing' ? (
           <LandingPage

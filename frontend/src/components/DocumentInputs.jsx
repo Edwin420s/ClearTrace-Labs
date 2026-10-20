@@ -156,7 +156,7 @@ export default function DocumentInputs({
   };
 
   return (
-    <section className="flex flex-col gap-4 bg-[#0F172A] p-6 rounded-xl border border-[#1E293B]">
+    <section className="flex flex-col gap-4 bg-[#0F172A] p-4 sm:p-6 rounded-xl border border-[#1E293B]">
       {/* Hidden File Inputs */}
       <input
         type="file"
@@ -201,8 +201,8 @@ export default function DocumentInputs({
 
       {/* Step Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold text-sm border border-sky-500/20">
+        <div className="flex items-start sm:items-center gap-3">
+          <div className="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold text-sm border border-sky-500/20 shrink-0">
             1
           </div>
           <div>
@@ -215,23 +215,23 @@ export default function DocumentInputs({
           </div>
         </div>
 
-        <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
+        <div className="flex items-center gap-2 self-stretch sm:self-auto justify-end flex-wrap pt-1 sm:pt-0">
           {report && (
             <button
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="flex items-center gap-1.5 px-3 py-1 rounded text-xs text-sky-400 hover:text-white bg-[#1E293B] hover:bg-[#334155] transition-colors cursor-pointer border border-sky-500/20"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded text-xs text-sky-400 hover:text-white bg-[#1E293B] hover:bg-[#334155] transition-colors cursor-pointer border border-sky-500/20"
               type="button"
               title={isCollapsed ? 'Expand document inputs' : 'Collapse document inputs'}
             >
               <span className="material-symbols-outlined text-[15px]">
                 {isCollapsed ? 'unfold_more' : 'unfold_less'}
               </span>
-              <span>{isCollapsed ? 'Expand Inputs' : 'Collapse Inputs'}</span>
+              <span>{isCollapsed ? 'Expand' : 'Collapse'}</span>
             </button>
           )}
           <button
             onClick={handleClearAll}
-            className="flex items-center gap-1.5 px-3 py-1 rounded text-xs text-slate-400 hover:text-white bg-[#1E293B] hover:bg-[#334155] transition-colors cursor-pointer"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded text-xs text-slate-400 hover:text-white bg-[#1E293B] hover:bg-[#334155] transition-colors cursor-pointer"
             type="button"
           >
             <span className="material-symbols-outlined text-[15px]">clear_all</span>
@@ -394,9 +394,9 @@ export default function DocumentInputs({
                   : 'border-[#1E293B] hover:border-pink-500/40'
               }`}
             >
-              <div className="flex items-center justify-between gap-2 flex-wrap">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-md bg-pink-500/10 border border-pink-500/30 text-pink-400 flex items-center justify-center font-bold font-mono text-[11px]">
+                  <div className="w-6 h-6 rounded-md bg-pink-500/10 border border-pink-500/30 text-pink-400 flex items-center justify-center font-bold font-mono text-[11px] shrink-0">
                     A
                   </div>
                   <div>
@@ -409,7 +409,7 @@ export default function DocumentInputs({
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between sm:justify-end gap-2 pt-1 sm:pt-0 border-t sm:border-t-0 border-[#1E293B]">
                   <button
                     onClick={() => fileInputARef.current?.click()}
                     disabled={uploadingA}
@@ -486,9 +486,9 @@ export default function DocumentInputs({
                   : 'border-[#1E293B] hover:border-sky-500/40'
               }`}
             >
-              <div className="flex items-center justify-between gap-2 flex-wrap">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-md bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center font-bold font-mono text-[11px]">
+                  <div className="w-6 h-6 rounded-md bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center font-bold font-mono text-[11px] shrink-0">
                     B
                   </div>
                   <div>
@@ -501,7 +501,7 @@ export default function DocumentInputs({
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between sm:justify-end gap-2 pt-1 sm:pt-0 border-t sm:border-t-0 border-[#1E293B]">
                   <button
                     onClick={() => fileInputBRef.current?.click()}
                     disabled={uploadingB}

@@ -40,22 +40,22 @@ export default function LandingPage({
   return (
     <div className="flex flex-col gap-16 py-4 animate-fade-in text-slate-100">
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#0F172A] via-[#0B1120] to-[#070B14] p-8 sm:p-12 md:p-16 border border-[#1E293B] shadow-2xl">
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#0F172A] via-[#0B1120] to-[#070B14] p-5 sm:p-12 md:p-16 border border-[#1E293B] shadow-2xl">
         {/* Ambient Glows */}
         <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-sky-500/10 blur-3xl pointer-events-none"></div>
         <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none"></div>
 
-        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center gap-6">
+        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center gap-5 sm:gap-6">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-300 text-xs font-semibold shadow-sm">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-300 text-[11px] sm:text-xs font-semibold shadow-sm flex-wrap justify-center">
             <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
             <span>Evidence-First Truth Engine</span>
-            <span className="text-slate-500">•</span>
-            <span className="text-slate-400 font-normal">Powered by SingularityNET MeTTa</span>
+            <span className="text-slate-500 hidden sm:inline">•</span>
+            <span className="text-slate-400 font-normal hidden sm:inline">Powered by SingularityNET MeTTa</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.15]">
+          <h1 className="text-2xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.2] sm:leading-[1.15]">
             Reconcile Conflicting Documents.{' '}
             <span className="bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
               Prove Every Fact.
@@ -64,7 +64,7 @@ export default function LandingPage({
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
+          <p className="text-sm sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
             When business documents disagree—such as Purchase Orders vs. Invoices, or Split Sheets
             vs. Royalty Statements—standard AI invents fake compromises. ClearTrace deploys two
             independent AI agents and deterministic MeTTa symbolic logic to pinpoint discrepancies,
@@ -92,27 +92,25 @@ export default function LandingPage({
               <span className="material-symbols-outlined text-amber-400 text-[18px]">bolt</span>
               <span>Try Demo Sandbox</span>
             </button>
-
-
           </div>
 
           {/* Key Metric Pills */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full pt-6 border-t border-[#1E293B]/80 mt-2">
-            <div className="p-3 rounded-xl bg-[#070B14]/60 border border-[#1E293B] flex flex-col items-center">
-              <span className="text-xl font-extrabold text-white">0%</span>
-              <span className="text-[11px] text-slate-400 mt-0.5">False Consensus</span>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full pt-4 sm:pt-6 border-t border-[#1E293B]/80 mt-2">
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[#070B14]/60 border border-[#1E293B] flex flex-col items-center">
+              <span className="text-lg sm:text-xl font-extrabold text-white">0%</span>
+              <span className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">False Consensus</span>
             </div>
-            <div className="p-3 rounded-xl bg-[#070B14]/60 border border-[#1E293B] flex flex-col items-center">
-              <span className="text-xl font-extrabold text-sky-400">&lt; 35ms</span>
-              <span className="text-[11px] text-slate-400 mt-0.5">Reasoning Latency</span>
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[#070B14]/60 border border-[#1E293B] flex flex-col items-center">
+              <span className="text-lg sm:text-xl font-extrabold text-sky-400">&lt; 35ms</span>
+              <span className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">Reasoning Latency</span>
             </div>
-            <div className="p-3 rounded-xl bg-[#070B14]/60 border border-[#1E293B] flex flex-col items-center">
-              <span className="text-xl font-extrabold text-emerald-400">SHA-256</span>
-              <span className="text-[11px] text-slate-400 mt-0.5">Merkle Proof Sealed</span>
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[#070B14]/60 border border-[#1E293B] flex flex-col items-center">
+              <span className="text-lg sm:text-xl font-extrabold text-emerald-400">SHA-256</span>
+              <span className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">Merkle Proof Sealed</span>
             </div>
-            <div className="p-3 rounded-xl bg-[#070B14]/60 border border-[#1E293B] flex flex-col items-center">
-              <span className="text-xl font-extrabold text-teal-400">Air-Gapped</span>
-              <span className="text-[11px] text-slate-400 mt-0.5">Tenant Isolation</span>
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[#070B14]/60 border border-[#1E293B] flex flex-col items-center">
+              <span className="text-lg sm:text-xl font-extrabold text-teal-400">Air-Gapped</span>
+              <span className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">Tenant Isolation</span>
             </div>
           </div>
         </div>
@@ -135,10 +133,10 @@ export default function LandingPage({
           </div>
 
           {/* Toggle buttons */}
-          <div className="p-1 rounded-xl bg-[#0F172A] border border-[#1E293B] flex items-center gap-1 self-start sm:self-auto">
+          <div className="p-1 rounded-xl bg-[#0F172A] border border-[#1E293B] grid grid-cols-2 sm:flex items-center gap-1 w-full sm:w-auto">
             <button
               onClick={() => setDemoState('with_conflict')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
                 demoState === 'with_conflict'
                   ? 'bg-rose-600 text-white shadow-sm'
                   : 'text-slate-400 hover:text-white'
@@ -149,7 +147,7 @@ export default function LandingPage({
             </button>
             <button
               onClick={() => setDemoState('resolved')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
                 demoState === 'resolved'
                   ? 'bg-emerald-600 text-white shadow-sm'
                   : 'text-slate-400 hover:text-white'
@@ -162,7 +160,7 @@ export default function LandingPage({
         </div>
 
         {/* The Interactive Card */}
-        <div className="rounded-2xl bg-[#0F172A] border border-[#1E293B] shadow-xl p-6 flex flex-col gap-5">
+        <div className="rounded-2xl bg-[#0F172A] border border-[#1E293B] shadow-xl p-4 sm:p-6 flex flex-col gap-4 sm:gap-5">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2">
               <span className="font-bold text-sm text-white">Purchase Order Line Quantity</span>

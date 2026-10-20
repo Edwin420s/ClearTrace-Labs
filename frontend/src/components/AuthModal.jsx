@@ -80,20 +80,20 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, initialMode 
       role="dialog"
       aria-modal="true"
       aria-labelledby="auth-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in overflow-y-auto"
     >
-      <div className="bg-[#0B1120] border border-[#1E293B] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
+      <div className="bg-[#0B1120] border border-[#1E293B] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col max-h-[92vh] my-auto">
         {/* Modal Header */}
-        <div className="p-6 border-b border-[#1E293B] bg-gradient-to-b from-[#0F172A] to-[#0B1120] flex items-center justify-between">
+        <div className="p-4 sm:p-6 border-b border-[#1E293B] bg-gradient-to-b from-[#0F172A] to-[#0B1120] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 font-mono font-bold text-sm shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 font-mono font-bold text-sm shadow-sm shrink-0">
               CT
             </div>
             <div>
-              <h2 id="auth-modal-title" className="text-lg font-bold text-white tracking-tight">
+              <h2 id="auth-modal-title" className="text-base sm:text-lg font-bold text-white tracking-tight">
                 {mode === 'register' ? 'Create Auditor Account' : 'Sign In to ClearTrace'}
               </h2>
-              <p className="text-xs text-slate-400">
+              <p className="text-[11px] sm:text-xs text-slate-400">
                 {mode === 'register'
                   ? 'Independent, private workspace for your documents'
                   : 'Access your private reconciliations and audit certificates'}
@@ -103,7 +103,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, initialMode 
           <button
             onClick={onClose}
             aria-label="Close dialog"
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#1E293B] transition-colors cursor-pointer"
+            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#1E293B] transition-colors cursor-pointer shrink-0"
             type="button"
           >
             <span className="material-symbols-outlined text-[20px]">close</span>
@@ -111,7 +111,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, initialMode 
         </div>
 
         {/* Tab Switcher: Sign In vs Create Account */}
-        <div className="px-6 pt-5">
+        <div className="px-4 sm:px-6 pt-4 sm:pt-5">
           <div className="grid grid-cols-2 p-1 rounded-xl bg-[#070B14] border border-[#1E293B]">
             <button
               onClick={() => {
@@ -153,7 +153,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, initialMode 
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 flex flex-col gap-3.5 sm:gap-4 overflow-y-auto">
           {mode === 'register' && (
             <div>
               <label className="block text-xs font-medium text-slate-300 mb-1">

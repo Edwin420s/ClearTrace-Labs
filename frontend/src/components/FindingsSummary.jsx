@@ -245,8 +245,8 @@ export default function FindingsSummary({
               </div>
             </div>
 
-            {/* Stepper Steps */}
-            <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 pt-1">
+            {/* Stepper Steps (Responsive 2-Col Mobile, 5-Col Desktop) */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 pt-1">
               <div className="p-2.5 rounded-lg bg-[#0F172A] border border-[#1E293B] flex flex-col gap-1">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono text-cyan-400 font-bold">STAGE 1</span>
@@ -283,7 +283,7 @@ export default function FindingsSummary({
                 <span className="text-[10px] text-slate-400 leading-tight">Symbolic rewrite in typed Atomspace</span>
               </div>
 
-              <div className="p-2.5 rounded-lg bg-[#0F172A] border border-[#1E293B] flex flex-col gap-1">
+              <div className="col-span-2 sm:col-span-1 p-2.5 rounded-lg bg-[#0F172A] border border-[#1E293B] flex flex-col gap-1">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono text-cyan-400 font-bold">STAGE 5</span>
                   <span className="material-symbols-outlined text-[14px] text-emerald-400">check_circle</span>
@@ -346,7 +346,7 @@ export default function FindingsSummary({
             </div>
 
             {hasFinancialDispute && (
-              <div className="shrink-0 bg-[#0B1120] px-3.5 py-2 rounded-lg border border-rose-500/30 text-right">
+              <div className="w-full sm:w-auto shrink-0 bg-[#0B1120] px-3.5 py-2 rounded-lg border border-rose-500/30 text-left sm:text-right">
                 <span className="text-[10px] text-slate-400 block uppercase font-mono">Held Variance</span>
                 <span className="text-sm font-bold text-rose-400 font-mono">
                   {totalFinancialVarianceKsh > 0

@@ -189,7 +189,7 @@ export default function AdvancedAudit({
   };
 
   return (
-    <section className="flex flex-col gap-5 p-6 rounded-xl bg-[#0F172A] border border-[#1E293B] shadow-xl">
+    <section className="flex flex-col gap-5 p-4 sm:p-6 rounded-xl bg-[#0F172A] border border-[#1E293B] shadow-xl">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#1E293B] pb-4">
         <div>
@@ -207,11 +207,11 @@ export default function AdvancedAudit({
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <button
             onClick={handleVerifyProof}
             disabled={verifyingProof}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold transition-all cursor-pointer shadow-sm shadow-sky-900/30"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold transition-all cursor-pointer shadow-sm shadow-sky-900/30"
             type="button"
           >
             <span className="material-symbols-outlined text-[16px]">verified</span>
@@ -219,7 +219,7 @@ export default function AdvancedAudit({
           </button>
           <button
             onClick={downloadCert}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1E293B] hover:bg-[#334155] text-slate-200 text-xs font-semibold border border-[#334155] transition-colors cursor-pointer"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1E293B] hover:bg-[#334155] text-slate-200 text-xs font-semibold border border-[#334155] transition-colors cursor-pointer"
             type="button"
           >
             <span className="material-symbols-outlined text-[16px]">download</span>
@@ -270,11 +270,11 @@ export default function AdvancedAudit({
         </div>
       )}
 
-      {/* Navigation Sub-Tabs */}
-      <div className="flex items-center gap-1.5 border-b border-[#1E293B] pb-2 flex-wrap">
+      {/* Navigation Sub-Tabs (Horizontally Scrollable on Mobile) */}
+      <div className="flex items-center gap-1.5 border-b border-[#1E293B] pb-2 overflow-x-auto whitespace-nowrap scrollbar-none">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
             activeTab === 'overview'
               ? 'bg-sky-600 text-white shadow-sm'
               : 'text-slate-400 hover:text-white hover:bg-[#1E293B]'
@@ -282,12 +282,12 @@ export default function AdvancedAudit({
           type="button"
         >
           <span className="material-symbols-outlined text-[15px]">security</span>
-          <span>Replay Certificate & Multi-Agent Rounds</span>
+          <span><span className="hidden sm:inline">Replay </span>Cert & Rounds</span>
         </button>
 
         <button
           onClick={() => setActiveTab('merkle')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
             activeTab === 'merkle'
               ? 'bg-sky-600 text-white shadow-sm'
               : 'text-slate-400 hover:text-white hover:bg-[#1E293B]'
@@ -295,12 +295,12 @@ export default function AdvancedAudit({
           type="button"
         >
           <span className="material-symbols-outlined text-[15px]">account_tree</span>
-          <span>Hierarchical Merkle Tree Visualizer</span>
+          <span><span className="hidden sm:inline">Hierarchical </span>Merkle Tree</span>
         </button>
 
         <button
           onClick={() => setActiveTab('atomspace')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
             activeTab === 'atomspace'
               ? 'bg-sky-600 text-white shadow-sm'
               : 'text-slate-400 hover:text-white hover:bg-[#1E293B]'
@@ -308,12 +308,12 @@ export default function AdvancedAudit({
           type="button"
         >
           <span className="material-symbols-outlined text-[15px]">memory</span>
-          <span>MeTTa Atomspace Inspector</span>
+          <span>MeTTa Atomspace<span className="hidden sm:inline"> Inspector</span></span>
         </button>
 
         <button
           onClick={() => setActiveTab('rule_studio')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
             activeTab === 'rule_studio'
               ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-sm'
               : 'text-purple-300 hover:text-white hover:bg-purple-950/40 border border-purple-500/20'
@@ -321,7 +321,7 @@ export default function AdvancedAudit({
           type="button"
         >
           <span className="material-symbols-outlined text-[15px]">psychology</span>
-          <span>Rule-Learning Studio (The Agent That Grows Up)</span>
+          <span>Rule Studio<span className="hidden sm:inline"> (Agent That Grows Up)</span></span>
         </button>
       </div>
 

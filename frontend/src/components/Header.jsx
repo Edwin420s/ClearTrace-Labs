@@ -67,8 +67,8 @@ export default function Header({
           </div>
         </div>
 
-        {/* Center: Navigation Tabs */}
-        <nav className="flex items-center gap-1 bg-[#0F172A] p-1 rounded-xl border border-[#1E293B]">
+        {/* Center: Desktop Navigation Tabs */}
+        <nav className="hidden md:flex items-center gap-1 bg-[#0F172A] p-1 rounded-xl border border-[#1E293B]">
           <button
             onClick={() => setActiveTab('landing')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
@@ -81,7 +81,6 @@ export default function Header({
             <span className="material-symbols-outlined text-[16px]">hub</span>
             <span>Product</span>
           </button>
-
 
           <button
             onClick={() => {
@@ -272,6 +271,65 @@ export default function Header({
             </div>
           )}
         </div>
+      </div>
+
+      {/* Mobile Navigation Sub-Bar (Touch-Friendly Bottom Segment on Small Devices) */}
+      <div className="md:hidden border-t border-[#1E293B] bg-[#070B14]/95 px-3 py-1.5 flex items-center justify-around gap-1">
+        <button
+          onClick={() => setActiveTab('landing')}
+          className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            activeTab === 'landing'
+              ? 'bg-sky-600 text-white shadow-sm'
+              : 'text-slate-400 hover:text-white'
+          }`}
+          type="button"
+        >
+          <span className="material-symbols-outlined text-[16px]">hub</span>
+          <span>Product</span>
+        </button>
+
+        <button
+          onClick={() => {
+            if (!user) {
+              onOpenAuth('login');
+              return;
+            }
+            setActiveTab('workbench');
+          }}
+          className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            activeTab === 'workbench'
+              ? 'bg-sky-600 text-white shadow-sm'
+              : 'text-slate-400 hover:text-white'
+          }`}
+          type="button"
+        >
+          <span className="material-symbols-outlined text-[16px]">compare_arrows</span>
+          <span>Reconcile</span>
+        </button>
+
+        <button
+          onClick={() => {
+            if (!user) {
+              onOpenAuth('login');
+              return;
+            }
+            setActiveTab('history');
+          }}
+          className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            activeTab === 'history'
+              ? 'bg-sky-600 text-white shadow-sm'
+              : 'text-slate-400 hover:text-white'
+          }`}
+          type="button"
+        >
+          <span className="material-symbols-outlined text-[16px]">folder_open</span>
+          <span>History</span>
+          {user && caseCount > 0 && (
+            <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-[#1E293B] text-slate-300 ml-0.5">
+              {caseCount}
+            </span>
+          )}
+        </button>
       </div>
     </header>
   );

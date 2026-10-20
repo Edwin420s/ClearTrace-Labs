@@ -33,6 +33,7 @@ export default function ReportModal({
     summary.execution_time_ms ||
     runTiming?.executionTimeMs ||
     38.5;
+  const completedDate = caseInfo.completed_at || caseInfo.created_at || report.timestamp || report.created_at;
   let completedFormatted = 'Recent';
   if (completedDate) {
     try {
@@ -60,13 +61,13 @@ export default function ReportModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
       <div
         id="printable-report"
-        className="relative w-full max-w-4xl bg-[#0F172A] border border-[#1E293B] rounded-2xl shadow-2xl overflow-hidden my-8 flex flex-col max-h-[90vh]"
+        className="relative w-full max-w-4xl bg-[#0F172A] border border-[#1E293B] rounded-2xl shadow-2xl overflow-hidden my-2 sm:my-8 flex flex-col max-h-[92vh]"
       >
         {/* Modal Top Action Bar (Hidden during print) */}
-        <div className="print:hidden flex items-center justify-between px-6 py-4 border-b border-[#1E293B] bg-[#0B1120] flex-wrap gap-3">
+        <div className="print:hidden flex items-center justify-between px-3 sm:px-6 py-3 border-b border-[#1E293B] bg-[#0B1120] flex-wrap gap-2 sm:gap-3">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-sky-400 text-[22px]">description</span>
             <span className="font-bold text-sm text-white">Reconciliation Audit Report</span>
