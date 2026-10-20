@@ -23,6 +23,7 @@ class CreateCaseRequest(BaseModel):
     title: str
     domain: str = Field(default="peace", description="Domain e.g. 'peace', 'rights', 'invoice', or custom domain")
     description: Optional[str] = None
+    user_id: Optional[str] = None
     sources: List[SourceDocumentInput]
 
 
@@ -177,6 +178,7 @@ class QuickReconcileRequest(BaseModel):
     """Schema for ad-hoc reconciliation from unstructured text."""
     title: str = Field(default="Quick Case Reconciliation", description="Title of the dispute case")
     domain: str = Field(default="peace", description="'peace', 'rights', or 'invoice'")
+    user_id: Optional[str] = Field(default=None, description="Owner user ID for isolated multi-tenant privacy")
     source_a_label: str = Field(default="Primary Source A")
     source_a_text: str = Field(..., description="Raw text of Document A")
     source_b_label: str = Field(default="Primary Source B")
@@ -185,4 +187,31 @@ class QuickReconcileRequest(BaseModel):
     corroboration_text: Optional[str] = Field(default=None, description="Optional corroborating text")
     negotiation_round_limit: int = Field(default=3, ge=1, le=5)
     include_corroboration: bool = Field(default=False)
+
+
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+    full_name: str
+    organization: Optional[str] = "Independent"
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class UserProfile(BaseModel):
+    user_id: str
+    email: str
+    full_name: str
+    organization: Optional[str] = "Independent"
+    role: str = "auditor"
+    created_at: str
+
+
+class AuthTokenResponse(BaseModel):
+    token: str
+    user: UserProfile
+
 
