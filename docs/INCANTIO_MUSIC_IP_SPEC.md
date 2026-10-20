@@ -1,8 +1,8 @@
 # ClearTrace Labs — Incantio Creative Rights & Royalty Reconciliation Specification
 
-**Track 02 Partner Brief**: Incantio.com Music Business & Rights as Rules  
-**Brief Requirement**: *"Royalty reconciliation: Platform and label statements disagree — agents find the missing money."*  
-**Problem Context**: Co-writer split sheets vs. DSP streaming statements (Spotify, Apple Music, YouTube)  
+**Domain Application**: Music Publishing & Digital Streaming Royalty Reconciliation  
+**Core Requirement**: Auditing contractual split agreements against DSP statements and identifying missing disbursements.  
+**Case Study Context**: Co-writer split sheets vs. DSP streaming remittance statements  
 
 ---
 
