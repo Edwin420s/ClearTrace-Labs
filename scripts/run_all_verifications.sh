@@ -3,7 +3,7 @@
 set -e
 
 echo "================================================================="
-echo " ClearTrace Labs — Verification Suite (Track 02: Omega AI Agents)"
+echo " ClearTrace Labs — Master System Verification Suite"
 echo "================================================================="
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
