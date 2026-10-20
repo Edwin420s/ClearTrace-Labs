@@ -1,7 +1,7 @@
 ;; ============================================================================
 ;; ClearTrace Labs — Core Symbolic Reconciliation Rules
 ;; Substrate: SingularityNET Hyperon / MeTTa
-;; Track 02: Omega AI Agents — Two Agents, One Truth
+;; Architecture: Multi-Agent Truth & Consensus Engine
 ;; ============================================================================
 
 ;; Primary rule for classifying pairwise claims with optional corroboration and ground truth verification
