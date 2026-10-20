@@ -189,10 +189,10 @@ class MultiAgentReconciliationEngine:
                         metta_output=metta_out,
                         metta_reduction_trace=metta_trace,
                         explanation=(
-                            f"Asymmetric Record: '{present_claim.value}' is documented exclusively by "
-                            f"{present_claim.source_label} ({present_claim.evidence_ref}). Preserved with attribution."
+                            f"Recorded only in {present_claim.source_label} ('{present_claim.value}'). "
+                            f"Not mentioned in {missing_side}."
                         ),
-                        recommended_action="Include in report with explicit single-source attribution.",
+                        recommended_action="Keep as single-source note.",
                     )
                 )
                 continue
@@ -216,10 +216,9 @@ class MultiAgentReconciliationEngine:
                         metta_output=metta_out,
                         metta_reduction_trace=metta_trace,
                         explanation=(
-                            f"Corroborated Agreement: Both {ca.source_label} and {cb.source_label} "
-                            f"independently establish '{val_a}'."
+                            f"Both {ca.source_label} and {cb.source_label} agree on '{val_a}'."
                         ),
-                        recommended_action="Accept corroborated fact into the verified record.",
+                        recommended_action="Verified match between both records.",
                     )
                 )
                 continue
@@ -306,10 +305,10 @@ class MultiAgentReconciliationEngine:
                         metta_reduction_trace=metta_trace,
                         financial_impact=impact,
                         explanation=(
-                            f"Resolved via Corroboration: Initial conflict ('{val_a}' vs '{val_b}') "
-                            f"was settled by {cc.source_label} ({cc.evidence_ref}), establishing '{winning_val}'."
+                            f"Resolved via third document: Initial difference ('{val_a}' vs '{val_b}') "
+                            f"was verified by {cc.source_label} ({cc.evidence_ref}), confirming '{winning_val}'."
                         ),
-                        recommended_action=f"Adopt corroborated value '{winning_val}' with full audit trail.",
+                        recommended_action=f"Adopt verified value '{winning_val}'.",
                     )
                 )
             else:
@@ -465,8 +464,8 @@ class MultiAgentReconciliationEngine:
                     "Hold payment approval and request a signed delivery note or approved PO amendment.",
                 )
         return (
-            f"Direct contradiction on '{prop}': {ca.source_label} states '{ca.value}' vs {cb.source_label} '{cb.value}'.",
-            "Escalate to human reviewer with source citations.",
+            f"Discrepancy found: {ca.source_label} states '{ca.value}', but {cb.source_label} states '{cb.value}'.",
+            "Review both source documents or verify with the document owners.",
         )
 
     def _build_domain_summary(
