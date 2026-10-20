@@ -7,12 +7,26 @@
 > **Engineering Lead:** Edwin Mwiti • **Architecture:** SingularityNET Hyperon / MeTTa & Omega Multi-Agent Cognitive Architecture  
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Track: Track 02 MeTTa Omega](https://img.shields.io/badge/Track-Track%2002%20MeTTa%20Omega%20(Builders)-purple)](hackathon-starter/track-02-builders.md)
+[![Track: Track 02 MeTTa Omega](https://img.shields.io/badge/Track-Track%2002%20MeTTa%20Omega%20(Builders)-purple)](docs/TRACK_02_ALIGNMENT.md)
 [![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
 [![FastAPI: Production](https://img.shields.io/badge/FastAPI-v0.115-emerald)](https://fastapi.tiangolo.com)
 [![MeTTa: Hyperon](https://img.shields.io/badge/MeTTa-Hyperon%20Symbolic%20Engine-purple)](https://singularitynet.io)
 [![Tests: 33/33 Passing](https://img.shields.io/badge/Tests-33%2F33%20Passing%20(100%25)-brightgreen)](tests/)
 [![Proofs: Cryptographic SHA-256 Merkle](https://img.shields.io/badge/Proofs-SHA--256%20Merkle%20DAG-blueviolet)](scripts/validate_proof.py)
+
+---
+
+### 🧭 Submission & Audience Navigator
+
+| For Evaluator / Reader | Recommended Starting Document | What You Will Learn |
+| :--- | :--- | :--- |
+| 🧑‍⚖️ **Hackathon Judges & Mentors** | 🎯 [`docs/TRACK_02_ALIGNMENT.md`](docs/TRACK_02_ALIGNMENT.md) | Rubric compliance (30% Execution, 25% Demo, 25% Track Fit, 20% Docs), Challenge 4/1/2/7 proofs, 1-line verification commands. |
+| 👥 **Non-Technical & Business People** | 📖 [`docs/NON_TECHNICAL_GUIDE.md`](docs/NON_TECHNICAL_GUIDE.md) | Plain-English walkthrough, everyday analogies, why ChatGPT makes costly errors, and the 3 real-world stories (Office Invoices, Music Royalties, Peace Archives). |
+| 💼 **Investors & Business Leaders** | 💼 [`docs/BUSINESS_OVERVIEW.md`](docs/BUSINESS_OVERVIEW.md) | Market sizing ($28B friction), customer personas, pricing tiers ($99/$499/$2.5k), customer ROI (>1,300%), and BASIX incubation roadmap. |
+| 🎥 **Video Evaluators** | 🎬 [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md) | Exact 3-minute video presentation script and narrative breakdown. |
+| 📊 **Presentation Evaluators** | 📑 [`docs/ClearTrace_Labs_Presentation.pdf`](docs/ClearTrace_Labs_Presentation.pdf) | Official presentation slide deck. |
+| ⚖️ **Compliance & Ethics Reviewers** | 🛡️ [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md) | Formal Hackathon Rule 03 compliance: AI tools disclosed, 100% deterministic MeTTa runtime execution. |
+| ☁️ **DevOps & Cloud Engineers** | 🚀 [`DEPLOYMENT.md`](DEPLOYMENT.md) | Single-port full-stack Docker, Render 1-click blueprint, Railway, Fly.io, and Vercel configs. |
 
 ---
 
@@ -106,8 +120,8 @@ flowchart TD
 
 ### 1. Clone & Install Dependencies
 ```bash
-git clone https://github.com/Edwin420s/SafeLedger.git
-cd SafeLedger/cleartrace-labs
+git clone https://github.com/Edwin420s/ClearTrace-Labs.git
+cd ClearTrace-Labs
 
 # Install Python backend dependencies
 pip install -r requirements.txt
@@ -140,8 +154,9 @@ npm run dev -- --port 5173
 # Seed default demonstration benchmarks
 python3 scripts/seed_presets.py
 
-# Verify proof offline
-python3 scripts/validate_proof.py --case-id=CT-B1534BBE
+# Verify proof offline (supports 'latest', domain name, or specific case ID)
+python3 scripts/validate_proof.py --case-id=latest
+python3 scripts/validate_proof.py --case-id=invoice
 ```
 
 ### 6. Production Cloud & Docker Deployment
@@ -169,6 +184,18 @@ cleartrace-labs/
 ├── requirements.txt                   # Backend dependencies (fastapi, pydantic, pytest, httpx)
 ├── pytest.ini                         # Pytest configuration
 ├── LICENSE                            # Apache 2.0 open-source license
+│
+├── docs/                              # Enterprise Specifications & Guides
+│   ├── TRACK_02_ALIGNMENT.md          # Official Track 02 challenge alignment & judging rubric
+│   ├── NON_TECHNICAL_GUIDE.md         # Plain-English guide for non-technical evaluators & creators
+│   ├── BUSINESS_OVERVIEW.md           # Business model, market sizing, ROI & incubation plan
+│   ├── ARCHITECTURE.md                # System blueprint & 5-stage multi-agent loop
+│   ├── METTA_SYMBOLIC_SPEC.md         # Formal declarative reduction semantics
+│   ├── OMEGA_AGENT_PROTOCOL.md        # Stateful agent negotiation protocol
+│   ├── CRYPTOGRAPHIC_AUDIT_SPEC.md    # SHA-256 Merkle proofs & tamper-evident chaining
+│   ├── COMPLIANCE_AND_AUDIT.md        # Enterprise standards verification matrix
+│   ├── ClearTrace_Labs_Presentation.pdf # Official presentation slide deck
+│   └── API_SPECIFICATION.md           # REST API reference & schemas
 │
 ├── metta/                             # Symbolic Reasoning Substrate
 │   ├── ontology/types.metta           # Typed atom schemas (Entity, Property, Value, Status)

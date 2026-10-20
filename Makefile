@@ -18,7 +18,7 @@ verify:
 	./scripts/run_all_verifications.sh
 
 test:
-	pytest -v tests/test_cleartrace.py
+	pytest -v tests/
 
 benchmark:
 	python3 scripts/benchmark_engine.py

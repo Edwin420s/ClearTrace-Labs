@@ -31,7 +31,7 @@
   $$\text{INTAKE} \to \text{ALIGNMENT} \to \text{EVIDENCE\_EXCHANGE} \to \text{CORROBORATION} \to \text{RECONCILED}$$
 - **Cryptographic Replay Certificates**: SHA-256 Merkle root computation over decision findings, proving reproducibility offline via `scripts/verify_replay_cert.py`.
 - **Tamper-Evident Audit Chain**: SHA-256 hash chaining protecting all case events against tampering.
-- **Automated Test Matrix**: 25 comprehensive automated acceptance tests passing in local and containerized runtimes.
+- **Automated Test Matrix**: 33 comprehensive automated acceptance and security tests passing in local and containerized runtimes (100% pass rate).
 
 ### B. User Experience & Non-Technical Accessibility
 - **Dual-Mode UI**: Simple 3-step action mode for business users and non-technical readers, plus an Advanced Audit mode for compliance auditors and systems engineers.

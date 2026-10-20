@@ -37,9 +37,12 @@ def main():
         report = reconcile_case(case_id, ReconcileRequest(negotiation_round_limit=3, include_corroboration=False))
         findings_count = len(report["findings"])
         print(f"Reconciled {case_id} across {findings_count} properties. Status: {report['case']['status']}")
-        print(f"Replay Hash: {report['replay_certificate']['verification_hash'][:16]}...")
-
     print("\n[SUCCESS] All synthetic demo cases successfully seeded and reconciled.")
+    print("\nTo independently verify cryptographic proofs offline:")
+    print("  python3 scripts/validate_proof.py --case-id=latest")
+    print("  python3 scripts/validate_proof.py --case-id=invoice")
+    print("  python3 scripts/validate_proof.py --case-id=peace")
+    print("  python3 scripts/validate_proof.py --case-id=rights")
 
 
 if __name__ == "__main__":

@@ -23,8 +23,8 @@ ClearTrace Labs adheres strictly to:
 ### 2. Setup
 ```bash
 # Clone and enter the directory
-git clone https://github.com/Edwin420s/SafeLedger.git cleartrace-labs
-cd cleartrace-labs
+git clone https://github.com/Edwin420s/ClearTrace-Labs.git
+cd ClearTrace-Labs
 
 # Python Virtual Environment
 python3 -m venv .venv
@@ -38,11 +38,11 @@ cd ..
 ```
 
 ### 3. Running Acceptance Tests
-Before submitting any pull request, ensure all 10 acceptance tests pass:
+Before submitting any pull request, ensure all 33 acceptance and security tests pass:
 ```bash
 make verify
 # or
-pytest -v tests/test_cleartrace.py
+pytest -v tests/
 ```
 
 ### 4. Code Formatting & Linting
