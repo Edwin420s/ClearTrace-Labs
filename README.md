@@ -10,7 +10,7 @@
 [![FastAPI: Production](https://img.shields.io/badge/FastAPI-v0.115-emerald)](https://fastapi.tiangolo.com)
 [![Pitch Deck: PPTX Available](https://img.shields.io/badge/Pitch%20Deck-PPTX%20Included-orange)](ClearTrace_Labs_Product_Pitch_Deck.pptx)
 
-📊 **[Download Official Pitch Deck (PPTX)](ClearTrace_Labs_Product_Pitch_Deck.pptx)** • 📑 **[Read Pitch Deck in Markdown](docs/PITCH_DECK.md)** • 🎬 **[3-Minute Video Pitch Script](DEMO_SCRIPT.md)**
+📊 **[Download Official Pitch Deck (PPTX)](ClearTrace_Labs_Product_Pitch_Deck.pptx)** • 📑 **[Read Pitch Deck in Markdown](docs/PITCH_DECK.md)**
 
 ---
 
@@ -177,7 +177,6 @@ docker run -d -p 8000:8000 cleartrace-labs
 * 📖 **Plain-English Guide for Non-Technical Readers:** [`docs/NON_TECHNICAL_GUIDE.md`](docs/NON_TECHNICAL_GUIDE.md)
 * 💼 **Business Overview & Market Sizing:** [`docs/BUSINESS_OVERVIEW.md`](docs/BUSINESS_OVERVIEW.md)
 * 🎯 **Track 02 (Builders: MeTTa & Omega) Rubric Matrix:** [`docs/TRACK_02_ALIGNMENT.md`](docs/TRACK_02_ALIGNMENT.md)
-* 🎬 **3-Minute Video Pitch Script:** [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md)
 * 🛡️ **AI Engineering Disclosure (Rule 03):** [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md)
 * 🚀 **Cloud & Docker Deployment Guide:** [`DEPLOYMENT.md`](DEPLOYMENT.md)
 * 📐 **Technical Architecture & Specifications:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) • [`docs/METTA_SYMBOLIC_SPEC.md`](docs/METTA_SYMBOLIC_SPEC.md) • [`docs/API_SPECIFICATION.md`](docs/API_SPECIFICATION.md)
