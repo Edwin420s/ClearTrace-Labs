@@ -35,7 +35,7 @@ $$\text{decision\_digest} = \text{SHA-256}\left(\text{CanonicalJSON}\left(\{ \te
 $$\text{verification\_hash} = \text{SHA-256}\left(\text{CanonicalJSON}\left(\{ \text{case\_id}, \text{domain}, \text{decision\_digest}, \text{merkle\_root}, \text{status}, \dots \}\right)\right)$$
 
 ### Offline Verification CLI
-Judges and external auditors can verify any certificate offline in 1 line:
+Compliance officers, external auditors, and developers can verify any certificate offline in 1 line:
 ```bash
 python3 scripts/verify_replay_cert.py [path_to_bundle.json]
 ```
