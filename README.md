@@ -183,6 +183,14 @@ docker run -d -p 8000:8000 cleartrace-labs
 
 ---
 
+## 10. What We Would Build Next (Product Roadmap)
+
+* **On-Chain Escrow Settlement (SingularityNET / Base):** Integrate with smart contracts to automatically release milestone payments only when a 100% cryptographic MeTTa Merkle proof is recorded.
+* **Direct Enterprise ERP Connectors:** Seamless bi-directional plugins for SAP, NetSuite, and Workday accounts payable and inventory pipelines.
+* **SingularityNET Marketplace AI Service:** Publish the ClearTrace MeTTa engine as an accessible decentralized AI service with tokenized x402 / AgentCash micropayments.
+
+---
+
 ## Team & Submission Info
 * **Engineering Lead:** Edwin Mwiti (Institution: ClearTrace Labs)
 * **Track:** Track 02: MeTTa Omega (Builders)
