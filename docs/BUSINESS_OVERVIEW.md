@@ -37,14 +37,14 @@ Existing solutions fall into two flawed extremes:
 │ Capability                      │ Generic LLMs      │ Document Diffs   │ ClearTrace Labs      │
 │                                 │ (ChatGPT, Claude) │ (Diffchecker)    │ (Evidence-First)     │
 ├─────────────────────────────────┼───────────────────┼──────────────────┼──────────────────────┤
-│ Hallucination-Free Deduction    │ ❌ Guesses/Averages│ ❌ No semantic AI│ ✅ 100% Deterministic│
-│ Air-Gapped Ingestion            │ ❌ Same Prompt    │ ❌ None          │ ✅ Isolated Agents   │
-│ Financial Exposure Math         │ ⚠️ Probabilistic  │ ❌ None          │ ✅ Exact Invariant   │
-│ "What Could Help Resolve This?" │ ❌ Generic Prompt │ ❌ None          │ ✅ Domain Guidance   │
-│ Preserved Contradictions        │ ❌ Blurs Conflict │ ❌ Raw red/green │ ✅ Explicit Status   │
-│ Cryptographic Offline Proof     │ ❌ Impossible     │ ❌ None          │ ✅ SHA-256 Merkle DAG│
-│ Dynamic Rule Learning Studio    │ ❌ Prompt Hack    │ ❌ None          │ ✅ MeTTa Atomspace   │
-│ Multi-Tenant Isolation          │ ⚠️ Public Cloud   │ ⚠️ Cloud Upload  │ ✅ Air-Gapped DB     │
+│ Hallucination-Free Deduction    │ [No] Guesses/Averages│ [No] No semantic AI│ [Yes] 100% Deterministic│
+│ Air-Gapped Ingestion            │ [No] Same Prompt    │ [No] None          │ [Yes] Isolated Agents   │
+│ Financial Exposure Math         │ [Partial] Probabilistic  │ [No] None          │ [Yes] Exact Invariant   │
+│ "What Could Help Resolve This?" │ [No] Generic Prompt │ [No] None          │ [Yes] Domain Guidance   │
+│ Preserved Contradictions        │ [No] Blurs Conflict │ [No] Raw red/green │ [Yes] Explicit Status   │
+│ Cryptographic Offline Proof     │ [No] Impossible     │ [No] None          │ [Yes] SHA-256 Merkle DAG│
+│ Dynamic Rule Learning Studio    │ [No] Prompt Hack    │ [No] None          │ [Yes] MeTTa Atomspace   │
+│ Multi-Tenant Isolation          │ [Partial] Public Cloud   │ [Partial] Cloud Upload  │ [Yes] Air-Gapped DB     │
 └─────────────────────────────────┴───────────────────┴──────────────────┴──────────────────────┘
 ```
 

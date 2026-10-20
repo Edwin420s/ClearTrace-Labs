@@ -23,11 +23,11 @@ An evidence-first investigation workspace for resolving conflicting claims, redu
 ### Disagreement is expensive. Uncertainty is even worse.
 Organizations often have the records—but not a trusted way to resolve what they mean.
 
-* **💰 MONEY LEAKS:** Invoices, purchase orders, and delivery notes tell different stories.  
+* **MONEY LEAKS:** Invoices, purchase orders, and delivery notes tell different stories.  
   *Example: KSh 5,000 potential variance on a single order.*
-* **🤝 TRUST BREAKS:** Partners dispute ownership, terms, or what was actually agreed.  
+* **TRUST BREAKS:** Partners dispute ownership, terms, or what was actually agreed.  
   *Weeks of back-and-forth email arguments.*
-* **⏳ DECISIONS STALL:** Teams chase emails and spreadsheets instead of finding the missing proof.  
+* **DECISIONS STALL:** Teams chase emails and spreadsheets instead of finding the missing proof.  
   *Slow, hard-to-audit outcomes.*
 
 > **The Gap:** A comparison can show a mismatch. It rarely tells people what evidence would settle it—or how to defend the final call.
@@ -80,13 +80,13 @@ ClearTrace is designed for decisions that must stand up to scrutiny.
 ### Start where disagreement creates real operational cost.
 A focused entry market, with a path into other evidence-heavy workflows.
 
-* **🏢 Procurement & Finance:**  
+* **Procurement & Finance:**  
   Invoice / PO mismatch, duplicate charges, delivery disputes.  
   *Buyer: Finance lead or procurement manager.*
-* **📑 Contract & Partner Operations:**  
+* **Contract & Partner Operations:**  
   Conflicting terms, amendments, milestones, and obligations.  
   *Buyer: Operations or compliance lead.*
-* **🎵 Rights & Content Disputes:**  
+* **Rights & Content Disputes:**  
   Conflicting ownership, split sheets, permissions, and agreements.  
   *Buyer: Rights manager or platform operator.*
 

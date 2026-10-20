@@ -10,16 +10,16 @@
 [![FastAPI: Production](https://img.shields.io/badge/FastAPI-v0.115-emerald)](https://fastapi.tiangolo.com)
 [![Pitch Deck: PPTX Available](https://img.shields.io/badge/Pitch%20Deck-PPTX%20Included-orange)](ClearTrace_Labs_Product_Pitch_Deck.pptx)
 
-📊 **[Download Official Pitch Deck (PPTX)](ClearTrace_Labs_Product_Pitch_Deck.pptx)** • 📑 **[Read Pitch Deck in Markdown](docs/PITCH_DECK.md)**
+**[Download Official Pitch Deck (PPTX)](ClearTrace_Labs_Product_Pitch_Deck.pptx)** • **[Read Pitch Deck in Markdown](docs/PITCH_DECK.md)**
 
 ---
 
 ## 1. The Problem: Disagreement is expensive. Uncertainty is even worse.
 
 Organizations often have the records—but not a trusted way to resolve what they mean:
-* 💰 **Money Leaks:** Invoices, purchase orders, and delivery notes tell different stories. (e.g. KSh 5,000 potential overcharge on a single order).
-* 🤝 **Trust Breaks:** Partners dispute ownership, royalty splits, or what was actually agreed upon. (Weeks of back-and-forth email arguments).
-* ⏳ **Decisions Stall:** Teams chase emails and spreadsheets instead of finding the missing proof. (Slow, hard-to-audit outcomes).
+* **Money Leaks:** Invoices, purchase orders, and delivery notes tell different stories. (e.g. KSh 5,000 potential overcharge on a single order).
+* **Trust Breaks:** Partners dispute ownership, royalty splits, or what was actually agreed upon. (Weeks of back-and-forth email arguments).
+* **Decisions Stall:** Teams chase emails and spreadsheets instead of finding the missing proof. (Slow, hard-to-audit outcomes).
 
 > **The Gap:** A basic comparison tool shows a mismatch. Generative AI guesses a fake compromise. Neither tells people what evidence would settle the dispute—or how to defend the final call.
 
@@ -86,11 +86,11 @@ Not another chatbot. Not just a document diff. ClearTrace is designed for decisi
 
 ## 5. Proven Use Cases Across Three Domains
 
-1. **🏢 B2B Procurement & Finance:**  
+1. **B2B Procurement & Finance:**  
    Invoice / PO mismatch, duplicate charges, delivery disputes. Automatically flags variance (e.g. KSh 5,000) and holds payment until an authorized amendment is verified.
-2. **🎵 Music IP & Royalties (Incantio Brief):**  
+2. **Music IP & Royalties (Incantio Brief):**  
    Audits co-writer split sheets against DSP streaming statements. Calculates the exact 15 percentage-point gap and $1,800 USD missing payment on $12,000 revenue.
-3. **🕊️ Cultural Heritage & Oral History (AI for Peace Brief):**  
+3. **Cultural Heritage & Oral History (AI for Peace Brief):**  
    Reconciles Harlem and Nairobi community accounts of the 1969 Cultural Peace Exchange. Preserves conflicting dates (Aug 12 vs Aug 19) until a printed 1969 programme corroborates the opening ceremony.
 
 ---
@@ -173,13 +173,13 @@ docker run -d -p 8000:8000 cleartrace-labs
 
 ## 9. Documentation Index & Hackathon Alignment
 
-* 📊 **Official Pitch Deck:** [`ClearTrace_Labs_Product_Pitch_Deck.pptx`](ClearTrace_Labs_Product_Pitch_Deck.pptx) • Markdown: [`docs/PITCH_DECK.md`](docs/PITCH_DECK.md)
-* 📖 **Plain-English Guide for Non-Technical Readers:** [`docs/NON_TECHNICAL_GUIDE.md`](docs/NON_TECHNICAL_GUIDE.md)
-* 💼 **Business Overview & Market Sizing:** [`docs/BUSINESS_OVERVIEW.md`](docs/BUSINESS_OVERVIEW.md)
-* 🎯 **Track 02 (Builders: MeTTa & Omega) Rubric Matrix:** [`docs/TRACK_02_ALIGNMENT.md`](docs/TRACK_02_ALIGNMENT.md)
-* 🛡️ **AI Engineering Disclosure (Rule 03):** [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md)
-* 🚀 **Cloud & Docker Deployment Guide:** [`DEPLOYMENT.md`](DEPLOYMENT.md)
-* 📐 **Technical Architecture & Specifications:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) • [`docs/METTA_SYMBOLIC_SPEC.md`](docs/METTA_SYMBOLIC_SPEC.md) • [`docs/API_SPECIFICATION.md`](docs/API_SPECIFICATION.md)
+* **Official Pitch Deck:** [`ClearTrace_Labs_Product_Pitch_Deck.pptx`](ClearTrace_Labs_Product_Pitch_Deck.pptx) • Markdown: [`docs/PITCH_DECK.md`](docs/PITCH_DECK.md)
+* **Plain-English Guide for Non-Technical Readers:** [`docs/NON_TECHNICAL_GUIDE.md`](docs/NON_TECHNICAL_GUIDE.md)
+* **Business Overview & Market Sizing:** [`docs/BUSINESS_OVERVIEW.md`](docs/BUSINESS_OVERVIEW.md)
+* **Track 02 (Builders: MeTTa & Omega) Rubric Matrix:** [`docs/TRACK_02_ALIGNMENT.md`](docs/TRACK_02_ALIGNMENT.md)
+* **AI Engineering Disclosure (Rule 03):** [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md)
+* **Cloud & Docker Deployment Guide:** [`DEPLOYMENT.md`](DEPLOYMENT.md)
+* **Technical Architecture & Specifications:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) • [`docs/METTA_SYMBOLIC_SPEC.md`](docs/METTA_SYMBOLIC_SPEC.md) • [`docs/API_SPECIFICATION.md`](docs/API_SPECIFICATION.md)
 
 ---
 
