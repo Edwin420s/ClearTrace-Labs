@@ -1,7 +1,7 @@
 ;; ============================================================================
 ;; ClearTrace Labs — Symbolic Reasoning & Multi-Agent Reconciliation Rules
 ;; Substrate: SingularityNET Hyperon / MeTTa
-;; Track 02: Omega AI Agents — Two Agents, One Truth
+;; Architecture: Multi-Agent Truth & Consensus Engine
 ;; ============================================================================
 
 (: Entity Type)
