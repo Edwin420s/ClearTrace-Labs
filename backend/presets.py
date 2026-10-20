@@ -1,6 +1,6 @@
 """
 Clearly Labelled Synthetic Demonstration Presets for ClearTrace Labs.
-Strictly adheres to Hackathon Rule 05 (Data & Consent): all records are clearly
+Strictly adheres to Privacy & Consent standards: all records are clearly
 marked as synthetic demonstration archives.
 """
 
@@ -10,7 +10,7 @@ PRESETS: Dict[str, Dict[str, Any]] = {
     "peace": {
         "preset_id": "peace",
         "domain": "peace",
-        "badge": "Primary Brief — AI for Peace (Harlem ↔ Nairobi)",
+        "badge": "Oral History & Cultural Archiving (AI for Peace)",
         "title": "[SYNTHETIC DEMO] 1969 Harlem–Nairobi Cultural Peace Exchange",
         "description": (
             "Two community archives describe the same cross-cultural peace gathering. "
@@ -150,7 +150,7 @@ PRESETS: Dict[str, Dict[str, Any]] = {
     "rights": {
         "preset_id": "rights",
         "domain": "rights",
-        "badge": "Partner Brief — Incantio Music Split & Royalty Audit",
+        "badge": "Music Royalties & Rights Distribution (Incantio)",
         "title": "[SYNTHETIC DEMO] Incantio Co-Write Split Sheet vs. DSP Royalty Statement",
         "description": (
             "Compares a signed studio session split sheet (50% co-writer share) against a quarterly "
