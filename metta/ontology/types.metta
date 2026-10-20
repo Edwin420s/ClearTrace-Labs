@@ -1,6 +1,6 @@
 ;; ============================================================================
 ;; ClearTrace Labs — Core MeTTa Type Ontology
-;; Track 02: Omega AI Agents — Two Agents, One Truth
+;; Architecture: Multi-Agent Knowledge Representation
 ;; ============================================================================
 
 (: Entity Type)
