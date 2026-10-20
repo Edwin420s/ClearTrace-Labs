@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+
+const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 export default function DocumentInputs({
   scenarios,
@@ -21,353 +23,781 @@ export default function DocumentInputs({
   setCorrLabel,
   corrText,
   setCorrText,
+  hasFourthEvidence,
+  onToggleFourthEvidence,
+  corr4Label,
+  setCorr4Label,
+  corr4Text,
+  setCorr4Text,
   onRunComparison,
   loading,
   isInputsEmpty,
   setIsStale,
+  user,
+  report,
 }) {
+  const fileInputARef = useRef(null);
+  const fileInputBRef = useRef(null);
+  const fileInputCRef = useRef(null);
+  const fileInputDRef = useRef(null);
+
+  const [fileAInfo, setFileAInfo] = useState(null);
+  const [fileBInfo, setFileBInfo] = useState(null);
+  const [fileCInfo, setFileCInfo] = useState(null);
+  const [fileDInfo, setFileDInfo] = useState(null);
+
+  const [isDraggingA, setIsDraggingA] = useState(false);
+  const [isDraggingB, setIsDraggingB] = useState(false);
+  const [isDraggingC, setIsDraggingC] = useState(false);
+  const [isDraggingD, setIsDraggingD] = useState(false);
+
+  const [uploadingA, setUploadingA] = useState(false);
+  const [uploadingB, setUploadingB] = useState(false);
+  const [uploadingC, setUploadingC] = useState(false);
+  const [uploadingD, setUploadingD] = useState(false);
+
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const wordsA = sourceAText.trim() ? sourceAText.trim().split(/\s+/).filter(Boolean).length : 0;
+  const wordsB = sourceBText.trim() ? sourceBText.trim().split(/\s+/).filter(Boolean).length : 0;
+  const wordsC = corrText?.trim() ? corrText.trim().split(/\s+/).filter(Boolean).length : 0;
+  const wordsD = corr4Text?.trim() ? corr4Text.trim().split(/\s+/).filter(Boolean).length : 0;
+
+  const handleFileUpload = async (file, target) => {
+    if (!file) return;
+    const lowerName = file.name.toLowerCase();
+    const isBinary = lowerName.endsWith('.docx') || lowerName.endsWith('.pdf');
+
+    if (target === 'A') setUploadingA(true);
+    if (target === 'B') setUploadingB(true);
+    if (target === 'C') setUploadingC(true);
+    if (target === 'D') setUploadingD(true);
+
+    try {
+      let extractedText = '';
+
+      if (!isBinary) {
+        // Fast local client-side extraction for plain text, markdown, csv, json, logs
+        extractedText = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (e) => resolve(e.target.result);
+          reader.onerror = () => reject(new Error('Failed to read file locally.'));
+          reader.readAsText(file);
+        });
+      } else {
+        // Process Word (.docx) or PDF via the backend extraction endpoint
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch(`${API_BASE}/api/documents/extract-text`, {
+          method: 'POST',
+          body: formData,
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.detail || 'Failed to extract text from document.');
+        }
+        const data = await res.json();
+        extractedText = data.text;
+      }
+
+      const sizeKb = Math.round(file.size / 1024) || 1;
+
+      if (target === 'A') {
+        setSourceAText(extractedText);
+        setSourceALabel(file.name);
+        setFileAInfo({ name: file.name, sizeKb });
+      } else if (target === 'B') {
+        setSourceBText(extractedText);
+        setSourceBLabel(file.name);
+        setFileBInfo({ name: file.name, sizeKb });
+      } else if (target === 'C') {
+        setCorrText(extractedText);
+        setCorrLabel(file.name);
+        setFileCInfo({ name: file.name, sizeKb });
+      } else if (target === 'D') {
+        setCorr4Text(extractedText);
+        setCorr4Label(file.name);
+        setFileDInfo({ name: file.name, sizeKb });
+      }
+
+      setIsStale(true);
+    } catch (err) {
+      alert(`Could not load ${file.name}: ${err.message}`);
+    } finally {
+      if (target === 'A') setUploadingA(false);
+      if (target === 'B') setUploadingB(false);
+      if (target === 'C') setUploadingC(false);
+      if (target === 'D') setUploadingD(false);
+    }
+  };
+
+  const handleScenarioChange = (scen) => {
+    setFileAInfo(null);
+    setFileBInfo(null);
+    setFileCInfo(null);
+    setFileDInfo(null);
+    onSelectScenario(scen);
+  };
+
+  const handleCustomChange = () => {
+    setFileAInfo(null);
+    setFileBInfo(null);
+    setFileCInfo(null);
+    setFileDInfo(null);
+    onCustomMode();
+  };
+
+  const handleClearAll = () => {
+    setFileAInfo(null);
+    setFileBInfo(null);
+    setFileCInfo(null);
+    setFileDInfo(null);
+    onClearInputs();
+  };
+
   return (
-    <section
-      style={{
-        background: '#0F172A',
-        border: '1px solid #1E293B',
-        borderRadius: '12px',
-        padding: '24px',
-        marginBottom: '24px',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '12px',
-          marginBottom: '16px',
+    <section className="flex flex-col gap-4 bg-[#0F172A] p-6 rounded-xl border border-[#1E293B]">
+      {/* Hidden File Inputs */}
+      <input
+        type="file"
+        ref={fileInputARef}
+        className="hidden"
+        accept=".txt,.md,.markdown,.csv,.tsv,.json,.docx,.pdf,.log,.rtf"
+        onChange={(e) => {
+          if (e.target.files?.[0]) handleFileUpload(e.target.files[0], 'A');
+          e.target.value = '';
         }}
-      >
-        <div>
-          <div
-            style={{
-              fontSize: '11px',
-              fontWeight: 800,
-              color: '#38BDF8',
-              textTransform: 'uppercase',
-              letterSpacing: '0.8px',
-            }}
-          >
-            Action 1
+      />
+      <input
+        type="file"
+        ref={fileInputBRef}
+        className="hidden"
+        accept=".txt,.md,.markdown,.csv,.tsv,.json,.docx,.pdf,.log,.rtf"
+        onChange={(e) => {
+          if (e.target.files?.[0]) handleFileUpload(e.target.files[0], 'B');
+          e.target.value = '';
+        }}
+      />
+      <input
+        type="file"
+        ref={fileInputCRef}
+        className="hidden"
+        accept=".txt,.md,.markdown,.csv,.tsv,.json,.docx,.pdf,.log,.rtf"
+        onChange={(e) => {
+          if (e.target.files?.[0]) handleFileUpload(e.target.files[0], 'C');
+          e.target.value = '';
+        }}
+      />
+      <input
+        type="file"
+        ref={fileInputDRef}
+        className="hidden"
+        accept=".txt,.md,.markdown,.csv,.tsv,.json,.docx,.pdf,.log,.rtf"
+        onChange={(e) => {
+          if (e.target.files?.[0]) handleFileUpload(e.target.files[0], 'D');
+          e.target.value = '';
+        }}
+      />
+
+      {/* Step Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold text-sm border border-sky-500/20">
+            1
           </div>
-          <h2 style={{ margin: '2px 0 0', fontSize: '18px', color: '#FFF', fontWeight: 800 }}>
-            Add Your Documents
-          </h2>
-          <div style={{ fontSize: '12px', color: '#94A3B8', marginTop: '2px' }}>
-            Choose a sample scenario below or paste two records you want to compare.
+          <div>
+            <h2 className="text-base font-bold text-white">
+              Add Your Documents
+            </h2>
+            <p className="text-xs text-slate-400">
+              Pick a sample scenario, paste text, or upload your document files (.docx, .pdf, .txt, .csv, .md).
+            </p>
           </div>
         </div>
 
-        {/* Scenario Chooser */}
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {scenarios.map((s) => {
-            const active = activeScenarioId === s.id;
-            return (
-              <button
-                key={s.id}
-                onClick={() => onSelectScenario(s)}
-                style={{
-                  background: active ? '#0284C7' : '#1E293B',
-                  color: active ? '#FFF' : '#CBD5E1',
-                  border: active ? '1px solid #38BDF8' : '1px solid #334155',
-                  padding: '7px 12px',
-                  borderRadius: '6px',
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                }}
-              >
-                {s.name}
-              </button>
-            );
-          })}
+        <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
+          {report && (
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="flex items-center gap-1.5 px-3 py-1 rounded text-xs text-sky-400 hover:text-white bg-[#1E293B] hover:bg-[#334155] transition-colors cursor-pointer border border-sky-500/20"
+              type="button"
+              title={isCollapsed ? 'Expand document inputs' : 'Collapse document inputs'}
+            >
+              <span className="material-symbols-outlined text-[15px]">
+                {isCollapsed ? 'unfold_more' : 'unfold_less'}
+              </span>
+              <span>{isCollapsed ? 'Expand Inputs' : 'Collapse Inputs'}</span>
+            </button>
+          )}
           <button
-            onClick={onCustomMode}
-            style={{
-              background: activeScenarioId === 'custom' ? '#0F766E' : '#1E293B',
-              color: activeScenarioId === 'custom' ? '#FFF' : '#94A3B8',
-              border: activeScenarioId === 'custom' ? '1px solid #2DD4BF' : '1px solid #334155',
-              padding: '7px 12px',
-              borderRadius: '6px',
-              fontSize: '11px',
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
+            onClick={handleClearAll}
+            className="flex items-center gap-1.5 px-3 py-1 rounded text-xs text-slate-400 hover:text-white bg-[#1E293B] hover:bg-[#334155] transition-colors cursor-pointer"
+            type="button"
           >
-            Paste Custom Documents
+            <span className="material-symbols-outlined text-[15px]">clear_all</span>
+            <span>Clear inputs</span>
           </button>
         </div>
       </div>
 
-      {/* Demonstration Notice */}
-      {isSynthetic && (
-        <div
-          style={{
-            background: '#1E293B80',
-            border: '1px solid #334155',
-            padding: '6px 12px',
-            borderRadius: '6px',
-            fontSize: '11px',
-            color: '#94A3B8',
-            marginBottom: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <span>
-            <strong style={{ color: '#FBBF24' }}>Demonstration data:</strong> Synthetic sample records loaded. You can edit any word or number below.
-          </span>
-          <button
-            onClick={onClearInputs}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: '#94A3B8',
-              fontSize: '11px',
-              textDecoration: 'underline',
-              cursor: 'pointer',
-            }}
-          >
-            Clear inputs
-          </button>
-        </div>
-      )}
-
-      {/* Document Textareas Grid */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: hasThirdEvidence ? '1fr 1fr 1fr' : '1fr 1fr',
-          gap: '16px',
-          marginBottom: '16px',
-        }}
-      >
-        {/* First Document (Document A) */}
-        <div style={{ background: '#090D16', border: '1px solid #F472B6', borderRadius: '8px', padding: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '12px', fontWeight: 800, color: '#F472B6', textTransform: 'uppercase' }}>
-              First Document (Record A)
+      {isCollapsed && report ? (
+        /* Collapsed Compact View When Results Exist */
+        <div className="rounded-lg bg-[#0B1120] p-4 border border-[#1E293B] flex flex-col gap-3">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <span className="text-xs font-semibold text-slate-300">
+              Active Ingested Documents (Compact View)
             </span>
-            <span style={{ fontSize: '11px', color: '#64748B' }}>
-              {sourceAText.length} characters • {sourceAText.trim().split(/\s+/).filter(Boolean).length} words
-            </span>
+            <button
+              onClick={() => setIsCollapsed(false)}
+              className="text-xs text-sky-400 hover:text-sky-300 underline font-medium cursor-pointer"
+              type="button"
+            >
+              Expand to edit clauses or upload new files
+            </button>
           </div>
-          <input
-            type="text"
-            value={sourceALabel}
-            onChange={(e) => {
-              setSourceALabel(e.target.value);
-              setIsStale(true);
-            }}
-            placeholder="Document label (e.g. Purchase Order, Split Sheet)..."
-            style={{
-              width: '100%',
-              padding: '8px 10px',
-              borderRadius: '4px',
-              background: '#0F172A',
-              border: '1px solid #334155',
-              color: '#FFF',
-              fontSize: '11px',
-              marginBottom: '10px',
-              fontWeight: 600,
-            }}
-          />
-          <textarea
-            rows={7}
-            value={sourceAText}
-            onChange={(e) => {
-              setSourceAText(e.target.value);
-              setIsStale(true);
-            }}
-            placeholder="Paste your first document contents here..."
-            style={{
-              width: '100%',
-              padding: '10px',
-              borderRadius: '4px',
-              background: '#0F172A',
-              border: '1px solid #334155',
-              color: '#E2E8F0',
-              fontSize: '12px',
-              lineHeight: 1.6,
-            }}
-          />
-        </div>
-
-        {/* Second Document (Document B) */}
-        <div style={{ background: '#090D16', border: '1px solid #38BDF8', borderRadius: '8px', padding: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '12px', fontWeight: 800, color: '#38BDF8', textTransform: 'uppercase' }}>
-              Second Document (Record B)
-            </span>
-            <span style={{ fontSize: '11px', color: '#64748B' }}>
-              {sourceBText.length} characters • {sourceBText.trim().split(/\s+/).filter(Boolean).length} words
-            </span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+            <div className="p-2.5 rounded bg-[#0F172A] border border-pink-500/30">
+              <span className="text-[10px] uppercase font-bold text-pink-400">Record A</span>
+              <div className="font-semibold text-slate-200 truncate mt-0.5">{sourceALabel || 'Document A'}</div>
+              <div className="text-[11px] text-slate-400 mt-0.5">{sourceAText.length} chars • {wordsA} words</div>
+            </div>
+            <div className="p-2.5 rounded bg-[#0F172A] border border-sky-500/30">
+              <span className="text-[10px] uppercase font-bold text-sky-400">Record B</span>
+              <div className="font-semibold text-slate-200 truncate mt-0.5">{sourceBLabel || 'Document B'}</div>
+              <div className="text-[11px] text-slate-400 mt-0.5">{sourceBText.length} chars • {wordsB} words</div>
+            </div>
+            {hasThirdEvidence && (
+              <div className="p-2.5 rounded bg-[#0F172A] border border-emerald-500/30">
+                <span className="text-[10px] uppercase font-bold text-emerald-400">Record 3 (Proof)</span>
+                <div className="font-semibold text-slate-200 truncate mt-0.5">{corrLabel || 'Document 3'}</div>
+                <div className="text-[11px] text-slate-400 mt-0.5">{corrText.length} chars • {wordsC} words</div>
+              </div>
+            )}
+            {hasFourthEvidence && (
+              <div className="p-2.5 rounded bg-[#0F172A] border border-emerald-500/30">
+                <span className="text-[10px] uppercase font-bold text-emerald-400">Record 4 (Proof)</span>
+                <div className="font-semibold text-slate-200 truncate mt-0.5">{corr4Label || 'Document 4'}</div>
+                <div className="text-[11px] text-slate-400 mt-0.5">{corr4Text.length} chars • {wordsD} words</div>
+              </div>
+            )}
           </div>
-          <input
-            type="text"
-            value={sourceBLabel}
-            onChange={(e) => {
-              setSourceBLabel(e.target.value);
-              setIsStale(true);
-            }}
-            placeholder="Document label (e.g. Supplier Invoice, DSP Statement)..."
-            style={{
-              width: '100%',
-              padding: '8px 10px',
-              borderRadius: '4px',
-              background: '#0F172A',
-              border: '1px solid #334155',
-              color: '#FFF',
-              fontSize: '11px',
-              marginBottom: '10px',
-              fontWeight: 600,
-            }}
-          />
-          <textarea
-            rows={7}
-            value={sourceBText}
-            onChange={(e) => {
-              setSourceBText(e.target.value);
-              setIsStale(true);
-            }}
-            placeholder="Paste the document you want to compare it with..."
-            style={{
-              width: '100%',
-              padding: '10px',
-              borderRadius: '4px',
-              background: '#0F172A',
-              border: '1px solid #334155',
-              color: '#E2E8F0',
-              fontSize: '12px',
-              lineHeight: 1.6,
-            }}
-          />
         </div>
-
-        {/* Optional Third Document (Only expands when enabled) */}
-        {hasThirdEvidence && (
-          <div style={{ background: '#090D16', border: '1px solid #10B981', borderRadius: '8px', padding: '16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-              <span style={{ fontSize: '12px', fontWeight: 800, color: '#10B981', textTransform: 'uppercase' }}>
-                Third Document (Independent Proof)
+      ) : (
+        <>
+          {/* Scenario Template Toolbar */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-2.5 rounded-lg bg-[#0B1120] border border-[#1E293B]">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide flex items-center gap-1 mr-1">
+                <span className="material-symbols-outlined text-[15px] text-sky-400">tune</span>
+                <span>Intake Mode:</span>
               </span>
-              <span style={{ fontSize: '11px', color: '#64748B' }}>
-                {corrText.length} characters
+
+              <button
+                type="button"
+                onClick={handleCustomChange}
+                className={`px-3 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+                  activeScenarioId === 'custom'
+                    ? 'bg-sky-600 text-white shadow-sm'
+                    : 'bg-[#1E293B] text-slate-300 hover:text-white hover:bg-[#334155]'
+                }`}
+              >
+                Custom Documents
+              </button>
+
+              {/* Demo Sandbox only: show demo benchmark templates */}
+              {(!user || user.user_id === 'usr-demo') && (
+                <>
+                  <div className="h-4 w-px bg-slate-700 mx-1 hidden sm:block"></div>
+                  <span className="text-[11px] text-slate-400 hidden sm:inline mr-1">Demo Benchmarks:</span>
+                  {scenarios
+                    .filter((s) => s.id !== 'custom')
+                    .map((scen) => {
+                      const isActive = activeScenarioId === scen.id;
+                      return (
+                        <button
+                          key={scen.id}
+                          onClick={() => handleScenarioChange(scen)}
+                          className={`px-3 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+                            isActive
+                              ? 'bg-sky-600 text-white shadow-sm'
+                              : 'bg-[#1E293B] text-slate-300 hover:text-white hover:bg-[#334155]'
+                          }`}
+                          type="button"
+                          title={scen.subtitle}
+                        >
+                          {scen.name}
+                        </button>
+                      );
+                    })}
+                </>
+              )}
+            </div>
+
+            {activeScenarioId !== 'custom' && (!user || user.user_id === 'usr-demo') && (
+              <span className="text-[11px] text-slate-400 italic">
+                Sample benchmark loaded. Edit any field or drop your own files below.
+              </span>
+            )}
+          </div>
+
+          {/* Air-Gapped Multi-Agent Intake Pipeline Architecture Banner */}
+          <div className="bg-[#070B14] p-3.5 rounded-xl border border-[#1E293B] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center -space-x-2">
+                <div className="w-7 h-7 rounded-lg bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center font-bold text-xs shadow-sm">
+                  A
+                </div>
+                <div className="w-7 h-7 rounded-lg bg-sky-500/20 border border-sky-500/40 text-sky-400 flex items-center justify-center font-bold text-xs shadow-sm">
+                  B
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-white tracking-wide flex items-center gap-1.5">
+                  <span>Air-Gapped Multi-Agent Intake Pods</span>
+                  <span className="text-[10px] px-2 py-0.2 rounded font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                    AIR-GAP ACTIVE
+                  </span>
+                </span>
+                <span className="text-[11px] text-slate-400">
+                  Agent A (*Record Verifier*) and Agent B (*Context Challenger*) ingest documents in total isolation. Zero prompt contamination.
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="text-[10px] text-slate-400 font-mono px-2 py-1 rounded bg-[#0B1120] border border-[#1E293B]">
+                Protocol: <strong className="text-sky-400">Omega 5-Stage</strong>
+              </span>
+              <span className="text-[10px] text-slate-400 font-mono px-2 py-1 rounded bg-[#0B1120] border border-[#1E293B]">
+                Engine: <strong className="text-purple-400">MeTTa S-Expr</strong>
               </span>
             </div>
-            <input
-              type="text"
-              value={corrLabel}
-              onChange={(e) => {
-                setCorrLabel(e.target.value);
-                setIsStale(true);
-              }}
-              placeholder="3rd Document label (e.g. Signed Amendment)..."
-              style={{
-                width: '100%',
-                padding: '8px 10px',
-                borderRadius: '4px',
-                background: '#0F172A',
-                border: '1px solid #334155',
-                color: '#FFF',
-                fontSize: '11px',
-                marginBottom: '10px',
-                fontWeight: 600,
-              }}
-            />
-            <textarea
-              rows={7}
-              value={corrText}
-              onChange={(e) => {
-                setCorrText(e.target.value);
-                setIsStale(true);
-              }}
-              placeholder="Paste a third independent record to verify disputed claims..."
-              style={{
-                width: '100%',
-                padding: '10px',
-                borderRadius: '4px',
-                background: '#0F172A',
-                border: '1px solid #334155',
-                color: '#E2E8F0',
-                fontSize: '12px',
-                lineHeight: 1.6,
-              }}
-            />
           </div>
-        )}
-      </div>
 
-      {/* Action Row: Third Evidence Prompt + Primary Compare Button */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '14px',
-          background: '#090D16',
-          padding: '14px 18px',
-          borderRadius: '8px',
-        }}
-      >
-        <label
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            cursor: 'pointer',
-            fontSize: '13px',
-            fontWeight: 700,
-            color: hasThirdEvidence ? '#34D399' : '#94A3B8',
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={hasThirdEvidence}
-            onChange={(e) => onToggleThirdEvidence(e.target.checked)}
-            style={{ width: '18px', height: '18px', accentColor: '#10B981', cursor: 'pointer' }}
-          />
-          <span>
-            Have a third document to help verify the result?{' '}
-            <strong style={{ color: hasThirdEvidence ? '#34D399' : '#64748B' }}>
-              {hasThirdEvidence ? 'ENABLED' : 'DISABLED'}
-            </strong>
-          </span>
-        </label>
+          {/* Split Document Inputs — Isolated Agent Intake Pods */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Agent A Pod */}
+            <div
+              onDragOver={(e) => {
+                e.preventDefault();
+                setIsDraggingA(true);
+              }}
+              onDragLeave={() => setIsDraggingA(false)}
+              onDrop={(e) => {
+                e.preventDefault();
+                setIsDraggingA(false);
+                if (e.dataTransfer.files?.[0]) handleFileUpload(e.dataTransfer.files[0], 'A');
+              }}
+              className={`flex flex-col gap-2.5 bg-[#0B1120] p-4 rounded-xl border transition-all ${
+                isDraggingA
+                  ? 'border-dashed border-pink-400 bg-pink-950/20 ring-2 ring-pink-500/30'
+                  : 'border-[#1E293B] hover:border-pink-500/40'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-md bg-pink-500/10 border border-pink-500/30 text-pink-400 flex items-center justify-center font-bold font-mono text-[11px]">
+                    A
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-pink-400 uppercase tracking-wide block">
+                      Agent A: Record Verifier
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-mono">
+                      Isolated Pod A • Scoped Claim Register
+                    </span>
+                  </div>
+                </div>
 
-        {/* Primary Action Button */}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => fileInputARef.current?.click()}
+                    disabled={uploadingA}
+                    className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#1E293B] hover:bg-[#334155] text-slate-200 text-[11px] font-medium transition-colors border border-[#334155] cursor-pointer"
+                    type="button"
+                    title="Upload document file (.docx, .pdf, .txt, .csv, .md)"
+                  >
+                    <span className="material-symbols-outlined text-[15px] text-pink-400">upload_file</span>
+                    <span>{uploadingA ? 'Loading...' : 'Upload File'}</span>
+                  </button>
+                  <span className="text-[11px] text-slate-500 font-mono">
+                    {sourceAText.length} chars • {wordsA} words
+                  </span>
+                </div>
+              </div>
+
+              {/* Uploaded File Chip */}
+              {fileAInfo && (
+                <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-pink-950/30 border border-pink-500/30 text-xs text-pink-200">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <span className="material-symbols-outlined text-[16px] text-pink-400">description</span>
+                    <span className="font-semibold truncate">{fileAInfo.name}</span>
+                    <span className="text-slate-400 text-[11px]">({fileAInfo.sizeKb} KB)</span>
+                  </div>
+                  <button
+                    onClick={() => setFileAInfo(null)}
+                    className="text-pink-400 hover:text-pink-300 ml-2 text-[11px] cursor-pointer flex items-center"
+                    type="button"
+                    title="Dismiss file tag"
+                  >
+                    <span className="material-symbols-outlined text-[13px]">close</span>
+                  </button>
+                </div>
+              )}
+
+              <input
+                type="text"
+                value={sourceALabel}
+                onChange={(e) => {
+                  setSourceALabel(e.target.value);
+                  setIsStale(true);
+                }}
+                className="w-full px-3 py-1.5 rounded bg-[#0F172A] text-xs font-semibold text-white border border-[#334155] focus:outline-none focus:border-pink-500"
+                placeholder="Document label (e.g. Purchase Order PO-2026-089)..."
+              />
+
+              <textarea
+                rows={7}
+                value={sourceAText}
+                onChange={(e) => {
+                  setSourceAText(e.target.value);
+                  setIsStale(true);
+                }}
+                placeholder="Paste your first document text, or drag and drop a file (.docx, .pdf, .txt, .csv) here..."
+                className="w-full p-3 rounded bg-[#0F172A] text-xs text-slate-200 leading-relaxed border border-[#334155] focus:outline-none focus:border-pink-500 resize-none font-sans"
+              />
+            </div>
+
+            {/* Agent B Pod */}
+            <div
+              onDragOver={(e) => {
+                e.preventDefault();
+                setIsDraggingB(true);
+              }}
+              onDragLeave={() => setIsDraggingB(false)}
+              onDrop={(e) => {
+                e.preventDefault();
+                setIsDraggingB(false);
+                if (e.dataTransfer.files?.[0]) handleFileUpload(e.dataTransfer.files[0], 'B');
+              }}
+              className={`flex flex-col gap-2.5 bg-[#0B1120] p-4 rounded-xl border transition-all ${
+                isDraggingB
+                  ? 'border-dashed border-sky-400 bg-sky-950/20 ring-2 ring-sky-500/30'
+                  : 'border-[#1E293B] hover:border-sky-500/40'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-md bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center font-bold font-mono text-[11px]">
+                    B
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-sky-400 uppercase tracking-wide block">
+                      Agent B: Context Challenger
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-mono">
+                      Isolated Pod B • Scoped Claim Register
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => fileInputBRef.current?.click()}
+                    disabled={uploadingB}
+                    className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#1E293B] hover:bg-[#334155] text-slate-200 text-[11px] font-medium transition-colors border border-[#334155] cursor-pointer"
+                    type="button"
+                    title="Upload document file (.docx, .pdf, .txt, .csv, .md)"
+                  >
+                    <span className="material-symbols-outlined text-[15px] text-sky-400">upload_file</span>
+                    <span>{uploadingB ? 'Loading...' : 'Upload File'}</span>
+                  </button>
+                  <span className="text-[11px] text-slate-500 font-mono">
+                    {sourceBText.length} chars • {wordsB} words
+                  </span>
+                </div>
+              </div>
+
+              {/* Uploaded File Chip */}
+              {fileBInfo && (
+                <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-sky-950/30 border border-sky-500/30 text-xs text-sky-200">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <span className="material-symbols-outlined text-[16px] text-sky-400">description</span>
+                    <span className="font-semibold truncate">{fileBInfo.name}</span>
+                    <span className="text-slate-400 text-[11px]">({fileBInfo.sizeKb} KB)</span>
+                  </div>
+                  <button
+                    onClick={() => setFileBInfo(null)}
+                    className="text-sky-400 hover:text-sky-300 ml-2 text-[11px] cursor-pointer flex items-center"
+                    type="button"
+                    title="Dismiss file tag"
+                  >
+                    <span className="material-symbols-outlined text-[13px]">close</span>
+                  </button>
+                </div>
+              )}
+
+              <input
+                type="text"
+                value={sourceBLabel}
+                onChange={(e) => {
+                  setSourceBLabel(e.target.value);
+                  setIsStale(true);
+                }}
+                className="w-full px-3 py-1.5 rounded bg-[#0F172A] text-xs font-semibold text-white border border-[#334155] focus:outline-none focus:border-sky-500"
+                placeholder="Document label (e.g. Supplier Invoice INV-2026-104)..."
+              />
+
+              <textarea
+                rows={7}
+                value={sourceBText}
+                onChange={(e) => {
+                  setSourceBText(e.target.value);
+                  setIsStale(true);
+                }}
+                placeholder="Paste the document to compare with, or drag and drop a file (.docx, .pdf, .txt, .csv) here..."
+                className="w-full p-3 rounded bg-[#0F172A] text-xs text-slate-200 leading-relaxed border border-[#334155] focus:outline-none focus:border-sky-500 resize-none font-sans"
+              />
+            </div>
+          </div>
+
+          {/* Optional Independent Third & Fourth Sources */}
+          <div id="supporting-evidence-section" className="flex flex-col gap-3 bg-[#0B1120] p-4 rounded-lg border border-[#1E293B]">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <label className="flex items-center gap-2.5 cursor-pointer text-xs font-semibold text-slate-300">
+                <input
+                  type="checkbox"
+                  checked={hasThirdEvidence}
+                  onChange={(e) => onToggleThirdEvidence(e.target.checked)}
+                  className="w-4 h-4 accent-emerald-500 rounded cursor-pointer"
+                />
+                <span>
+                  Have a supporting document to verify results?{' '}
+                  <strong className={hasThirdEvidence ? 'text-emerald-400' : 'text-slate-500'}>
+                    {hasThirdEvidence ? '(Enabled)' : '(Disabled)'}
+                  </strong>
+                </span>
+              </label>
+              <span className="text-[11px] text-slate-400">
+                Inject signed amendments, delivery receipts, or catalogue records to resolve disputes.
+              </span>
+            </div>
+
+            {hasThirdEvidence && (
+              <div className="flex flex-col gap-4 pt-2 border-t border-[#1E293B]">
+                {/* Document 3 */}
+                <div
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDraggingC(true);
+                  }}
+                  onDragLeave={() => setIsDraggingC(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setIsDraggingC(false);
+                    if (e.dataTransfer.files?.[0]) handleFileUpload(e.dataTransfer.files[0], 'C');
+                  }}
+                  className={`flex flex-col gap-2 rounded-lg p-3 transition-all ${
+                    isDraggingC
+                      ? 'border border-dashed border-emerald-400 bg-emerald-950/20'
+                      : 'bg-[#0F172A] border border-[#1E293B]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <span className="text-xs font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-[16px]">verified</span>
+                      <span>Ground-Truth Corroboration Anchor (Neutral Tier 3)</span>
+                      {uploadingC && (
+                        <span className="text-[10px] text-emerald-300 animate-pulse font-normal">
+                          (Extracting...)
+                        </span>
+                      )}
+                    </span>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => fileInputCRef.current?.click()}
+                        disabled={uploadingC}
+                        className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#1E293B] hover:bg-[#334155] text-slate-200 text-[11px] font-medium transition-colors border border-[#334155] cursor-pointer"
+                        type="button"
+                        title="Upload third document file (.docx, .pdf, .txt, .csv, .md)"
+                      >
+                        <span className="material-symbols-outlined text-[15px] text-emerald-400">upload_file</span>
+                        <span>{uploadingC ? 'Loading...' : 'Upload File'}</span>
+                      </button>
+                      <span className="text-[11px] text-slate-500">{corrText.length} chars • {wordsC} words</span>
+                    </div>
+                  </div>
+
+                  {fileCInfo && (
+                    <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-xs text-emerald-200">
+                      <div className="flex items-center gap-1.5 truncate">
+                        <span className="material-symbols-outlined text-[16px] text-emerald-400">description</span>
+                        <span className="font-semibold truncate">{fileCInfo.name}</span>
+                        <span className="text-slate-400 text-[11px]">({fileCInfo.sizeKb} KB)</span>
+                      </div>
+                      <button
+                        onClick={() => setFileCInfo(null)}
+                        className="text-emerald-400 hover:text-emerald-300 ml-2 text-[11px] cursor-pointer flex items-center"
+                        type="button"
+                        title="Dismiss file tag"
+                      >
+                        <span className="material-symbols-outlined text-[13px]">close</span>
+                      </button>
+                    </div>
+                  )}
+
+                  <input
+                    type="text"
+                    value={corrLabel}
+                    onChange={(e) => {
+                      setCorrLabel(e.target.value);
+                      setIsStale(true);
+                    }}
+                    className="w-full px-3 py-1.5 rounded bg-[#0B1120] text-xs font-semibold text-white border border-[#334155] focus:outline-none focus:border-emerald-500"
+                    placeholder="3rd Document label (e.g. Signed Amendment / Addendum)..."
+                  />
+                  <textarea
+                    rows={4}
+                    value={corrText}
+                    onChange={(e) => {
+                      setCorrText(e.target.value);
+                      setIsStale(true);
+                    }}
+                    placeholder="Paste independent third document here, or drag and drop a file..."
+                    className="w-full p-3 rounded bg-[#0B1120] text-xs text-slate-200 leading-relaxed border border-[#334155] focus:outline-none focus:border-emerald-500 resize-none font-sans"
+                  />
+                </div>
+
+                {/* Document 4 (Optional Second Supporting Proof) */}
+                {hasFourthEvidence ? (
+                  <div
+                    onDragOver={(e) => {
+                      e.preventDefault();
+                      setIsDraggingD(true);
+                    }}
+                    onDragLeave={() => setIsDraggingD(false)}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      setIsDraggingD(false);
+                      if (e.dataTransfer.files?.[0]) handleFileUpload(e.dataTransfer.files[0], 'D');
+                    }}
+                    className={`flex flex-col gap-2 rounded-lg p-3 transition-all ${
+                      isDraggingD
+                        ? 'border border-dashed border-emerald-400 bg-emerald-950/20'
+                        : 'bg-[#0F172A] border border-[#1E293B]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1.5">
+                          <span>Fourth Document (Proof 2)</span>
+                          {uploadingD && (
+                            <span className="text-[10px] text-emerald-300 animate-pulse font-normal">
+                              (Extracting...)
+                            </span>
+                          )}
+                        </span>
+                        <button
+                          onClick={() => onToggleFourthEvidence(false)}
+                          className="text-[11px] text-red-400 hover:text-red-300 ml-1 cursor-pointer"
+                          type="button"
+                          title="Remove Document 4"
+                        >
+                          (Remove)
+                        </button>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => fileInputDRef.current?.click()}
+                          disabled={uploadingD}
+                          className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#1E293B] hover:bg-[#334155] text-slate-200 text-[11px] font-medium transition-colors border border-[#334155] cursor-pointer"
+                          type="button"
+                          title="Upload fourth document file (.docx, .pdf, .txt, .csv, .md)"
+                        >
+                          <span className="material-symbols-outlined text-[15px] text-emerald-400">upload_file</span>
+                          <span>{uploadingD ? 'Loading...' : 'Upload File'}</span>
+                        </button>
+                        <span className="text-[11px] text-slate-500">{corr4Text.length} chars • {wordsD} words</span>
+                      </div>
+                    </div>
+
+                    {fileDInfo && (
+                      <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-xs text-emerald-200">
+                        <div className="flex items-center gap-1.5 truncate">
+                          <span className="material-symbols-outlined text-[16px] text-emerald-400">description</span>
+                          <span className="font-semibold truncate">{fileDInfo.name}</span>
+                          <span className="text-slate-400 text-[11px]">({fileDInfo.sizeKb} KB)</span>
+                        </div>
+                        <button
+                          onClick={() => setFileDInfo(null)}
+                          className="text-emerald-400 hover:text-emerald-300 ml-2 text-[11px] cursor-pointer flex items-center"
+                          type="button"
+                          title="Dismiss file tag"
+                        >
+                          <span className="material-symbols-outlined text-[13px]">close</span>
+                        </button>
+                      </div>
+                    )}
+
+                    <input
+                      type="text"
+                      value={corr4Label}
+                      onChange={(e) => {
+                        setCorr4Label(e.target.value);
+                        setIsStale(true);
+                      }}
+                      className="w-full px-3 py-1.5 rounded bg-[#0B1120] text-xs font-semibold text-white border border-[#334155] focus:outline-none focus:border-emerald-500"
+                      placeholder="4th Document label (e.g. Delivery Receipt / Certified Log)..."
+                    />
+                    <textarea
+                      rows={4}
+                      value={corr4Text}
+                      onChange={(e) => {
+                        setCorr4Text(e.target.value);
+                        setIsStale(true);
+                      }}
+                      placeholder="Paste additional fourth document here, or drag and drop a file..."
+                      className="w-full p-3 rounded bg-[#0B1120] text-xs text-slate-200 leading-relaxed border border-[#334155] focus:outline-none focus:border-emerald-500 resize-none font-sans"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-[#0F172A] border border-[#1E293B]">
+                    <span className="text-xs text-slate-400">
+                      Have another supporting record (like a separate delivery note or catalogue item)?
+                    </span>
+                    <button
+                      onClick={() => onToggleFourthEvidence(true)}
+                      className="flex items-center gap-1 px-3 py-1.5 rounded bg-[#1E293B] hover:bg-[#334155] text-emerald-400 hover:text-emerald-300 text-xs font-semibold transition-colors border border-emerald-500/30 cursor-pointer"
+                      type="button"
+                    >
+                      <span className="material-symbols-outlined text-[15px]">add_circle</span>
+                      <span>+ Add Document 4 (Next Proof)</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </>
+      )}
+
+      {/* Primary Action Button */}
+      <div className="flex items-center justify-end pt-2">
         <button
           onClick={() => onRunComparison()}
           disabled={loading || isInputsEmpty}
-          style={{
-            background: loading || isInputsEmpty ? '#334155' : 'linear-gradient(135deg, #0284C7 0%, #10B981 100%)',
-            color: '#FFFFFF',
-            border: 'none',
-            padding: '12px 28px',
-            borderRadius: '8px',
-            fontWeight: 800,
-            fontSize: '14px',
-            cursor: loading || isInputsEmpty ? 'not-allowed' : 'pointer',
-            boxShadow: isInputsEmpty ? 'none' : '0 4px 18px rgba(2, 132, 199, 0.4)',
-            transition: 'all 0.15s ease',
-          }}
+          className={`w-full sm:w-auto px-6 py-2.5 rounded-lg font-bold text-sm transition-all cursor-pointer flex items-center justify-center gap-2 ${
+            loading || isInputsEmpty
+              ? 'bg-slate-700 text-slate-400 opacity-60 cursor-not-allowed'
+              : 'bg-sky-600 hover:bg-sky-500 text-white shadow-lg shadow-sky-600/20 active:scale-98'
+          }`}
+          type="button"
         >
-          {loading ? 'Comparing Documents...' : 'Compare My Documents'}
+          <span className="material-symbols-outlined text-[18px]">compare_arrows</span>
+          <span>{loading ? 'Comparing Documents...' : 'Compare My Documents'}</span>
         </button>
-      </div>
-
-      <div style={{ marginTop: '8px', fontSize: '11px', color: '#64748B' }}>
-        Results update when you click <strong>Compare My Documents</strong>.
       </div>
     </section>
   );
