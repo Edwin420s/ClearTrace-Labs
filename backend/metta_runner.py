@@ -114,15 +114,17 @@ def tokenize(text: str) -> List[str]:
 
 
 def parse_tokens(tokens: List[str]) -> List[Any]:
-    def parse_one(idx: int) -> Tuple[Any, int]:
+    def parse_one(idx: int, depth: int = 0) -> Tuple[Any, int]:
         if idx >= len(tokens):
             return None, idx
+        if depth > 100:
+            return None, len(tokens)
         token = tokens[idx]
         if token == "(":
             idx += 1
             children = []
             while idx < len(tokens) and tokens[idx] != ")":
-                child, idx = parse_one(idx)
+                child, idx = parse_one(idx, depth + 1)
                 if child is not None:
                     children.append(child)
             return Expression(children), idx + 1
@@ -225,7 +227,9 @@ class MettaInterpreter:
             return Expression([self.substitute(c, bindings) for c in expr.children])
         return expr
 
-    def evaluate(self, expr: Any) -> Any:
+    def evaluate(self, expr: Any, depth: int = 0) -> Any:
+        if depth > 64:
+            return expr
         if not isinstance(expr, Expression):
             return expr
 
@@ -238,7 +242,7 @@ class MettaInterpreter:
         # Builtin: if
         if head == Symbol("if"):
             if len(children) >= 4:
-                cond = self.evaluate(children[1])
+                cond = self.evaluate(children[1], depth + 1)
                 branch = "then" if cond else "else"
                 self.trace_steps.append({
                     "type": "CONDITION_EVAL",
@@ -246,12 +250,12 @@ class MettaInterpreter:
                     "result": bool(cond),
                     "branch": branch,
                 })
-                return self.evaluate(children[2]) if cond else self.evaluate(children[3])
+                return self.evaluate(children[2], depth + 1) if cond else self.evaluate(children[3], depth + 1)
 
         # Builtin: and
         if head == Symbol("and"):
             for child in children[1:]:
-                res = self.evaluate(child)
+                res = self.evaluate(child, depth + 1)
                 if not res:
                     return False
             return True
@@ -259,7 +263,7 @@ class MettaInterpreter:
         # Builtin: or
         if head == Symbol("or"):
             for child in children[1:]:
-                res = self.evaluate(child)
+                res = self.evaluate(child, depth + 1)
                 if res:
                     return True
             return False
@@ -267,27 +271,27 @@ class MettaInterpreter:
         # Builtin: not
         if head == Symbol("not"):
             if len(children) >= 2:
-                return not bool(self.evaluate(children[1]))
+                return not bool(self.evaluate(children[1], depth + 1))
 
         # Builtin: ==
         if head == Symbol("=="):
             if len(children) >= 3:
-                left = self.evaluate(children[1])
-                right = self.evaluate(children[2])
+                left = self.evaluate(children[1], depth + 1)
+                right = self.evaluate(children[2], depth + 1)
                 return self._equal(left, right)
 
         # Builtin: !=
         if head == Symbol("!="):
             if len(children) >= 3:
-                left = self.evaluate(children[1])
-                right = self.evaluate(children[2])
+                left = self.evaluate(children[1], depth + 1)
+                right = self.evaluate(children[2], depth + 1)
                 return not self._equal(left, right)
 
         # Builtin Arithmetic: -, +, *, /
         if head in (Symbol("-"), Symbol("+"), Symbol("*"), Symbol("/")):
             if len(children) >= 3:
-                lval = float(self.evaluate(children[1]))
-                rval = float(self.evaluate(children[2]))
+                lval = float(self.evaluate(children[1], depth + 1))
+                rval = float(self.evaluate(children[2], depth + 1))
                 if head == Symbol("-"):
                     return lval - rval
                 elif head == Symbol("+"):
@@ -309,7 +313,7 @@ class MettaInterpreter:
                     "bindings": {k: str(v) for k, v in bindings.items()},
                     "reduced_to": repr(substituted_body),
                 })
-                return self.evaluate(substituted_body)
+                return self.evaluate(substituted_body, depth + 1)
 
         return expr
 
@@ -321,8 +325,8 @@ class MettaInterpreter:
             return False
         if isinstance(a, (int, float)) and isinstance(b, (int, float)):
             return abs(float(a) - float(b)) < 1e-6
-        sa = str(a).strip().lower()
-        sb = str(b).strip().lower()
+        sa = re.sub(r'[\s\u00a0]+', ' ', str(a)).strip().lower()
+        sb = re.sub(r'[\s\u00a0]+', ' ', str(b)).strip().lower()
         return sa == sb
 
 
@@ -430,7 +434,8 @@ class SymbolicReasoner:
             return "NONE"
         if isinstance(val, (int, float)):
             return f"{float(val):.4f}".rstrip("0").rstrip(".")
-        return str(val).strip()
+        clean = re.sub(r'[\s\u00a0]+', ' ', str(val)).strip()
+        return clean.replace('"', "'")
 
     def get_atomspace_inspection(self) -> Dict[str, Any]:
         """Returns comprehensive runtime inspection of loaded MeTTa rules, Atomspace types, and status atoms."""
