@@ -4,7 +4,7 @@ ClearTrace Labs — Standalone CLI Replay Certificate Verifier.
 Run:
     python3 scripts/verify_replay_cert.py [optional_path_to_cert.json]
 
-Allows judges and external auditors to independently verify the cryptographic SHA-256
+Allows compliance officers and external auditors to independently verify the cryptographic SHA-256
 Merkle proof and decision integrity of any ClearTrace Labs reconciliation offline.
 """
 
