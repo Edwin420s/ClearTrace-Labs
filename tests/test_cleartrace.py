@@ -23,12 +23,21 @@ from backend.main import app
 client = TestClient(app)
 
 
+TEST_DB_PATH = Path(__file__).resolve().parent / "test_cleartrace.db"
+
 @pytest.fixture(autouse=True)
-def clean_test_db():
-    if DB_PATH.exists():
-        os.remove(DB_PATH)
-    init_db()
+def clean_test_db(monkeypatch):
+    import backend.database as db_mod
+    monkeypatch.setattr(db_mod, "DB_PATH", TEST_DB_PATH)
+    if TEST_DB_PATH.exists():
+        os.remove(TEST_DB_PATH)
+    db_mod.init_db(TEST_DB_PATH)
     yield
+    if TEST_DB_PATH.exists():
+        try:
+            os.remove(TEST_DB_PATH)
+        except OSError:
+            pass
 
 
 def test_01_health_endpoint():
