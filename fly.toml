@@ -1,9 +1,9 @@
-# ClearTrace Labs — Fly.io Deployment Configuration
+# ClearTrace Labs — Fly.io Unified Full-Stack Deployment Configuration
 app = "cleartrace-labs"
-primary_region = "nbo" # Nairobi region or closest available
+primary_region = "nbo" # Nairobi or closest available region
 
 [build]
-  dockerfile = "Dockerfile.backend"
+  dockerfile = "Dockerfile"
 
 [env]
   PORT = "8000"

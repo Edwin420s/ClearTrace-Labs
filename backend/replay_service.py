@@ -7,7 +7,7 @@ multi-agent reconciliation case. Allows offline mathematical verification by any
 import hashlib
 import json
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 from backend.schemas import ReplayCertificate
 
 

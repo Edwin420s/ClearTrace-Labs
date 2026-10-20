@@ -21,11 +21,15 @@ import xml.etree.ElementTree as ET
 import zipfile
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 from fastapi import FastAPI, File, Header, HTTPException, Request, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import FileResponse, PlainTextResponse
+from fastapi.staticfiles import StaticFiles
 
 from backend.pdf_generator import build_pdf_report
 
@@ -109,8 +113,8 @@ agent_a = RecordVerifierAgentA()
 agent_b = ContextChallengerAgentB()
 
 
-@app.get("/health")
-@app.get("/api/health")
+@app.api_route("/health", methods=["GET", "HEAD"])
+@app.api_route("/api/health", methods=["GET", "HEAD"])
 def health_check() -> Dict[str, Any]:
     init_db()
     return {
@@ -1370,6 +1374,26 @@ def quick_reconcile_case(
         include_corroboration=req.include_corroboration,
     )
     return reconcile_case(case_id, reconcile_req, authorization=authorization, x_user_id=x_user_id)
+
+
+# Mount compiled frontend if available (enables unified single-port deployment on Render/Railway/Fly.io)
+FRONTEND_DIST = BASE_DIR / "frontend" / "dist"
+if FRONTEND_DIST.is_dir():
+    assets_dir = FRONTEND_DIST / "assets"
+    if assets_dir.is_dir():
+        app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="frontend_assets")
+
+    @app.api_route("/{full_path:path}", methods=["GET", "HEAD"], include_in_schema=False)
+    async def serve_spa_frontend(full_path: str):
+        if full_path.startswith(("api", "health", "docs", "openapi.json", "redoc")):
+            raise HTTPException(status_code=404, detail="Not Found")
+        target_file = FRONTEND_DIST / full_path
+        if full_path and target_file.is_file():
+            return FileResponse(str(target_file))
+        index_file = FRONTEND_DIST / "index.html"
+        if index_file.is_file():
+            return FileResponse(str(index_file))
+        raise HTTPException(status_code=404, detail="Frontend build index.html not found.")
 
 
 if __name__ == "__main__":

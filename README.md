@@ -144,6 +144,18 @@ python3 scripts/seed_presets.py
 python3 scripts/validate_proof.py --case-id=CT-B1534BBE
 ```
 
+### 6. Production Cloud & Docker Deployment
+ClearTrace Labs supports unified single-port deployments (FastAPI serving the compiled React 19 SPA) and multi-service deployments across Render, Railway, Fly.io, and Docker Compose:
+```bash
+# Unified Single-Port Docker container (FastAPI + React SPA on port 8000)
+docker build -t cleartrace-labs .
+docker run -d -p 8000:8000 cleartrace-labs
+
+# Multi-service Docker Compose (Backend on 8000, Frontend on 3000)
+docker-compose up --build -d
+```
+*For 1-click Render blueprint, Railway, Fly.io, and Vercel configurations, see [`DEPLOYMENT.md`](DEPLOYMENT.md).*
+
 ---
 
 ## 6. Project Structure
