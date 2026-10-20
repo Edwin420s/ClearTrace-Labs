@@ -15,8 +15,7 @@ Default local development port: `http://localhost:8000`
   {
     "status": "online",
     "service": "ClearTrace Labs Multi-Agent Truth Engine",
-    "track": "Track 02: Omega AI Agents",
-    "challenge": "Two Agents, One Truth",
+    "engine": "SingularityNET MeTTa & Omega Multi-Agent Architecture",
     "metta_hyperon_runtime_active": true,
     "rules_file_loaded": true,
     "total_active_metta_rules": 14
