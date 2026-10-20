@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ClearTrace Labs — Audit Bundle Exporter for Hackathon Reviewers.
+ClearTrace Labs — Audit Bundle Exporter for Compliance and Technical Reviewers.
 Exports a complete self-contained JSON audit bundle with cryptographic verification proofs.
 Run:
     python3 scripts/export_audit_bundle.py <case_id> [output_file.json]
