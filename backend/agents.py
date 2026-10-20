@@ -66,7 +66,7 @@ def normalize_claim_value(val: Any) -> str:
     if isinstance(val, (int, float)):
         return f"{float(val):.4f}".rstrip("0").rstrip(".")
     s = str(val).strip()
-    return re.sub(r"\s+", " ", s)
+    return re.sub(r"[\s\u00a0]+", " ", s)
 
 
 def extract_claims_from_raw_text(raw_text: str, domain: str = "", agent_id: str = "") -> List[Dict[str, Any]]:
@@ -75,7 +75,7 @@ def extract_claims_from_raw_text(raw_text: str, domain: str = "", agent_id: str 
     text_lower = raw_text.lower()
 
     # 1. Date extraction
-    date_match = re.search(r'\b(19\d\d[-/]\d{1,2}[-/]\d{1,2})\b', raw_text)
+    date_match = re.search(r'\b((?:19|20)\d\d[-/]\d{1,2}[-/]\d{1,2})\b', raw_text)
     if date_match:
         claims.append({
             "entity": "Event",
@@ -107,6 +107,62 @@ def extract_claims_from_raw_text(raw_text: str, domain: str = "", agent_id: str 
             "value": "1969-08-19",
             "evidence_ref": "August 19 citation",
             "original_text": "August 19, 1969",
+        })
+    else:
+        # Check standard month-year pattern e.g. "August 2026"
+        month_year_match = re.search(r'\b((?:january|february|march|april|may|june|july|august|september|october|november|december)\s+(?:19|20)\d\d)\b', text_lower)
+        if month_year_match:
+            claims.append({
+                "entity": "Document",
+                "property_name": "document_date",
+                "value": month_year_match.group(1).title(),
+                "evidence_ref": f"Document publication/authorized date '{month_year_match.group(1).title()}'",
+                "original_text": month_year_match.group(0),
+            })
+
+    # 1.1 Document Version
+    version_match = re.search(r'\bversion\s+([0-9]+(?:\.[0-9]+)?)\b', text_lower)
+    if version_match:
+        claims.append({
+            "entity": "Specification",
+            "property_name": "document_version",
+            "value": version_match.group(1),
+            "evidence_ref": f"Document specification version {version_match.group(1)}",
+            "original_text": version_match.group(0),
+        })
+
+    # 1.2 Microcontroller / Embedded Platform
+    mcu_match = re.search(r'\b(esp32|arduino|raspberry\s*pi|stm32)\b', text_lower)
+    if mcu_match:
+        mcu_val = mcu_match.group(1).upper().replace(" ", "_")
+        claims.append({
+            "entity": "Hardware",
+            "property_name": "controller_platform",
+            "value": mcu_val,
+            "evidence_ref": f"Target hardware platform {mcu_val}",
+            "original_text": mcu_match.group(0),
+        })
+
+    # 1.3 Operational / Moisture Threshold
+    threshold_match = re.search(r'\b(\d+(?:\.\d+)?)\s*%\s*(?:soil[- ]moisture\s+threshold|moisture\s+threshold|operational\s+threshold|threshold)\b', text_lower)
+    if threshold_match:
+        claims.append({
+            "entity": "Threshold",
+            "property_name": "operational_threshold",
+            "value": f"{threshold_match.group(1)}%",
+            "evidence_ref": f"{threshold_match.group(1)}% calibrated threshold",
+            "original_text": threshold_match.group(0),
+        })
+
+    # 1.4 Operating Voltage
+    voltage_match = re.search(r'\b(\d+(?:\.\d+)?\s*v)\s*(?:relay|pump|supply|power|dc|ac)?\b', text_lower)
+    if voltage_match:
+        claims.append({
+            "entity": "Electrical",
+            "property_name": "operating_voltage",
+            "value": voltage_match.group(1).upper().strip(),
+            "evidence_ref": f"Operating electrical specification '{voltage_match.group(1).upper().strip()}'",
+            "original_text": voltage_match.group(0),
         })
 
     # 2. Venue extraction
@@ -159,7 +215,7 @@ def extract_claims_from_raw_text(raw_text: str, domain: str = "", agent_id: str 
         })
 
     # 6. Rights & Royalties: Split Percentage
-    split_match = re.search(r'\b(\d+(?:\.\d+)?)\s*%', raw_text)
+    split_match = re.search(r'\b(\d+(?:\.\d+)?)\s*%(?!\s*(?:soil|moisture|threshold))', raw_text)
     if split_match:
         claims.append({
             "entity": "Composition",
@@ -212,6 +268,33 @@ def extract_claims_from_raw_text(raw_text: str, domain: str = "", agent_id: str 
             "value": price_val,
             "evidence_ref": f"KSh {price_val} unit rate",
             "original_text": price_match.group(0),
+        })
+
+    # 11. Key-Value Clauses
+    kv_matches = re.findall(r'(?m)^\s*([A-Za-z0-9 _\-\/]{3,30})\s*:\s*([^\r\n]{2,80})$', raw_text)
+    excluded_keys = {
+        "line items", "terms", "note", "notes", "fileciteturn", "layer", "module", "item",
+        "category", "phase", "week", "priority", "field", "component", "unit area", "risk", "core idea"
+    }
+    for k, v in kv_matches:
+        k_clean = k.strip().lower()
+        if k_clean in excluded_keys:
+            continue
+        # Exclude figure, table, and appendix captions
+        if re.match(r"^(figure|table|appendix|fig)\b", k_clean):
+            continue
+        clean_v = re.sub(r"[\s\u00a0]+", " ", v).strip()
+        if len(clean_v) < 2:
+            continue
+        prop_slug = re.sub(r'[^a-z0-9_]+', '_', k_clean).strip('_')
+        if any(c["property_name"] == prop_slug for c in claims):
+            continue
+        claims.append({
+            "entity": "Clause",
+            "property_name": prop_slug,
+            "value": clean_v,
+            "evidence_ref": f"Explicit clause '{k.strip()}: {clean_v}'",
+            "original_text": f"{k.strip()}: {clean_v}",
         })
 
     return claims
