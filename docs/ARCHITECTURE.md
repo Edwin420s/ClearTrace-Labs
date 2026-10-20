@@ -1,7 +1,7 @@
 # ClearTrace Labs — Production Architecture & Cognitive Blueprint
 
 ## Executive Abstract
-ClearTrace Labs is a deterministic, evidence-grounded multi-agent dispute resolution and truth engine built on **SingularityNET Hyperon / MeTTa** and the **Omega Stateful Agent Architecture**. Architected specifically for **Track 02 (Omega AI Agents) -> Challenge 01 (Two Agents, One Truth)** of the BASIX State of the Art Hackathon 2026, ClearTrace investigates situations where two autonomous AI agents reach conflicting conclusions about the same domain fact.
+ClearTrace Labs is a deterministic, evidence-grounded multi-agent dispute resolution and truth engine built on **SingularityNET Hyperon / MeTTa** and the **Omega Stateful Agent Architecture**. ClearTrace investigates situations where two autonomous AI agents or conflicting documentary sources reach contradictory conclusions about the same domain fact.
 
 Rather than relying on ungrounded generative LLMs that invent synthetic compromises or "split the difference," ClearTrace implements genuine agent separation, structured 5-stage cross-examination, and declarative MeTTa S-expression deduction in a typed Atomspace.
 
@@ -83,7 +83,7 @@ The frontend separates operational consumption from forensic compliance:
   1. *Action 1 (Add Your Documents)*: Two primary textareas, presets, clear confirmation, and an expandable 3rd-party independent evidence panel.
   2. *Action 2 (Understand the Results)*: Plain-language summary banner, prioritized discrepancy cards, side-by-side claim values with exact citations, and financial impact exposure estimates.
   3. *Action 3 (Next Steps for Your Audit)*: Concrete operational options to add independent proof, record human approval, or export reports.
-* **Advanced Audit Mode**: Tailored for hackathon judges, auditors, and systems engineers. Exposes the multi-agent negotiation timeline, human reviewer adjudication ledger, and offline mathematical SHA-256 Decision Replay validation.
+* **Advanced Audit Mode**: Tailored for technical auditors, compliance engineers, and systems administrators. Exposes the multi-agent negotiation timeline, human reviewer adjudication ledger, and offline mathematical SHA-256 Decision Replay validation.
 * **Responsible Trust Categorization**:
   * `Agreement Between Sources`: Both records state the same value. Distinct from independent verification—shared claims do not constitute external truth.
   * `Conflict Detected`: Records state conflicting values. Preserved transparently without hallucinating averages.
