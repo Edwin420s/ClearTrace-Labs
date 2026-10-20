@@ -177,6 +177,7 @@ docker run -d -p 8000:8000 cleartrace-labs
 * **Plain-English Guide for Non-Technical Readers:** [`docs/NON_TECHNICAL_GUIDE.md`](docs/NON_TECHNICAL_GUIDE.md)
 * **Business Overview & Market Sizing:** [`docs/BUSINESS_OVERVIEW.md`](docs/BUSINESS_OVERVIEW.md)
 * **Track 02 (Builders: MeTTa & Omega) Rubric Matrix:** [`docs/TRACK_02_ALIGNMENT.md`](docs/TRACK_02_ALIGNMENT.md)
+* **Stakeholder Evaluation Report (Judges, Business, Partners):** [`docs/STAKEHOLDER_EVALUATION_REPORT.md`](docs/STAKEHOLDER_EVALUATION_REPORT.md)
 * **AI Engineering Disclosure (Rule 03):** [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md)
 * **Cloud & Docker Deployment Guide:** [`DEPLOYMENT.md`](DEPLOYMENT.md)
 * **Technical Architecture & Specifications:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) • [`docs/METTA_SYMBOLIC_SPEC.md`](docs/METTA_SYMBOLIC_SPEC.md) • [`docs/API_SPECIFICATION.md`](docs/API_SPECIFICATION.md)
