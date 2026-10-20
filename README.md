@@ -214,4 +214,5 @@ cleartrace-labs/
 * **Secondary Challenges Addressed:** Challenge 2: The Agent That Grows Up • Challenge 1: The Glass Box Agent • Challenge 7: Trusted With Money
 * **AI Disclosure:** Detailed in [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md) adhering strictly to Hackathon Rule 3.
 * **Demonstration Video Script:** Formatted in [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md) for the 3-minute video presentation.
+* **Presentation Slide Deck:** Available in [`docs/ClearTrace_Labs_Presentation.pdf`](docs/ClearTrace_Labs_Presentation.pdf) for technical evaluation and partner review.
 * **License:** [Apache 2.0](LICENSE).
