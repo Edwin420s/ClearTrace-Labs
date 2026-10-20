@@ -1,8 +1,8 @@
 # ClearTrace Labs — AI for Peace Narrative Mediation Specification
 
-**Track 02 Partner Brief**: AI for Peace  
-**Brief Requirement**: *"Two communities’ accounts of one event, mediated to one story."*  
-**Problem Context**: Harlem Fine Arts Show (HFAS) 2026 Archive & Nairobi Oral History Exchange  
+**Domain Application**: Cultural Archiving & Oral History Mediation  
+**Core Requirement**: Mediating disparate historical accounts into verified, evidence-grounded records without synthetic distortion.  
+**Case Study Context**: Harlem Cultural Archive & Nairobi Oral History Exchange  
 
 ---
 
