@@ -1,125 +1,120 @@
-# ClearTrace Labs — Multi-Agent Truth & Reconciliation Engine
+# ClearTrace Labs
 
-> **ClearTrace Labs — Evidence-Grounded Multi-Agent Document Discrepancy & Reconciliation Engine**  
-> **Event:** *MeTTa & OMEGA: State of the Art Hackathon 2026*  
-> **Track:** **Track 02: MeTTa Omega (Builders)**  
-> **Challenges:** **Challenge 4: Two Agents, One Truth (Primary)** • **Challenge 2: The Agent That Grows Up** • **Challenge 1: The Glass Box Agent** • **Challenge 7: Trusted With Money**  
-> **Engineering Lead:** Edwin Mwiti • **Architecture:** SingularityNET Hyperon / MeTTa & Omega Multi-Agent Cognitive Architecture  
+> **When records disagree, make the next decision clear.**  
+> An evidence-first investigation workspace for resolving conflicting claims, reducing costly mistakes, and making decisions people can explain.  
+> **Two sides. One evidence trail. Accountable outcomes.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Track: Track 02 MeTTa Omega](https://img.shields.io/badge/Track-Track%2002%20MeTTa%20Omega%20(Builders)-purple)](docs/TRACK_02_ALIGNMENT.md)
-[![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
-[![FastAPI: Production](https://img.shields.io/badge/FastAPI-v0.115-emerald)](https://fastapi.tiangolo.com)
-[![MeTTa: Hyperon](https://img.shields.io/badge/MeTTa-Hyperon%20Symbolic%20Engine-purple)](https://singularitynet.io)
 [![Tests: 33/33 Passing](https://img.shields.io/badge/Tests-33%2F33%20Passing%20(100%25)-brightgreen)](tests/)
-[![Proofs: Cryptographic SHA-256 Merkle](https://img.shields.io/badge/Proofs-SHA--256%20Merkle%20DAG-blueviolet)](scripts/validate_proof.py)
+[![MeTTa: Hyperon Engine](https://img.shields.io/badge/MeTTa-Hyperon%20Symbolic%20Engine-purple)](https://singularitynet.io)
+[![FastAPI: Production](https://img.shields.io/badge/FastAPI-v0.115-emerald)](https://fastapi.tiangolo.com)
+[![Pitch Deck: PPTX Available](https://img.shields.io/badge/Pitch%20Deck-PPTX%20Included-orange)](ClearTrace_Labs_Product_Pitch_Deck.pptx)
+
+📊 **[Download Official Pitch Deck (PPTX)](ClearTrace_Labs_Product_Pitch_Deck.pptx)** • 📑 **[Read Pitch Deck in Markdown](docs/PITCH_DECK.md)** • 🎬 **[3-Minute Video Pitch Script](DEMO_SCRIPT.md)**
 
 ---
 
-### 🧭 Submission & Audience Navigator
+## 1. The Problem: Disagreement is expensive. Uncertainty is even worse.
 
-| For Evaluator / Reader | Recommended Starting Document | What You Will Learn |
-| :--- | :--- | :--- |
-| 🧑‍⚖️ **Hackathon Judges & Mentors** | 🎯 [`docs/TRACK_02_ALIGNMENT.md`](docs/TRACK_02_ALIGNMENT.md) | Rubric compliance (30% Execution, 25% Demo, 25% Track Fit, 20% Docs), Challenge 4/1/2/7 proofs, 1-line verification commands. |
-| 👥 **Non-Technical & Business People** | 📖 [`docs/NON_TECHNICAL_GUIDE.md`](docs/NON_TECHNICAL_GUIDE.md) | Plain-English walkthrough, everyday analogies, why ChatGPT makes costly errors, and the 3 real-world stories (Office Invoices, Music Royalties, Peace Archives). |
-| 💼 **Investors & Business Leaders** | 💼 [`docs/BUSINESS_OVERVIEW.md`](docs/BUSINESS_OVERVIEW.md) | Market sizing ($28B friction), customer personas, pricing tiers ($99/$499/$2.5k), customer ROI (>1,300%), and BASIX incubation roadmap. |
-| 🎥 **Video Evaluators** | 🎬 [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md) | Exact 3-minute video presentation script and narrative breakdown. |
-| 📊 **Presentation Evaluators** | 📑 [`docs/ClearTrace_Labs_Presentation.pdf`](docs/ClearTrace_Labs_Presentation.pdf) | Official presentation slide deck. |
-| ⚖️ **Compliance & Ethics Reviewers** | 🛡️ [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md) | Formal Hackathon Rule 03 compliance: AI tools disclosed, 100% deterministic MeTTa runtime execution. |
-| ☁️ **DevOps & Cloud Engineers** | 🚀 [`DEPLOYMENT.md`](DEPLOYMENT.md) | Single-port full-stack Docker, Render 1-click blueprint, Railway, Fly.io, and Vercel configs. |
+Organizations often have the records—but not a trusted way to resolve what they mean:
+* 💰 **Money Leaks:** Invoices, purchase orders, and delivery notes tell different stories. (e.g. KSh 5,000 potential overcharge on a single order).
+* 🤝 **Trust Breaks:** Partners dispute ownership, royalty splits, or what was actually agreed upon. (Weeks of back-and-forth email arguments).
+* ⏳ **Decisions Stall:** Teams chase emails and spreadsheets instead of finding the missing proof. (Slow, hard-to-audit outcomes).
+
+> **The Gap:** A basic comparison tool shows a mismatch. Generative AI guesses a fake compromise. Neither tells people what evidence would settle the dispute—or how to defend the final call.
 
 ---
 
-## 1. Executive Summary: What ClearTrace Labs Solves
+## 2. The Moment: A small mismatch can become a costly decision
 
-Generative Large Language Models (LLMs) operate probabilistically: they optimize for token plausibility rather than verifiable ground truth. When presented with contradictory accounts or disputed figures—such as a Purchase Order stating 90 units vs. an Invoice billing 100, or a signed Split Sheet allocating 50% vs. a DSP remitting 35%—traditional chatbots invent synthetic compromises ("splitting the difference"), hallucinating intermediate dates, fabricated authors, or unverified financial settlements that distort reality.
+Consider a procurement team asked to pay an invoice that does not match the purchase order:
 
-**ClearTrace Labs** replaces ungrounded text generation with **deterministic symbolic deduction** and **structured multi-agent consensus**:
+| Purchase Order (#PO-089) | Supplier Invoice (#INV-104) | Potential Variance |
+| :---: | :---: | :---: |
+| **90 units** authorized | **100 units** requested | **KSh 5,000** |
+| (KSh 45,000 expenditure) | (KSh 50,000 amount due) | (10 extra units × KSh 500) |
 
-* **Phase 1 (Isolated Air-Gapped Intake)**: Agent A (*Record Verifier*) and Agent B (*Context Challenger*) ingest primary documents in complete air-gap isolation without seeing counterparty claims, preventing prompt contamination and early false convergence.
-* **Phase 2 (5-Stage Cross-Challenge Negotiation)**: Agents debate claims across structured rounds, exchanging formal documentary citations rather than ungrounded chat tokens.
-* **Phase 3 (MeTTa Reasoning in Typed Atomspace)**: SingularityNET Hyperon / MeTTa rewrite rules execute in a typed Atomspace, categorizing claims into `AGREEMENT`, `CONTRADICTION`, `SOURCE_EXCLUSIVE`, or `EVIDENCE_SUPPORTED`. Contradictions are explicitly preserved rather than guessed away.
-* **Phase 4 (The Signature Differentiator: "What Could Help Resolve This?")**: Instead of stopping at the mismatch, ClearTrace guides the investigator with domain-specific recommendations of what missing proof could resolve the dispute, updating the outcome to *Supported*, *Still Disputed*, or *Insufficient Evidence*.
-* **Phase 5 (Glass Box Integrity & Cryptographic Replay)**: Every case is sealed with a 6-layer **SHA-256 Merkle Tree** and appended to an unalterable audit chain, fully reproducible offline via our CLI.
-
----
-
-## 2. Track 02 Challenge Alignment & Partner Creative Briefs
-
-| Track 02 Challenge | Partner / Creative Brief | Real-World Problem Solved | Core MeTTa Implementation | Deterministic Verification Proof |
-| :--- | :--- | :--- | :--- | :--- |
-| **Challenge 4: Two Agents, One Truth** *(Primary)* | **AI for Peace** (Harlem ↔ Nairobi Oral History) | Reconciles conflicting community archives regarding the 1969 Cultural Peace Exchange. Preserves start date conflict (Aug 12 vs Aug 19) without synthetic hallucination until printed evidence corroborates Aug 12. | `peace_narrative.metta` | Contradiction preserved in Round 1–2; resolved to `1969-08-12` in Round 3 via neutral third-party programme corroboration. |
-| **Challenge 2: The Agent That Grows Up** | **Incantio Music IP** (Creative Rights & Royalties) | Audits a creator's signed split sheet (50%) against a DSP streaming statement (35%). Starts with a small core rule set and visibly learns through our Rule Studio, showing live side-by-side rule diffs. | `incantio_rights.metta` + Dynamic Rule Synthesis (`/api/rules/custom`) | Live side-by-side diff: baseline strict dispute vs. newly synthesized 15% sub-publishing deduction waiver rule. |
-| **Challenge 7: Trusted With Money** | **Harlem Fine Arts Show / Enterprise B2B** | Audits a 90-unit Purchase Order vs. 100-unit Invoice (KSh 5,000 variance). Locks out payment until an authorized PO amendment confirms delivery of 100 units. | `invoice_dispute.metta` | Exact financial variance calculated; locks payout until Amendment #PO-2026-089-AMD1 is cryptographically verified. |
-| **Challenge 1: The Glass Box Agent** | **Enterprise Compliance & Audit** | Full transparent inspection: every claim, negotiation step, and verdict hash is exposed in our Hierarchical Merkle Tree and Atomspace Inspector. | Typed Atomspace (`/api/metta/space`) + Merkle DAG (`/api/cases/{id}/merkle-tree`) | Independent 1-line offline CLI replay verification: `python3 scripts/validate_proof.py --case-id={id}`. |
+The mismatch alone does not prove fraud—or prove the invoice is wrong.  
+Was there an approved amendment? Were 100 units actually delivered? Which document governs payment?  
+**The right next step is to identify the evidence needed, not guess.**
 
 ---
 
-## 3. Cognitive Architecture & Multi-Agent Loop
+## 3. The Solution: ClearTrace turns conflicting records into a clear investigation
 
-```mermaid
-flowchart TD
-    subgraph Ingestion ["Phase 1: Isolated Ingestion (Air-Gapped)"]
-        SA["Source A (Contract / Harlem Archive / PO)"] --> AgentA["Record Verifier (Agent A)"]
-        SB["Source B (DSP Statement / Nairobi Tape / Invoice)"] --> AgentB["Context Challenger (Agent B)"]
-    end
+One workspace to understand the disagreement, find what is missing, and record a defensible outcome:
 
-    subgraph Memory ["Omega Stateful Cognitive Memory"]
-        AgentA --> OA["Agent A Isolated Belief Atoms"]
-        AgentB --> OB["Agent B Isolated Belief Atoms"]
-        OA --> Atomspace["Typed Hyperon Atomspace"]
-        OB --> Atomspace
-    end
-
-    subgraph Protocol ["Phase 2: 5-Stage Multi-Round Negotiation"]
-        Atomspace --> S1["Stage 1: Independent Claim Extraction"]
-        S1 --> S2["Stage 2: Disagreement Detection"]
-        S2 --> S3["Stage 3: Evidence Citation Exchange"]
-        S3 --> S4["Stage 4: MeTTa Symbolic Rule Verification"]
-        S4 --> S5["Stage 5: Consensus or Human Escalation"]
-    end
-
-    subgraph Resolution ["Phase 3: What Evidence Would Resolve This?"]
-        S5 --> Suggestions["Evidence Guidance\n(Amendments / Delivery Receipts / Catalogues)"]
-        Suggestions --> Corrob["3rd-Party Corroboration Engine"]
-        Corrob --> Decision["Deterministic Decision\n(Supported / Disputed / Insufficient)"]
-    end
-
-    subgraph Integrity ["Phase 4: Cryptographic Glass Box & Replay"]
-        Decision --> Merkle["Hierarchical SHA-256 Merkle Tree"]
-        Decision --> Audit["Tamper-Evident SHA-256 Hash Chain"]
-        Merkle --> ReplayCert["Replay Certificate (.json) & Offline CLI Validation"]
-    end
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        ClearTrace Labs Engine                          │
+├────────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  1. Bring the records together                                         │
+│     Upload relevant documents, claims, or partner statements.          │
+│                                                                        │
+│  2. See what agrees — and what doesn't                                 │
+│     Separate supported facts, open contradictions, and unknowns.       │
+│                                                                        │
+│  3. Find the next best evidence ("What could help resolve this?")      │
+│     Get focused requests (PO Amendments, Delivery Slips, Catalogues)   │
+│     that move the case forward.                                        │
+│                                                                        │
+│  4. Decide with accountability                                         │
+│     A human reviews the evidence, records a reason, and exports        │
+│     the tamper-evident cryptographic trail.                            │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
----
-
-## 4. Key Architectural Differentiators
-
-1. **The Signature Feature: "What Evidence Would Resolve This?"**:
-   When two documents disagree, standard tools stop at flagging a mismatch. ClearTrace analyzes the domain and property, recommends what specific document (such as a signed amendment, delivery note, or work registration ticket) would resolve the dispute, and dynamically updates the outcome when proof is attached.
-2. **"The Agent That Grows Up" — Rule-Learning Studio**:
-   Compliance officers can teach the system new MeTTa rewrite rules dynamically through the UI (`POST /api/rules/custom`). The Rule Studio renders a live side-by-side rule diff (Baseline strict dispute vs. Candidate synthesized rule) and immediately compiles the expression into the active Atomspace to re-evaluate cases in real time.
-3. **Dual-Runtime MeTTa Engine (`backend/metta_runner.py`)**:
-   Seamlessly interfaces with native C++ Hyperon when available, coupled with an embedded pure-symbolic MeTTa S-expression parser and reduction interpreter that executes declarative rewrite rules and logs step-by-step traces (`REWRITE_RULE_MATCH`, `CONDITION_EVAL`).
-4. **Hierarchical Merkle Tree Visualizer (`backend/replay_service.py`)**:
-   Constructs a 6-layer cryptographic Merkle DAG across sources, multi-agent negotiation rounds, and reconciled findings. External auditors can verify any case offline with zero cloud dependencies using:
-   ```bash
-   python3 scripts/validate_proof.py --case-id={CASE_ID}
-   ```
-5. **False-Consensus Guard**:
-   Detects edge cases where both AI agents agree on a hallucinated extraction, rejecting false agent agreement in favor of deterministic source truth.
+> **ClearTrace does not manufacture consensus. It makes uncertainty visible and resolution actionable.**
 
 ---
 
-## 5. Quick Start (Clean-Clone Ready)
+## 4. Why ClearTrace Wins (Differentiation)
+
+Not another chatbot. Not just a document diff. ClearTrace is designed for decisions that must stand up to scrutiny:
+
+| Common Approach | ClearTrace Labs Approach |
+| :--- | :--- |
+| Shows two documents differ | **Explains the specific claim in dispute** |
+| Gives a confident guess or hallucinated average | **Separates evidence, assumptions, and unknowns** |
+| Asks for vague "more context" | **Suggests targeted evidence that could resolve the issue** |
+| Leaves decisions in scattered emails | **Records reviewer, mandatory rationale, and formal outcome** |
+| A report says "verified" without proof | **Cryptographic integrity checks are distinct from factual truth** |
+
+---
+
+## 5. Proven Use Cases Across Three Domains
+
+1. **🏢 B2B Procurement & Finance:**  
+   Invoice / PO mismatch, duplicate charges, delivery disputes. Automatically flags variance (e.g. KSh 5,000) and holds payment until an authorized amendment is verified.
+2. **🎵 Music IP & Royalties (Incantio Brief):**  
+   Audits co-writer split sheets against DSP streaming statements. Calculates the exact 15 percentage-point gap and $1,800 USD missing payment on $12,000 revenue.
+3. **🕊️ Cultural Heritage & Oral History (AI for Peace Brief):**  
+   Reconciles Harlem and Nairobi community accounts of the 1969 Cultural Peace Exchange. Preserves conflicting dates (Aug 12 vs Aug 19) until a printed 1969 programme corroborates the opening ceremony.
+
+---
+
+## 6. How It Works Under the Hood
+
+ClearTrace replaces probabilistic generative guessing with deterministic symbolic logic:
+* **Air-Gapped Ingestion:** Agent A (*Record Verifier*) and Agent B (*Context Challenger*) ingest documents in isolated memory pods, eliminating confirmation bias.
+* **SingularityNET Hyperon / MeTTa Reasoning:** Deductive rewrite rules execute in a typed Atomspace, categorizing claims into `AGREEMENT`, `CONTRADICTION`, `SOURCE_EXCLUSIVE`, or `EVIDENCE_SUPPORTED`.
+* **Stateful Omega Memory:** Tracks claims and citations across a structured 5-stage protocol.
+* **Cryptographic Replay Certificates:** Every decision is hashed into a 6-layer SHA-256 Merkle tree, verifiable offline in a single command.
+* **Dynamic Rule-Learning Studio ("The Agent That Grows Up"):** Compliance teams can teach the engine new business rules with live side-by-side rule diffs.
+
+---
+
+## 7. Quick Start (Get Running in 30 Seconds)
 
 ### Prerequisites
-- Python 3.10+ (tested on Python 3.10, 3.11, 3.12, 3.14)
+- Python 3.10+ (tested on 3.10, 3.11, 3.12, 3.14)
 - Node.js 18+ and npm
 
-### 1. Clone & Install Dependencies
+### 1. Install & Test
 ```bash
+# Clone repository
 git clone https://github.com/Edwin420s/ClearTrace-Labs.git
 cd ClearTrace-Labs
 
@@ -128,30 +123,24 @@ pip install -r requirements.txt
 
 # Install React frontend dependencies
 cd frontend && npm install && cd ..
+
+# Run full test suite (33/33 tests passing)
+pytest -v tests/
 ```
 
-### 2. Run the Full Automated Test Suite (33/33 Tests)
+### 2. Start Application
 ```bash
-python3 -m pytest tests/ -v
-```
-*Executes all 33 unit and integration tests covering multi-agent negotiation, MeTTa Atomspace reduction, Merkle tree math, DoS protection, IDOR isolation, and proof validation.*
-
-### 3. Start Backend Server
-```bash
+# Terminal 1: Backend API (FastAPI on port 8000)
 python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
-```
-*Interactive Swagger documentation available at: `http://localhost:8000/docs`*
 
-### 4. Start React Frontend Dashboard
-```bash
-cd frontend
-npm run dev -- --port 5173
+# Terminal 2: Frontend Dashboard (React + Vite on port 5173)
+cd frontend && npm run dev
 ```
-*Open `http://localhost:5173` in your browser.*
+Open **`http://localhost:5173`** in your browser.
 
-### 5. Verify a Cryptographic Decision Proof via CLI
+### 3. Verify Cryptographic Proofs Offline via CLI
 ```bash
-# Seed default demonstration benchmarks
+# Seed the 3 demonstration benchmarks
 python3 scripts/seed_presets.py
 
 # Verify proof offline (supports 'latest', domain name, or specific case ID)
@@ -159,99 +148,45 @@ python3 scripts/validate_proof.py --case-id=latest
 python3 scripts/validate_proof.py --case-id=invoice
 ```
 
-### 6. Production Cloud & Docker Deployment
-ClearTrace Labs supports unified single-port deployments (FastAPI serving the compiled React 19 SPA) and multi-service deployments across Render, Railway, Fly.io, and Docker Compose:
+### 4. Production Cloud & Docker Deployment
 ```bash
-# Unified Single-Port Docker container (FastAPI + React SPA on port 8000)
+# Single-port container (FastAPI + React SPA on port 8000)
 docker build -t cleartrace-labs .
 docker run -d -p 8000:8000 cleartrace-labs
-
-# Multi-service Docker Compose (Backend on 8000, Frontend on 3000)
-docker-compose up --build -d
 ```
 *For 1-click Render blueprint, Railway, Fly.io, and Vercel configurations, see [`DEPLOYMENT.md`](DEPLOYMENT.md).*
 
 ---
 
-## 6. Project Structure
+## 8. Business Model & Market Opportunity
 
-```
-cleartrace-labs/
-├── README.md                          # Master architectural overview & hackathon brief
-├── AI_DISCLOSURE.md                   # Formal AI disclosure adhering to Hackathon Rule 3
-├── DEMO_SCRIPT.md                     # 3-minute video walkthrough pitch script
-├── DEPLOYMENT.md                      # Cloud & Docker production deployment guide
-├── requirements.txt                   # Backend dependencies (fastapi, pydantic, pytest, httpx)
-├── pytest.ini                         # Pytest configuration
-├── LICENSE                            # Apache 2.0 open-source license
-│
-├── docs/                              # Enterprise Specifications & Guides
-│   ├── TRACK_02_ALIGNMENT.md          # Official Track 02 challenge alignment & judging rubric
-│   ├── NON_TECHNICAL_GUIDE.md         # Plain-English guide for non-technical evaluators & creators
-│   ├── BUSINESS_OVERVIEW.md           # Business model, market sizing, ROI & incubation plan
-│   ├── ARCHITECTURE.md                # System blueprint & 5-stage multi-agent loop
-│   ├── METTA_SYMBOLIC_SPEC.md         # Formal declarative reduction semantics
-│   ├── OMEGA_AGENT_PROTOCOL.md        # Stateful agent negotiation protocol
-│   ├── CRYPTOGRAPHIC_AUDIT_SPEC.md    # SHA-256 Merkle proofs & tamper-evident chaining
-│   ├── COMPLIANCE_AND_AUDIT.md        # Enterprise standards verification matrix
-│   ├── ClearTrace_Labs_Presentation.pdf # Official presentation slide deck
-│   └── API_SPECIFICATION.md           # REST API reference & schemas
-│
-├── metta/                             # Symbolic Reasoning Substrate
-│   ├── ontology/types.metta           # Typed atom schemas (Entity, Property, Value, Status)
-│   └── rules/
-│       ├── core_reconciliation.metta  # Mutual agreement, contradiction, and false-consensus rules
-│       ├── peace_narrative.metta      # AI for Peace historical mediation rules
-│       ├── incantio_rights.metta      # Royalty split & DSP statement rules
-│       └── invoice_dispute.metta      # PO vs Invoice verification & amendment rules
-│
-├── backend/                           # Production FastAPI Server
-│   ├── database.py                    # SQLite persistence & SHA-256 hash-chaining
-│   ├── schemas.py                     # Pydantic v2 data models
-│   ├── metta_runner.py                # Dual native/embedded MeTTa S-expression engine
-│   ├── agents.py                      # Isolated Record Verifier (A) & Context Challenger (B)
-│   ├── negotiation.py                 # 5-stage multi-round negotiation orchestrator
-│   ├── replay_service.py              # SHA-256 Merkle tree & Replay Certificate generator
-│   ├── presets.py                     # Synthetic demonstration datasets
-│   └── main.py                        # REST API routing, lifespan, and export handlers
-│
-├── frontend/                          # React + Vite Production Dashboard
-│   ├── src/
-│   │   ├── App.jsx                    # Root coordinator & state manager
-│   │   ├── data/scenarios.js          # Track 02 partner benchmarks & field dictionaries
-│   │   └── components/
-│   │       ├── Header.jsx             # Navigation tabs & multi-tenant user profile
-│   │       ├── HeroBanner.jsx         # Track 02 Partner benchmark switcher
-│   │       ├── DocumentInputs.jsx     # Action 1: Multi-document intake & supporting evidence
-│   │       ├── FindingsSummary.jsx    # Action 2: "What could help resolve this?" & outcome cards
-│   │       ├── NextSteps.jsx          # Action 3: Next steps, export, and auditor sign-off
-│   │       ├── AdvancedAudit.jsx      # Action 4: Merkle Visualizer, Atomspace & Rule Studio
-│   │       ├── SignOffModal.jsx       # Action 5: Accountable human-in-the-loop review form
-│   │       ├── ReportModal.jsx        # Executive print & export preview modal
-│   │       ├── AuditHistory.jsx       # Tenant-isolated searchable audit ledger
-│   │       └── LandingPage.jsx        # Public product showcase
-│
-├── tests/                             # Automated Acceptance Test Suite (33/33 Passing)
-│   ├── test_cleartrace.py             # MeTTa reasoning, multi-agent rounds & Merkle proofs
-│   ├── test_auth_isolation.py         # Multi-tenant scoping & session security
-│   └── test_security_resilience.py    # DoS protection, zip bombs, and recursion guards
-│
-└── scripts/                           # Tooling & Verification CLIs
-    ├── validate_proof.py              # Standalone 1-line offline proof verification CLI
-    ├── seed_presets.py                # Database seeder for demo cases
-    ├── benchmark_engine.py            # Latency and throughput benchmark (>8,000 claims/sec)
-    └── run_all_verifications.sh       # Unified verification runner
-```
+* **The $28B Problem:** Billions lost annually to invoice overbilling, missing streaming royalties, and delayed contract settlements.
+* **Pricing Architecture:**
+  * **Team ($99/mo):** Small teams, up to 50 cases/month.
+  * **Business ($499/mo):** Operations teams, up to 500 cases/month, custom Rule Studio.
+  * **Enterprise ($2,499+/mo):** Unlimited cases, ERP connectors (SAP, NetSuite), on-prem Docker.
+  * **API Pay-Per-Reconciliation:** $0.05 per claim verification via Stripe or x402 micropayments.
+* **Customer ROI:** Saves 4–6 hours per disputed invoice, catching 100% of unauthorized charges with payback in under 20 days.
+* **Detailed Commercial Analysis:** See [`docs/BUSINESS_OVERVIEW.md`](docs/BUSINESS_OVERVIEW.md).
 
 ---
 
-## 7. Team & Submission Information
+## 9. Documentation Index & Hackathon Alignment
 
-* **Team Lead / Builder:** Edwin Mwiti (BASIX.MARKET Profile: Edwin Mwiti, Institution: Cleartrace Labs)
+* 📊 **Official Pitch Deck:** [`ClearTrace_Labs_Product_Pitch_Deck.pptx`](ClearTrace_Labs_Product_Pitch_Deck.pptx) • Markdown: [`docs/PITCH_DECK.md`](docs/PITCH_DECK.md)
+* 📖 **Plain-English Guide for Non-Technical Readers:** [`docs/NON_TECHNICAL_GUIDE.md`](docs/NON_TECHNICAL_GUIDE.md)
+* 💼 **Business Overview & Market Sizing:** [`docs/BUSINESS_OVERVIEW.md`](docs/BUSINESS_OVERVIEW.md)
+* 🎯 **Track 02 (Builders: MeTTa & Omega) Rubric Matrix:** [`docs/TRACK_02_ALIGNMENT.md`](docs/TRACK_02_ALIGNMENT.md)
+* 🎬 **3-Minute Video Pitch Script:** [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md)
+* 🛡️ **AI Engineering Disclosure (Rule 03):** [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md)
+* 🚀 **Cloud & Docker Deployment Guide:** [`DEPLOYMENT.md`](DEPLOYMENT.md)
+* 📐 **Technical Architecture & Specifications:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) • [`docs/METTA_SYMBOLIC_SPEC.md`](docs/METTA_SYMBOLIC_SPEC.md) • [`docs/API_SPECIFICATION.md`](docs/API_SPECIFICATION.md)
+
+---
+
+## Team & Submission Info
+* **Engineering Lead:** Edwin Mwiti (Institution: ClearTrace Labs)
 * **Track:** Track 02: MeTTa Omega (Builders)
 * **Primary Challenge:** Challenge 4: Two Agents, One Truth
 * **Secondary Challenges Addressed:** Challenge 2: The Agent That Grows Up • Challenge 1: The Glass Box Agent • Challenge 7: Trusted With Money
-* **AI Disclosure:** Detailed in [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md) adhering strictly to Hackathon Rule 3.
-* **Demonstration Video Script:** Formatted in [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md) for the 3-minute video presentation.
-* **Presentation Slide Deck:** Available in [`docs/ClearTrace_Labs_Presentation.pdf`](docs/ClearTrace_Labs_Presentation.pdf) for technical evaluation and partner review.
-* **License:** [Apache 2.0](LICENSE).
+* **License:** [Apache 2.0](LICENSE)
