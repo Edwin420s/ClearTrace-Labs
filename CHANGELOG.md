@@ -55,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Tamper-Evident SHA-256 Audit Trail**: Hash-chained event log (`prev_hash` -> `curr_hash`) protecting case actions against modification.
 - **Dynamic Rule Studio ("The Agent That Grows Up")**: Dynamic MeTTa rule synthesis allowing human auditors to inject new domain axioms at runtime.
 - **Multi-Domain Presets**:
-  - AI for Peace: Harlem ↔ Nairobi oral history mediation.
+  - AI for Peace: Harlem to Nairobi oral history mediation.
   - Incantio Music Rights: Co-writer split sheets vs. DSP streaming statements.
   - Operational B2B: Purchase order vs. supplier invoice dispute.
 - **Modern React 18 + Vite Frontend**: 7 interactive workspaces with dark mode, responsive styling (desktop, tablet, mobile), live Merkle root verification, and one-click JSON audit bundle exports.

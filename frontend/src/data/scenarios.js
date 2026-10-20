@@ -5,7 +5,7 @@ export const SAMPLE_SCENARIOS = [
     id: 'peace',
     name: 'AI for Peace Oral History',
     badge: 'Track 02 · Challenge 4',
-    partner: 'AI for Peace (Harlem ↔ Nairobi)',
+    partner: 'AI for Peace (Harlem / Nairobi)',
     challenge: 'Challenge 4: Two Agents, One Truth',
     subtitle: 'Conflicting Eyewitness Accounts of 1969 Peace Exchange',
     category: 'Cultural Archives',

@@ -91,7 +91,7 @@
 **Reviewers:** Partner Representatives from AI for Peace Africa, Incantio.com, and Harlem Fine Arts Show / Harlem CLxR  
 **Evaluation Focus:** Fulfillment of Partner Creative Briefs and Protection of Cultural/Creative Assets
 
-### 1. AI for Peace Africa Review (Harlem ↔ Nairobi Oral History)
+### 1. AI for Peace Africa Review (Harlem - Nairobi Oral History)
 * **Partner Brief:** Reconcile conflicting community accounts of the 1969 Cultural Peace Exchange without erasing cultural memory.
 * **Partner Evaluation:**  
   * When the Harlem archive reported an August 12 start date with 450 delegates and the Nairobi reel reported August 19 with 600 attendees, ClearTrace did not average the dates to an imaginary "August 15".
