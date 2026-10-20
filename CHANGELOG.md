@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **Dual-Mode User Experience**:
   - **Simple Mode (Default)**: Streamlined 3-action workflow (Add Documents, Understand Results, Next Steps) designed for business users and non-technical auditors.
-  - **Advanced Audit Mode**: Dedicated interface for hackathon judges and compliance engineers featuring multi-agent negotiation timelines, human review adjudication forms, and cryptographic decision replay verification.
+  - **Advanced Audit Mode**: Dedicated interface for compliance auditors and systems engineers featuring multi-agent negotiation timelines, human review adjudication forms, and cryptographic decision replay verification.
 - **Responsible Trust Categorization**:
   - `Agreement Between Sources` explicitly distinguished from external verification.
   - `Supported by Independent Evidence` reserved strictly for corroborating 3rd documents.
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - 2026-10-19 — Advanced Features & Enhanced Verification Release
 
 ### Added
-- **Ad-Hoc Custom Case Reconciliation**: `POST /api/cases/quick-reconcile` and Tab 6 Custom Case Studio allowing users and judges to paste arbitrary unformatted documents and reconcile live with MeTTa.
+- **Ad-Hoc Custom Case Reconciliation**: `POST /api/cases/quick-reconcile` and Tab 6 Custom Case Studio allowing users and auditors to paste arbitrary unformatted documents and reconcile live with MeTTa.
 - **Automated Text Extraction Fallbacks**: Regex and heuristic extractors in `RecordVerifierAgentA` and `ContextChallengerAgentB` to extract dates, percentages, amounts, and entities from raw text.
 - **Hierarchical Merkle Tree Layer Engine**: Multi-level tree calculation (`compute_merkle_tree_layers`) and `GET /api/cases/{case_id}/merkle-tree` endpoint for visual inspection of cryptographic proofs.
 - **Live Atomspace Inspector**: `GET /api/metta/space` and live dashboard card in Tab 5 inspecting loaded rewrite rules and types.
@@ -38,10 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.0] - 2026-10-19 — BASIX State of the Art Hackathon Release
+## [1.0.0] - 2026-10-19 — Initial Production Release
 
 ### Added
-- **Track 02 Implementation**: Complete stateful multi-agent system addressing "Two Agents, One Truth" challenge.
+- **Multi-Agent Dispute Engine**: Complete stateful multi-agent system resolving conflicting records into verifiable truth.
 - **Dual-Runtime MeTTa Engine**: Native SingularityNET Hyperon support + embedded symbolic S-expression reduction engine with step-by-step reduction traces.
 - **Air-Gapped Ingestion**: Phase 1 isolated source extraction where Agent A and Agent B analyze disparate documents independently.
 - **5-Stage Negotiation Protocol**:
